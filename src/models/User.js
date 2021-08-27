@@ -17,6 +17,10 @@ const userSchema = new Schema({
     roles: [{
         ref: "Role",
         type: Schema.Types.ObjectId //relaciona con roles como si fuese una tabla
+    }],
+    employee: [{
+        ref: "Employee",
+        type: Schema.Types.ObjectId,
     }]
 }, {
     timestamps: true,

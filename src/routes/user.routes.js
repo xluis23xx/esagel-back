@@ -6,7 +6,27 @@ import { authJwt, verifySignUp } from '../middlewares'
 
 router.get('/', [
     authJwt.verifyToken, 
-    authJwt.isAdmin,
+    authJwt.isAdmin
 ], userCtrl.getUsers)
+
+router.post('/', [
+    authJwt.verifyToken, 
+    authJwt.isAdmin,
+    verifySignUp.checkDuplicateUsernameOrEmail, 
+    verifySignUp.checkRolesExisted
+], userCtrl.createUser)
+
+router.get('/:userId', [
+    authJwt.verifyToken
+], userCtrl.getUserById)
+
+router.put('/:userId', [
+    authJwt.verifyToken
+], userCtrl.updateUserById)
+
+router.delete('/:userId', [
+    authJwt.verifyToken,
+    authJwt.isAdmin
+], userCtrl.deleteUserById)
 
 export default router;

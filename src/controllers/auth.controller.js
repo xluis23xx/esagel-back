@@ -1,13 +1,11 @@
 import User from '../models/User'
 import jwt from 'jsonwebtoken'
 import config from '../config'
-import Role from '../models/Role';
+import Role from '../models/Role'
 
 export const signUp = async (req, res) => {
     
     const { username, email, password, roles } = req.body;
-
-    const userFound = User.find({email})
 
     const newUser = new User({
         username,
@@ -24,7 +22,6 @@ export const signUp = async (req, res) => {
     }
 
     const savedUser = await newUser.save();
-    console.log(savedUser)
 
     const token = jwt.sign({id: savedUser._id}, config.SECRET, {
         expiresIn: 86400 //24 horas
