@@ -1,5 +1,5 @@
 import Employee from "../models/Employee"
-import Document from "../models//Document"
+import Document from "../models/Document"
 
 export const createEmployee = async (req, res) => {
     const { 

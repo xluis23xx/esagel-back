@@ -9,6 +9,7 @@ import authRoutes from './routes/auth.routes'
 import usersRoutes from './routes/user.routes'
 import documentsRoutes from './routes/documents.routes'
 import employeesRoutes from './routes/employees.routes'
+import providersRoutes from './routes/providers.routes'
 
 const app = express()
 createRoles();
@@ -33,5 +34,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/documents', documentsRoutes);
 app.use('/api/employees', employeesRoutes);
+app.use('/api/providers', providersRoutes);
 
 export default app;

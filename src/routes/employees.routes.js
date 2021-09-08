@@ -1,7 +1,7 @@
 import { Router } from 'express'
 const router = Router()
 
-import * as employeeCtrl from '../controllers/employee.controller'
+import * as employeeCtrl from '../controllers/employees.controller'
 import { authJwt } from '../middlewares';
 
 router.post('/', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.createEmployee)

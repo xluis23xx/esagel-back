@@ -27,6 +27,7 @@ export const createDocuments = async() => {
 
         const values = await Promise.all([
             new Document({name: 'DNI'}).save(),
+            new Document({name: 'RUC'}).save(),
             new Document({name: 'CIP'}).save(),
             new Document({name: 'Carnet Extranjeria'}).save(),
             new Document({name: 'Pasaporte'}).save(),

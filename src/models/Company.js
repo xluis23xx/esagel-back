@@ -1,11 +1,20 @@
 import { Schema, model } from "mongoose";
 
-const providerSchema = new Schema({
-    name: {
+const companySchema = new Schema({
+    business_name: {
+        type: String
+    },
+    address: {
         type: String
     },
     movil: {
-        type: String
+        type: String,
+        minlength: 9,
+        maxlength: 12
+    },
+    email: {
+        type: String,
+        unique: true
     },
     number_doc: {
         type: String,
@@ -20,4 +29,4 @@ const providerSchema = new Schema({
     versionKey: false
 })
 
-export default model('Provider', providerSchema);
+export default model('Company', companySchema);
