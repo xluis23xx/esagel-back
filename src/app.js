@@ -12,6 +12,7 @@ import employeesRoutes from './routes/employees.routes'
 import providersRoutes from './routes/providers.routes'
 
 const app = express()
+const cors = require('cors')
 createRoles();
 createDocuments();
 
@@ -19,6 +20,7 @@ app.set('pkg', pkg);
 
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.json({
