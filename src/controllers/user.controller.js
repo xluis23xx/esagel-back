@@ -17,12 +17,13 @@ export const getUsers = async(req, res) => {
 
 export const createUser = async(req, res) => {
 
-    const { username, email, password, roles, employee } = req.body;
+    const { email, password, state, roles, employee } = req.body;
 
     const newUser = new User({
-        username,
         email,
-        password: await User.encryptPassword(password)
+        password: await User.encryptPassword(password),
+        state,
+        employee
     })
 
     if (roles) {
@@ -33,13 +34,13 @@ export const createUser = async(req, res) => {
         newUser.roles = [role._id];
     }
 
-    const foundEmployee = await Employee.findOne({number_doc: employee})
+    // const foundEmployee = await Employee.findOne({number_doc: employee})
 
-    console.log("foundEmployee",foundEmployee)
+    // console.log("foundEmployeeSDFDSFDSF",foundEmployee)
 
-    if (!foundEmployee) return res.status(400).json({message: "Employee not found"})
+    // if (!foundEmployee) return res.status(400).json({message: "Employee not found"})
 
-    newUser.employee = foundEmployee._id
+    // newUser.employee = foundEmployee._id
 
     const savedUser = await newUser.save();
 

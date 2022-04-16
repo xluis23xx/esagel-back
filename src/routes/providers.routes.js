@@ -13,6 +13,6 @@ router.get('/:providerId', [authJwt.verifyToken], providerCtrl.getProviderById)
 
 router.put('/:providerId', [authJwt.verifyToken], providerCtrl.updateProviderById)
 
-router.delete('/:providerId', [authJwt.verifyToken, authJwt.isAdmin], providerCtrl.deleteProviderById)
+// router.delete('/:providerId', [authJwt.verifyToken, authJwt.isAdmin], providerCtrl.deleteProviderById)
 
 export default router;

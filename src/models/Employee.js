@@ -7,16 +7,29 @@ const employeeSchema = new Schema({
     lastname: {
         type: String
     },
+    mother_lastname: {
+        type: String
+    },
     movil: {
         type: String,
         minlength: 9,
         maxlength: 12
+    },
+    email_personal: {
+        type: String,
+        unique: true
     },
     address: {
         type: String
     },
     birthdate: {
         type: Date
+    },
+    image: {
+        type: String
+    },
+    position: {
+        type: String
     },
     number_doc: {
         type: String,

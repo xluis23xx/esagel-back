@@ -11,10 +11,6 @@ const orderSchema = new Schema({
     client:[{
         ref: "Client",
         type: Schema.Types.ObjectId,
-    }],
-    state: [{
-        ref: "State",
-        type: Schema.Types.ObjectId,
     }]
 }, {
     timestamps: true,

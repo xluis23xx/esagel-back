@@ -2,10 +2,6 @@ import {Schema, model} from 'mongoose'
 import bcrypt from 'bcryptjs'
 
 const userSchema = new Schema({
-    username: {
-        type: String,
-        unique: true
-    },
     email: {
         type: String,
         unique: true
@@ -13,6 +9,9 @@ const userSchema = new Schema({
     password: {
         type: String,
         unique: true
+    },
+    state: {
+        type: Number
     },
     roles: [{
         ref: "Role",

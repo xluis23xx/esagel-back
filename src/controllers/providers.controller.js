@@ -2,23 +2,24 @@ import Provider from "../models/Provider"
 import Document from "../models/Document"
 
 export const createProvider = async (req, res) => {
-    console.log("req.body", req.body)
     const {
-        name,
+        name_business,
+        contact,
         movil,
+        state,
         number_doc,
         document
     } = req.body;
 
     const newProvider = new Provider({
-        name,
+        name_business,
+        contact,
         movil,
+        state,
         number_doc
     })
 
     const foundDocuments = await Document.find({name: {$in: document}})
-
-    console.log("document",foundDocuments)
 
     if (!foundDocuments.length>0) return res.status(400).json({message: "Document not found"})
 
@@ -35,19 +36,27 @@ export const getProviders = async (req, res) => {
 }
 
 export const getProviderById = async (req, res) => {
-    const provider = await Provider.findById(req.params.providerId).populate('document');
-    res.status(200).json(provider)
+    try {
+        const provider = await Provider.findById(req.params.providerId).populate('document');
+        res.status(200).json(provider)
+    } catch (error) {
+        res.status(400).json({message: "Provider not found"});
+    }
 }
 
 export const updateProviderById = async (req, res) => {
-    const updatedprovider = await Provider.findByIdAndUpdate(req.params.providerId, req.body, {
-        new: true
-    })
-    res.status(200).json(updatedprovider)
+    try {
+        const updatedprovider = await Provider.findByIdAndUpdate(req.params.providerId, req.body, {
+            new: true
+        })
+        res.status(200).json(updatedprovider)
+    } catch (error) {
+        res.status(400).json({message: "Provider not found"});
+    }
 }
 
-export const deleteProviderById = async (req, res) => {
-    const {providerId} = req.params;
-    await Provider.findOneAndDelete(providerId)
-    res.status(204).json()
-}
+// export const deleteProviderById = async (req, res) => {
+//     const {providerId} = req.params;
+//     await Provider.findOneAndDelete(providerId)
+//     res.status(204).json()
+// }

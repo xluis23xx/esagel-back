@@ -4,7 +4,7 @@ import pkg from '../package.json'
 
 import {createRoles,createDocuments} from './libs/initialSetup'
 
-import productsRoutes from './routes/products.routes'
+import coursesRoutes from './routes/courses.routes'
 import authRoutes from './routes/auth.routes'
 import usersRoutes from './routes/user.routes'
 import documentsRoutes from './routes/documents.routes'
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
     })
 })
 
-app.use('/api/products', productsRoutes);
+app.use('/api/courses', coursesRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/documents', documentsRoutes);

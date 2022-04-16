@@ -1,7 +1,10 @@
 import { Schema, model } from "mongoose";
 
 const providerSchema = new Schema({
-    name: {
+    name_business: {
+        type: String
+    },
+    contact: {
         type: String
     },
     movil: {
@@ -10,6 +13,9 @@ const providerSchema = new Schema({
     number_doc: {
         type: String,
         unique: true,
+    },
+    state: {
+        type: Number
     },
     document: [{
         ref: "Document",

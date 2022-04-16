@@ -4,20 +4,28 @@ import Document from "../models/Document"
 export const createEmployee = async (req, res) => {
     const { 
         name, 
-        lastname, 
-        movil, 
+        lastname,
+        mother_lastname,
+        movil,
+        email_personal,
         address, 
         birthdate,
+        image,
+        position,
         number_doc,
         document
     } = req.body;
 
     const newEmployee = new Employee({
         name, 
-        lastname, 
-        movil, 
+        lastname,
+        mother_lastname,
+        movil,
+        email_personal,
         address, 
         birthdate,
+        image,
+        position,
         number_doc
     })
 

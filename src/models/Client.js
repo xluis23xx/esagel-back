@@ -7,6 +7,9 @@ const clientSchema = new Schema({
     lastname: {
         type: String
     },
+    mother_lastname: {
+        type: String
+    },
     email: {
         type: String,
         unique: true
@@ -29,7 +32,28 @@ const clientSchema = new Schema({
     document: [{
         ref: "Document",
         type: Schema.Types.ObjectId, //relaciona con documento
-    }]
+    }],
+    department: {
+        type: String
+    },
+    lead_source: {
+        type: String
+    },
+    prospect_status: {
+        type: String
+    },
+    medium_contact: {
+        type: String
+    },
+    profession: {
+        type: String
+    },
+    business: {
+        type: String
+    },
+    position: {
+        type: String
+    },
 }, {
     timestamps: true,
     versionKey: false

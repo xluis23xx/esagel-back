@@ -10,9 +10,12 @@ const goalSchema = new Schema({
     amount: {
         type: Number
     },
-    user: [{
-        ref: "User",
-        type: Schema.Types.ObjectId, //relaciona con documento
+    amount_sold: {
+        type: Number
+    },
+    employee: [{
+        ref: "Employee",
+        type: Schema.Types.ObjectId,
     }]
 }, {
     timestamps: true,

@@ -1,8 +1,11 @@
 import {Schema, model} from 'mongoose'
 
 const documentSchema = new Schema({
-    name: String
+    name: String,
+    operation: String,
+    state: Number
 }, {
+    timestamps: true,
     versionKey: false
 })
 
