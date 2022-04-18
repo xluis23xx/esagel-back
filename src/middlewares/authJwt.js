@@ -7,18 +7,18 @@ export const verifyToken = async (req,res, next) => {
     try {
         const token = req.headers["x-access-token"];
 
-        if (!token) return res.status(403).json({message: "Not token provided"})
+        if (!token) return res.status(403).json({message: "Se requiere token"})
 
         const decoded = jwt.verify(token,config.SECRET)
         //propiedad nueva
         req.userId = decoded.id
 
         const user = await User.findById(req.userId, {password: 0})
-        if (!user) return res.status(404).json({message: "not user found"})
+        if (!user) return res.status(404).json({message: "Usuario no encontrado"})
 
         next()
     } catch (error) {
-       return res.status(401).json({message: 'Unauthorized'})
+       return res.status(401).json({message: "No autorizado"})
     }
 }
 
@@ -33,7 +33,7 @@ export const isModerator = async (req, res, next) => {
         }
     }
     
-    return res.status(403).json({message: "Required Moderator role"})
+    return res.status(403).json({message: "Rol de moderador requerido"})
 }
 
 export const isAdmin = async (req, res, next) => {
@@ -47,5 +47,5 @@ export const isAdmin = async (req, res, next) => {
         }
     }
     
-    return res.status(403).json({message: "Required Admin role"})
+    return res.status(403).json({message: "Rol de administrador requerido"})
 }
