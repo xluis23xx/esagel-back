@@ -9,6 +9,9 @@ const leadsourceSchema = new Schema({
     },
     description: {
         type: String
+    },
+    status: {
+        type: Number
     }
 }, {
     timestamps: true,

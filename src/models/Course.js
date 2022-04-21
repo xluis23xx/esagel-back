@@ -7,19 +7,25 @@ const courseSchema = new Schema({
     name: { 
         type: String
     },
-    category: { 
+    modality: { 
         type: String
     },
     price: {
         type: Number
     },
-    imgURL: {
+    vacanciesNumber: {
+        type: Number
+    },
+    status: {
+        type: Number
+    },
+    image: {
         type: String
     },
-    program: [{
+    courseType: {
         ref: "Program",
         type: Schema.Types.ObjectId,
-    }]
+    }
 }, {
     timestamps: true,
     versionKey: false

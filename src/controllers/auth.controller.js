@@ -5,10 +5,10 @@ import Role from '../models/Role'
 
 export const signUp = async (req, res) => {
     
-    const { email, password, roles } = req.body;
+    const { username, password, roles } = req.body;
 
     const newUser = new User({
-        email,
+        username,
         password: await User.encryptPassword(password)
     })
 
@@ -31,7 +31,7 @@ export const signUp = async (req, res) => {
 
 export const signIn = async (req, res) => {
     
-    const userFound = await User.findOne({email: req.body.email}).populate("roles");
+    const userFound = await User.findOne({username: req.body.username}).populate("roles");
 
     if (!userFound) return res.status(400).json({message: "Usuario no encontrado"})
 

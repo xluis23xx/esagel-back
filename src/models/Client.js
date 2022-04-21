@@ -7,14 +7,14 @@ const clientSchema = new Schema({
     lastname: {
         type: String
     },
-    mother_lastname: {
+    secondLastname: {
         type: String
     },
     email: {
         type: String,
         unique: true
     },
-    movil: {
+    phoneNumber: {
         type: String,
         minlength: 9,
         maxlength: 12
@@ -22,27 +22,27 @@ const clientSchema = new Schema({
     address: {
         type: String
     },
-    number_doc: {
+    documentNumber: {
         type: String,
         unique: true,
     },
     birthdate: {
         type: Date
     },
-    document: [{
+    documentType: [{
         ref: "Document",
         type: Schema.Types.ObjectId, //relaciona con documento
     }],
     department: {
         type: String
     },
-    lead_source: {
+    leadSource: {
         type: String
     },
-    prospect_status: {
+    prospectStatus: {
         type: String
     },
-    medium_contact: {
+    contactForm: {
         type: String
     },
     profession: {
@@ -51,9 +51,9 @@ const clientSchema = new Schema({
     business: {
         type: String
     },
-    position: {
-        type: String
-    },
+    status: {
+        type: Number
+    }
 }, {
     timestamps: true,
     versionKey: false

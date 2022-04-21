@@ -1,41 +1,20 @@
 import { Schema, model } from "mongoose";
 
-const programSchema = new Schema({
+const programSchema = new Schema({ //tipocursoo
     code: {
         type: String,
         unique: true
     },
     name: {
-        type: String
+        type: String,
+        unique: true
     },
     description: {
         type: String
     },
-    initial_date: {
-        type: Date
-    },
-    end_date: {
-        type: Date
-    },
-    sessions: {
-        type: String,
-        minlength: 9,
-        maxlength: 12
-    },
-    academic_hours: {
+    status: {
         type: Number
-    },
-    state: {
-        type: String
-    },
-    event: [{
-        ref: "Event",
-        type: Schema.Types.ObjectId,
-    }],
-    theme: [{
-        ref: "Theme",
-        type: Schema.Types.ObjectId,
-    }]
+    }
 }, {
     timestamps: true,
     versionKey: false

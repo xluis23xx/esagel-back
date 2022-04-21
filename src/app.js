@@ -10,6 +10,7 @@ import usersRoutes from './routes/user.routes'
 import documentsRoutes from './routes/documents.routes'
 import employeesRoutes from './routes/employees.routes'
 import providersRoutes from './routes/providers.routes'
+import positionsRoutes from './routes/positions.routes'
 
 const app = express()
 const cors = require('cors')
@@ -37,5 +38,6 @@ app.use('/api/users', usersRoutes);
 app.use('/api/documents', documentsRoutes);
 app.use('/api/employees', employeesRoutes);
 app.use('/api/providers', providersRoutes);
+app.use('/api/positions', positionsRoutes);
 
 export default app;

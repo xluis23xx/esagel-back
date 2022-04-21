@@ -2,7 +2,7 @@ import {Schema, model} from 'mongoose'
 import bcrypt from 'bcryptjs'
 
 const userSchema = new Schema({
-    email: {
+    username: {
         type: String,
         unique: true
     },
@@ -10,17 +10,17 @@ const userSchema = new Schema({
         type: String,
         unique: true
     },
-    state: {
+    status: {
         type: Number
     },
     roles: [{
         ref: "Role",
         type: Schema.Types.ObjectId //relaciona con roles como si fuese una tabla
     }],
-    employee: [{
+    employee: {
         ref: "Employee",
         type: Schema.Types.ObjectId,
-    }]
+    }
 }, {
     timestamps: true,
     versionKey: false

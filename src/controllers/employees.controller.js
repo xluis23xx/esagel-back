@@ -1,39 +1,51 @@
 import Employee from "../models/Employee"
 import Document from "../models/Document"
+import Position from "../models/Position"
 
 export const createEmployee = async (req, res) => {
     const { 
         name, 
         lastname,
-        mother_lastname,
-        movil,
-        email_personal,
+        secondLastname,
+        phoneNumber,
+        personalEmail,
+        corporateEmail,
         address, 
         birthdate,
         image,
         position,
-        number_doc,
-        document
+        documentNumber,
+        documentType,
+        status
     } = req.body;
 
     const newEmployee = new Employee({
         name, 
         lastname,
-        mother_lastname,
-        movil,
-        email_personal,
+        secondLastname,
+        phoneNumber,
+        personalEmail,
+        corporateEmail,
         address, 
         birthdate,
         image,
         position,
-        number_doc
+        documentNumber,
+        documentType,
+        status: status ? status : 1
     })
 
-    const foundDocuments = await Document.find({name: {$in: document}})
+    const foundDocuments = await Document.find({name: {$in: documentType}})
 
-    if (!foundDocuments.length>0) return res.status(400).json({message: "Document not found"})
+    if (!foundDocuments.length>0) return res.status(400).json({message: "Tipo documento no encontrado"})
 
-    newEmployee.document = foundDocuments.map(document => document._id)
+    newEmployee.documentType = foundDocuments[0];
+
+    const foundPositions = await Position.find({name: {$in: position}})
+
+    if (!foundPositions.length>0) return res.status(400).json({message: "Cargo no encontrado"})
+
+    newEmployee.position = foundPositions[0];
 
     const savedEmployee = await newEmployee.save();
 

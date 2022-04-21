@@ -3,7 +3,7 @@ import {Schema, model} from 'mongoose'
 const documentSchema = new Schema({
     name: String,
     operation: String,
-    state: Number
+    status: Number
 }, {
     timestamps: true,
     versionKey: false

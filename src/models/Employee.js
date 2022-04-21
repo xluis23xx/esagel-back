@@ -7,15 +7,19 @@ const employeeSchema = new Schema({
     lastname: {
         type: String
     },
-    mother_lastname: {
+    secondLastname: {
         type: String
     },
-    movil: {
+    phoneNumber: {
         type: String,
         minlength: 9,
         maxlength: 12
     },
-    email_personal: {
+    personalEmail: {
+        type: String,
+        unique: true
+    },
+    corporateEmail: {
         type: String,
         unique: true
     },
@@ -29,16 +33,20 @@ const employeeSchema = new Schema({
         type: String
     },
     position: {
-        type: String
+        ref: "Position",
+        type: Schema.Types.ObjectId,
     },
-    number_doc: {
+    documentNumber: {
         type: String,
         unique: true,
     },
-    document: [{
+    status: {
+        type: Number
+    },
+    documentType: {
         ref: "Document",
         type: Schema.Types.ObjectId, //relaciona con documento
-    }]
+    }
 }, {
     timestamps: true,
     versionKey: false
