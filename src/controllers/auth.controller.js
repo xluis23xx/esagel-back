@@ -39,10 +39,24 @@ export const signIn = async (req, res) => {
 
     if (!matchPassword) return res.status(401).json({token: null, message: "Contraseña Inválida"})
 
+    const user = await User.find({username: userFound.username}, { password: 0 }).populate("roles").populate(
+        { 
+            path: 'employee', 
+            populate: [
+                {
+                    path: 'documentType'
+                },
+                {
+                    path: 'position'
+                } 
+            ]
+        }
+    )
+
     const token = jwt.sign({id: userFound._id}, config.SECRET, {
         expiresIn: 86400
     })
 
-    res.json({token})
+    res.json({user, token})
 
 }
