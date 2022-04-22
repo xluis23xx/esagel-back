@@ -53,7 +53,7 @@ export const createEmployee = async (req, res) => {
 }
 
 export const getEmployees = async (req, res) => {
-    const employees = await Employee.find().populate('document');
+    const employees = await Employee.find().populate('documentType');
     res.json(employees)
 }
 
