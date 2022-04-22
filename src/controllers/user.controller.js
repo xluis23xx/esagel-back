@@ -3,7 +3,7 @@ import Role from '../models/Role'
 // import Employee from '../models/Employee'
 
 export const getUsers = async(req, res) => {
-    const users = await User.find()
+    const users = await User.find({}, { password: 0 })
     .populate('roles').populate(
         { 
             path: 'employee', 
@@ -58,15 +58,20 @@ export const createUser = async(req, res) => {
 }
 
 export const getUserById = async(req, res) => {
-    const user = await User.findById(req.params.userId)
-    // .populate('roles').populate(
-    //     {
-    //         path: 'employee',
-    //         populate: {
-    //             path: 'document'
-    //         }
-    //     }
-    // )
+    const user = await User.findById(req.params.userId, { password: 0 })
+    .populate('roles').populate(
+        {
+            path: 'employee',
+            populate: [
+                {
+                    path: 'documentType'
+                },
+                {
+                    path: 'position'
+                } 
+            ]
+        }
+    )
     res.status(200).json(user)
 }
 
