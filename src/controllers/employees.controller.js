@@ -49,7 +49,7 @@ export const createEmployee = async (req, res) => {
 
     const savedEmployee = await newEmployee.save();
 
-    res.status(201).json(savedEmployee)
+    res.status(201).json({status: 201, savedEmployee})
 }
 
 export const getEmployees = async (req, res) => {
@@ -63,13 +63,21 @@ export const getEmployeeById = async (req, res) => {
 }
 
 export const updateEmployeeById = async (req, res) => {
+
+    const foundPositions = await Position.find({name: {$in: req.body.position}});
+
+    if (!foundPositions.length>0) return res.status(400).json({message: "Cargo no encontrado"});
+
+    req.body.position = foundPositions[0]._id;
+
     try {
         const updatedEmployee = await Employee.findByIdAndUpdate(req.params.employeeId, req.body, {
             new: true
         }).populate('documentType').populate('position');
-        res.status(200).json(updatedEmployee)
+
+        res.status(200).json({status: 200, updatedEmployee})
     } catch (error) {
-        res.status(400).json({message: error});
+        res.status(400).json({message: 'No se actualizó el empleado'});
     }
 }
 

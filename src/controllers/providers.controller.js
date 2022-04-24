@@ -21,7 +21,7 @@ export const createProvider = async (req, res) => {
 
     const foundDocuments = await Document.find({name: {$in: document}})
 
-    if (!foundDocuments.length>0) return res.status(400).json({message: "Document not found"})
+    if (!foundDocuments.length>0) return res.status(400).json({message: "Documento no encontrado"})
 
     newProvider.document = foundDocuments.map(document => document._id)
 
@@ -40,7 +40,7 @@ export const getProviderById = async (req, res) => {
         const provider = await Provider.findById(req.params.providerId).populate('document');
         res.status(200).json(provider)
     } catch (error) {
-        res.status(400).json({message: "Provider not found"});
+        res.status(400).json({message: "Proveedor no encontrado"});
     }
 }
 
@@ -49,9 +49,9 @@ export const updateProviderById = async (req, res) => {
         const updatedprovider = await Provider.findByIdAndUpdate(req.params.providerId, req.body, {
             new: true
         })
-        res.status(200).json(updatedprovider)
+        res.status(200).json({status:200, updatedprovider})
     } catch (error) {
-        res.status(400).json({message: "Provider not found"});
+        res.status(400).json({message: "No se actualizó el proveedor"});
     }
 }
 

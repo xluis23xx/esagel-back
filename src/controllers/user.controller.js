@@ -41,19 +41,11 @@ export const createUser = async(req, res) => {
             newUser.roles = [role._id];
         }
     
-        // const foundEmployee = await Employee.findOne({number_doc: employee})
-    
-        // console.log("foundEmployeeSDFDSFDSF",foundEmployee)
-    
-        // if (!foundEmployee) return res.status(400).json({message: "Employee not found"})
-    
-        // newUser.employee = foundEmployee._id
-    
         const savedUser = await newUser.save();
     
-        res.status(201).json({message: password});
+        res.status(201).json({status: 201, message: password});
     } catch (error) {
-        res.status(400).json({message: "Usuario no creado"});
+        res.status(400).json({status: 400, message: "Usuario no creado"});
     }  
 }
 
@@ -81,18 +73,15 @@ export const updateUserById = async (req, res) => {
     
     req.body.password = await User.encryptPassword(req.body.password)
 
-    const updatedUser = await User.findByIdAndUpdate(req.params.userId, req.body, {
-        new: true
-    })
-    // .populate('roles').populate(
-    //     {
-    //         path: 'employee',
-    //         populate: {
-    //             path: 'document'
-    //         }
-    //     }
-    // )
-    res.status(200).json(updatedUser)
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.params.userId, req.body, {
+            new: true
+        })
+    
+        res.status(200).json({status: 200, updatedUser})
+    } catch (error) {
+        res.status(400).json({message: 'No se actualizó el usuario'});
+    }  
 }
 
 export const deleteUserById = async (req, res) => {
