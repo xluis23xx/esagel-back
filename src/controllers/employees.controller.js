@@ -58,15 +58,19 @@ export const getEmployees = async (req, res) => {
 }
 
 export const getEmployeeById = async (req, res) => {
-    const employee = await Employee.findById(req.params.employeeId).populate('document');
+    const employee = await Employee.findById(req.params.employeeId).populate('documentType').populate('position');
     res.status(200).json(employee)
 }
 
 export const updateEmployeeById = async (req, res) => {
-    const updatedEmployee = await Employee.findByIdAndUpdate(req.params.employeeId, req.body, {
-        new: true
-    })
-    res.status(200).json(updatedEmployee)
+    try {
+        const updatedEmployee = await Employee.findByIdAndUpdate(req.params.employeeId, req.body, {
+            new: true
+        }).populate('documentType').populate('position');
+        res.status(200).json(updatedEmployee)
+    } catch (error) {
+        res.status(400).json({message: error});
+    }
 }
 
 export const deleteEmployeeById = async (req, res) => {
