@@ -14,7 +14,7 @@ const providerSchema = new Schema({
         type: String,
         unique: true,
     },
-    state: {
+    status: {
         type: Number
     },
     document: [{

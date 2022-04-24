@@ -6,7 +6,7 @@ export const createProvider = async (req, res) => {
         name_business,
         contact,
         movil,
-        state,
+        status,
         number_doc,
         document
     } = req.body;
@@ -15,7 +15,7 @@ export const createProvider = async (req, res) => {
         name_business,
         contact,
         movil,
-        state,
+        status,
         number_doc
     })
 
