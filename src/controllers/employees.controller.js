@@ -107,9 +107,15 @@ export const updateEmployeeById = async (req, res) => {
 
     res.status(200).json({ status: 200, updatedEmployee });
   } catch (error) {
-    res
-      .status(400)
-      .json({ status: 400, message: "No se actualizó el empleado" });
+    if (req.body?.isDelete) {
+        res
+        .status(400)
+        .json({ status: 400, message: "No se eliminó el empleado" });
+    } else {
+        res
+        .status(400)
+        .json({ status: 400, message: "No se actualizó el empleado" });
+    }
   }
 };
 

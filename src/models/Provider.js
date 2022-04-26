@@ -1,23 +1,25 @@
 import { Schema, model } from "mongoose";
 
 const providerSchema = new Schema({
-    name_business: {
+    businessName: {
         type: String
     },
-    contact: {
+    contactName: {
         type: String
     },
-    movil: {
-        type: String
+    phoneNumber: {
+        type: String,
+        minlength: 7,
+        maxlength: 12
     },
-    number_doc: {
+    documentNumber: {
         type: String,
         unique: true,
     },
     status: {
         type: Number
     },
-    document: [{
+    documentType: [{
         ref: "Document",
         type: Schema.Types.ObjectId, //relaciona con documento
     }]

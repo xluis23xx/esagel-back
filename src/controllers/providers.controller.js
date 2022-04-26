@@ -3,27 +3,27 @@ import Document from "../models/Document"
 
 export const createProvider = async (req, res) => {
     const {
-        name_business,
-        contact,
-        movil,
+        businessName,
+        contactName,
+        phoneNumber,
         status,
-        number_doc,
-        document
+        documentNumber,
+        documentType
     } = req.body;
 
     const newProvider = new Provider({
-        name_business,
-        contact,
-        movil,
+        businessName,
+        contactName,
+        phoneNumber,
         status,
-        number_doc
+        documentNumber
     })
 
-    const foundDocuments = await Document.find({name: {$in: document}})
+    const foundDocuments = await Document.find({name: {$in: documentType}})
 
     if (!foundDocuments.length>0) return res.status(400).json({message: "Documento no encontrado"})
 
-    newProvider.document = foundDocuments.map(document => document._id)
+    newProvider.documentType = foundDocuments[0];
 
     const savedProvider = await newProvider.save();
 
@@ -31,13 +31,13 @@ export const createProvider = async (req, res) => {
 }
 
 export const getProviders = async (req, res) => {
-    const providers = await Provider.find().populate('document');
+    const providers = await Provider.find().populate('documentType');
     res.json(providers)
 }
 
 export const getProviderById = async (req, res) => {
     try {
-        const provider = await Provider.findById(req.params.providerId).populate('document');
+        const provider = await Provider.findById(req.params.providerId).populate('documentType');
         res.status(200).json(provider)
     } catch (error) {
         res.status(400).json({message: "Proveedor no encontrado"});
