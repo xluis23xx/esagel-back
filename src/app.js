@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import pkg from "../package.json";
 
-import { createRoles, createDocuments } from "./libs/initialSetup";
+import { createRoles, createDocuments, createSetting } from "./libs/initialSetup";
 
 import coursesRoutes from "./routes/courses.routes";
 import authRoutes from "./routes/auth.routes";
@@ -21,6 +21,7 @@ const app = express();
 const cors = require("cors");
 createRoles();
 createDocuments();
+createSetting();
 
 app.set("pkg", pkg);
 
