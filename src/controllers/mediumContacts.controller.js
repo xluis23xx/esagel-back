@@ -21,9 +21,9 @@ export const createContact = async (req, res) => {
 
         const savedContact = await newContact.save();
 
-        res.status(201).json({status: 201, savedContact});
+        res.status(201).json({ status: 201, savedContact });
     } catch (error) {
-        res.status(400).json({status: 400, message: 'No se creó la forma de contacto'});
+        res.status(400).json({ status: 400, message: 'No se creó la forma de contacto' });
     }
 }
 
@@ -40,8 +40,8 @@ export const updateContactById = async (req, res) => {
                 new: true
             }
         )
-        res.status(200).json(updateContact)
+        res.status(200).json({ status: 200, updateContact })
     } catch (error) {
-        res.status(400).json({status: 400, message: 'No se actualizó la forma de contacto'});
+        res.status(400).json({ status: 400, message: 'No se actualizó la forma de contacto' });
     }
 }

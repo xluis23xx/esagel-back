@@ -21,9 +21,9 @@ export const createLeadSource = async (req, res) => {
 
         const savedLeadSource = await newLeadSource.save();
 
-        res.status(201).json({status: 201, savedLeadSource});
+        res.status(201).json({ status: 201, savedLeadSource });
     } catch (error) {
-        res.status(400).json({status: 400, message: 'No se creó el origen de prospecto'});
+        res.status(400).json({ status: 400, message: 'No se creó el origen de prospecto' });
     }
 }
 
@@ -40,8 +40,8 @@ export const updateLeadSourceById = async (req, res) => {
                 new: true
             }
         )
-        res.status(200).json(updateLeadSource)
+        res.status(200).json({ status: 200, updateLeadSource })
     } catch (error) {
-        res.status(400).json({status: 400, message: 'No se actualizó el origen de prospecto'});
+        res.status(400).json({ status: 400, message: 'No se actualizó el origen de prospecto' });
     }
 }

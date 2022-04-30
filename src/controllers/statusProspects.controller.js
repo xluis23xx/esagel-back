@@ -21,9 +21,9 @@ export const createStatusProspect = async (req, res) => {
 
         const savedStatusProspect = await newStatusProspect.save();
 
-        res.status(201).json({status: 201, savedStatusProspect});
+        res.status(201).json({ status: 201, savedStatusProspect });
     } catch (error) {
-        res.status(400).json({status: 400, message: 'No se creó el estado de prospecto'});
+        res.status(400).json({ status: 400, message: 'No se creó el estado de prospecto' });
     }
 }
 
@@ -40,8 +40,8 @@ export const updateStatusProspectById = async (req, res) => {
                 new: true
             }
         )
-        res.status(200).json(updateStatusProspect)  
+        res.status(200).json({ status: 200, updateStatusProspect })  
     } catch (error) {
-        res.status(400).json({status: 400, message: 'No se actualizó el estado de prospecto'});
+        res.status(400).json({ status: 400, message: 'No se actualizó el estado de prospecto' });
     }
 }
