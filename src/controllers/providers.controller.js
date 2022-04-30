@@ -22,7 +22,9 @@ export const createProvider = async (req, res) => {
   const foundDocuments = await Document.find({ name: { $in: documentType } });
 
   if (!foundDocuments.length > 0)
-    return res.status(400).json({ message: "Documento no encontrado" });
+    return res
+      .status(400)
+      .json({ status: 400, message: "Documento no encontrado" });
 
   newProvider.documentType = foundDocuments[0];
 
@@ -58,7 +60,9 @@ export const updateProviderById = async (req, res) => {
     );
     res.status(200).json({ status: 200, updatedProvider });
   } catch (error) {
-    res.status(400).json({ message: "No se actualizó el proveedor" });
+    res
+      .status(400)
+      .json({ status: 400, message: "No se actualizó el proveedor" });
   }
 };
 

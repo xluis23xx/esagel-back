@@ -36,7 +36,7 @@ export const createUser = async(req, res) => {
             const foundRoles = await Role.find({name: {$in: roles}})
             newUser.roles = foundRoles.map(role => role._id)
         } else {
-            console.log("Retornar repsuesta error")
+            console.log("Retornar respuesta error")
             const role = await Role.findOne({name: "user"})
             newUser.roles = [role._id];
         }
@@ -69,7 +69,7 @@ export const getUserById = async(req, res) => {
 
 export const updateUserById = async (req, res) => {
     
-    if (!req.body.password) return res.status(400).json({message: "Password not entered"})
+    if (!req.body.password) return res.status(400).json({status: 400,message: "Password not entered"})
     
     req.body.password = await User.encryptPassword(req.body.password)
 
@@ -80,7 +80,7 @@ export const updateUserById = async (req, res) => {
     
         res.status(200).json({status: 200, updatedUser})
     } catch (error) {
-        res.status(400).json({message: 'No se actualizó el usuario'});
+        res.status(400).json({status: 400, message: 'No se actualizó el usuario'});
     }  
 }
 

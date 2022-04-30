@@ -21,7 +21,7 @@ export const createPosition = async (req, res) => {
 
         res.status(201).json({status: 201, savedPosition});
     } catch (error) {
-        res.status(400).json({message: 'No se creó el cargo'});
+        res.status(400).json({status: 400, message: 'No se creó el cargo'});
     }
 }
 
