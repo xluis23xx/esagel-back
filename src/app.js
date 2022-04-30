@@ -12,6 +12,9 @@ import employeesRoutes from "./routes/employees.routes";
 import providersRoutes from "./routes/providers.routes";
 import positionsRoutes from "./routes/positions.routes";
 import courseTypesRoutes from "./routes/courseTypes.routes";
+import statusProspectsRoutes from "./routes/statusProspects.routes";
+import leadSourcesRoutes from "./routes/leadSources.routes";
+import mediumContactsRoutes from "./routes/mediumContacts.routes";
 
 const app = express();
 const cors = require("cors");
@@ -41,5 +44,8 @@ app.use("/api/employees", employeesRoutes);
 app.use("/api/providers", providersRoutes);
 app.use("/api/positions", positionsRoutes);
 app.use("/api/courseTypes", courseTypesRoutes);
+app.use("/api/statusProspects", statusProspectsRoutes);
+app.use("/api/prospectOrigins", leadSourcesRoutes);
+app.use("/api/contactForms", mediumContactsRoutes);
 
 export default app;
