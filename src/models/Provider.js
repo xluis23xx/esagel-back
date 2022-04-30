@@ -19,10 +19,10 @@ const providerSchema = new Schema({
     status: {
         type: Number
     },
-    documentType: [{
+    documentType: {
         ref: "Document",
         type: Schema.Types.ObjectId, //relaciona con documento
-    }]
+    }
 }, {
     timestamps: true,
     versionKey: false
