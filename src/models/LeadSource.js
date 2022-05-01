@@ -1,18 +1,25 @@
 import { Schema, model } from "mongoose";
 
-const leadSourceSchema = new Schema({
+const leadSourceSchema = new Schema(
+  {
+    code: {
+      type: String,
+      unique: true,
+    },
     name: {
-        type: String
+      type: String,
     },
     description: {
-        type: String
+      type: String,
     },
     status: {
-        type: Number
-    }
-}, {
+      type: Number,
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Leadsource', leadSourceSchema);
+export default model("Leadsource", leadSourceSchema);

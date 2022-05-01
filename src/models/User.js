@@ -1,38 +1,46 @@
-import {Schema, model} from 'mongoose'
-import bcrypt from 'bcryptjs'
+import { Schema, model } from "mongoose";
+import bcrypt from "bcryptjs";
 
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     username: {
-        type: String,
-        unique: true
+      type: String,
+      unique: true,
     },
     password: {
-        type: String,
-        unique: true
+      type: String,
+      unique: true,
     },
     status: {
-        type: Number
+      type: Number,
     },
-    roles: [{
+    roles: [
+      {
         ref: "Role",
-        type: Schema.Types.ObjectId //relaciona con roles como si fuese una tabla
-    }],
+        type: Schema.Types.ObjectId, //relaciona con roles como si fuese una tabla
+      },
+    ],
     employee: {
-        ref: "Employee",
-        type: Schema.Types.ObjectId,
-    }
-}, {
+      ref: "Employee",
+      type: Schema.Types.ObjectId,
+    },
+    image: {
+      type: String,
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-});
+    versionKey: false,
+  }
+);
 
-userSchema.statics.encryptPassword = async(password) => {
-    const salt = await bcrypt.genSalt(10)
-    return await bcrypt.hash(password, salt)
-}
+userSchema.statics.encryptPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(password, salt);
+};
 
-userSchema.statics.comparePassword = async(password, receivedPassword) => {
-    return await bcrypt.compare(password, receivedPassword) 
-}
+userSchema.statics.comparePassword = async (password, receivedPassword) => {
+  return await bcrypt.compare(password, receivedPassword);
+};
 
-export default model('User', userSchema);
+export default model("User", userSchema);
