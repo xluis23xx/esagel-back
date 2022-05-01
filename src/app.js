@@ -16,6 +16,7 @@ import statusProspectsRoutes from "./routes/statusProspects.routes";
 import leadSourcesRoutes from "./routes/leadSources.routes";
 import mediumContactsRoutes from "./routes/mediumContacts.routes";
 import settingsRoutes from "./routes/settings.routes";
+import topicsRoutes from "./routes/topics.routes";
 
 const app = express();
 const cors = require("cors");
@@ -50,5 +51,6 @@ app.use("/api/statusProspects", statusProspectsRoutes);
 app.use("/api/prospectOrigins", leadSourcesRoutes);
 app.use("/api/contactForms", mediumContactsRoutes);
 app.use("/api/settings", settingsRoutes);
+app.use("/api/topics", topicsRoutes);
 
 export default app;

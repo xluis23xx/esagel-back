@@ -1,15 +1,18 @@
 import { Schema } from "mongoose";
 
-const themeSchema = new Schema({
+const topicSchema = new Schema({
     name: {
         type: String
     },
     description: {
         type: String
-    }
+    },
+    status: {
+        type: Number
+    },
 }, {
     timestamps: true,
     versionKey: false
 })
 
-export default model('Theme', themeSchema);
+export default model('Topic', topicSchema);
