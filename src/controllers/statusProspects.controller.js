@@ -13,7 +13,7 @@ export const createStatusProspect = async (req, res) => {
             status
         } = req.body;
     
-        const newStatusProspect =  new Position({
+        const newStatusProspect =  new StatusProspect({
             name,
             description,
             status
