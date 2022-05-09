@@ -16,7 +16,7 @@ export const createRoles = async () => {
 
     console.log(values);
   } catch (error) {
-    console.error(values);
+    console.error(error);
   }
 };
 
@@ -55,7 +55,7 @@ export const createDocuments = async () => {
 
     console.log(values);
   } catch (error) {
-    console.log(values);
+    console.log(error);
   }
 };
 
@@ -79,6 +79,6 @@ export const createSetting = async () => {
 
     console.log(values);
   } catch (error) {
-    console.log(values);
+    console.log(error);
   }
 };

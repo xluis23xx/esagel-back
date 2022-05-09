@@ -4,7 +4,7 @@ const router = Router()
 import * as coursesCtrl from '../controllers/courses.controller';
 import { authJwt } from '../middlewares';
 
-router.post('/', [authJwt.verifyToken, authJwt.isModerator], coursesCtrl.createCourse)
+router.post('/', [authJwt.verifyToken, authJwt.isAdmin], coursesCtrl.createCourse)
 
 router.get('/', coursesCtrl.getCourses)
 

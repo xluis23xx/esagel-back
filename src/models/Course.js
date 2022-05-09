@@ -1,34 +1,40 @@
-import {Schema, model} from 'mongoose'
+import { Schema, model } from "mongoose";
 
-const courseSchema = new Schema({
-    code: { 
-        type: String
+const courseSchema = new Schema(
+  {
+    code: {
+      type: String,
     },
-    name: { 
-        type: String
-    },
-    modality: { 
-        type: String
-    },
-    price: {
-        type: Number
-    },
-    vacanciesNumber: {
-        type: Number
-    },
-    status: {
-        type: Number
+    name: {
+      type: String,
     },
     image: {
-        type: String
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    modality: {
+      type: [String],
+    },
+    price: {
+      type: Number,
+    },
+    vacanciesNumber: {
+      type: Number,
+    },
+    status: {
+      type: Number,
     },
     courseType: {
-        ref: "Program",
-        type: Schema.Types.ObjectId,
-    }
-}, {
+      ref: "CourseType",
+      type: Schema.Types.ObjectId,
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Course', courseSchema);
+export default model("Course", courseSchema);
