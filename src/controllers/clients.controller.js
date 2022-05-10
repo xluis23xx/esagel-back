@@ -20,7 +20,7 @@ export const createClient = async (req, res) => {
             prospectStatus,
             contactForm,
             profession,
-            companyName,
+            business,
             status
         } =  req.body;
 
@@ -39,7 +39,7 @@ export const createClient = async (req, res) => {
             prospectStatus,
             contactForm,
             profession,
-            companyName,
+            business,
             status: status ? status : 1,
         })
 

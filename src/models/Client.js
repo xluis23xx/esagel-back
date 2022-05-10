@@ -51,7 +51,7 @@ const clientSchema = new Schema({
     profession: {
         type: String
     },
-    companyName: {
+    business: {
         type: String
     },
     status: {
