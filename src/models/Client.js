@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const clientSchema = new Schema({
     name: {
@@ -29,26 +29,29 @@ const clientSchema = new Schema({
     birthdate: {
         type: Date
     },
-    documentType: [{
+    documentType: {
         ref: "Document",
-        type: Schema.Types.ObjectId, //relaciona con documento
-    }],
+        type: Schema.Types.ObjectId,
+    },
     department: {
         type: String
     },
     leadSource: {
-        type: String
+        ref: "Leadsource",
+        type: Schema.Types.ObjectId,
     },
     prospectStatus: {
-        type: String
+        ref: "StatusProspect",
+        type: Schema.Types.ObjectId,
     },
     contactForm: {
-        type: String
+        ref: "Contact",
+        type: Schema.Types.ObjectId,
     },
     profession: {
         type: String
     },
-    business: {
+    companyName: {
         type: String
     },
     status: {
