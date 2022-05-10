@@ -2,6 +2,7 @@ import Client from "../models/Client";
 import Leadsource from "../models/LeadSource";
 import StatusProspect from "../models/StatusProspect";
 import Contact from "../models/MediumContact";
+import Document from "../models/Document";
 
 export const createClient = async (req, res) => {
     try {
