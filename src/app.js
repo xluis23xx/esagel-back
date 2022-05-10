@@ -17,7 +17,7 @@ import leadSourcesRoutes from "./routes/leadSources.routes";
 import mediumContactsRoutes from "./routes/mediumContacts.routes";
 import settingsRoutes from "./routes/settings.routes";
 import topicsRoutes from "./routes/topics.routes";
-import customersRoutes from "./routes/customers.routes";
+import customersRoutes from "./routes/clients.routes";
 
 const app = express();
 const cors = require("cors");
