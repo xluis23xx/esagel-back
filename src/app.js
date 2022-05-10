@@ -17,7 +17,7 @@ import leadSourcesRoutes from "./routes/leadSources.routes";
 import mediumContactsRoutes from "./routes/mediumContacts.routes";
 import settingsRoutes from "./routes/settings.routes";
 import topicsRoutes from "./routes/topics.routes";
-import customersRoutes from "./routes/clients.routes";
+import clientsRoutes from "./routes/clients.routes";
 
 const app = express();
 const cors = require("cors");
@@ -53,6 +53,6 @@ app.use("/api/prospectOrigins", leadSourcesRoutes);
 app.use("/api/contactForms", mediumContactsRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/topics", topicsRoutes);
-app.use("/api/customers", customersRoutes);
+app.use("/api/clients", clientsRoutes);
 
 export default app;
