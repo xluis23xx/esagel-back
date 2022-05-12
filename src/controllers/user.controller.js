@@ -1,6 +1,7 @@
 import User from "../models/User";
 import Role from "../models/Role";
-// import Employee from '../models/Employee'
+import Employee from "../models/Employee";
+import { generatorPassword } from "../utils/randomGenerator";
 
 export const getUsers = async (req, res) => {
   const users = await User.find({}, { password: 0 })
@@ -17,18 +18,27 @@ export const getUsers = async (req, res) => {
       ],
     });
 
-  res.json(users);
+  res.status(200).json(users);
 };
 
 export const createUser = async (req, res) => {
   try {
     const { username, password, status, roles, employee, image } = req.body;
+    const foundEmployee = await Employee.findById(employee)
+      .populate("documentType")
+      .populate("position");
+    if (!foundEmployee) {
+      return res
+        .status(400)
+        .json({ status: 400, message: "Empleado no encontrado" });
+    }
 
+    const verifyPassword = password ? password : generatorPassword(8);
     const newUser = new User({
       username,
-      password: await User.encryptPassword(password),
+      password: await User.encryptPassword(verifyPassword),
       status,
-      employee,
+      employee: foundEmployee,
       image,
     });
 
@@ -36,15 +46,15 @@ export const createUser = async (req, res) => {
       const foundRoles = await Role.find({ name: { $in: roles } });
       newUser.roles = foundRoles.map((role) => role._id);
     } else {
-      console.log("Retornar respuesta error");
       const role = await Role.findOne({ name: "user" });
       newUser.roles = [role._id];
     }
 
-    const savedUser = await newUser.save();
+    await newUser.save();
 
-    res.status(201).json({ status: 201, message: password });
+    res.status(201).json({ status: 201, message: verifyPassword });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ status: 400, message: "Usuario no creado" });
   }
 };
@@ -92,7 +102,6 @@ export const updateUserById = async (req, res) => {
 };
 
 export const deleteUserById = async (req, res) => {
-  console.log("req.params", req.params);
   const { userId } = req.params;
   await User.findOneAndDelete(userId);
   res.status(204).json();

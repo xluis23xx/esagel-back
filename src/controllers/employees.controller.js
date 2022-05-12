@@ -59,7 +59,9 @@ export const createEmployee = async (req, res) => {
 };
 
 export const getEmployees = async (req, res) => {
-  const employees = await Employee.find().populate("documentType");
+  const employees = await Employee.find()
+    .populate("documentType")
+    .populate("position");
   res.status(200).json(employees);
 };
 
@@ -108,11 +110,11 @@ export const updateEmployeeById = async (req, res) => {
     res.status(200).json({ status: 200, updatedEmployee });
   } catch (error) {
     if (req.body?.isDelete) {
-        res
+      res
         .status(400)
         .json({ status: 400, message: "No se eliminó el empleado" });
     } else {
-        res
+      res
         .status(400)
         .json({ status: 400, message: "No se actualizó el empleado" });
     }
