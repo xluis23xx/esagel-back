@@ -77,14 +77,24 @@ export const getUserById = async (req, res) => {
 };
 
 export const updateUserById = async (req, res) => {
-  if (!req.body.password)
-    return res
-      .status(400)
-      .json({ status: 400, message: "Contraseña no encontrada" });
+  // if (!req.body.password)
+  //   return res
+  //     .status(400)
+  //     .json({ status: 400, message: "Contraseña no encontrada" });
 
-  req.body.password = await User.encryptPassword(req.body.password);
+  // req.body.password = await User.encryptPassword(req.body.password);
+  const { roles } = req.body;
 
   try {
+    
+    if (roles) {
+      const foundRoles = await Role.find({ name: { $in: roles } });
+      req.body.roles = foundRoles.map((role) => role._id);
+    } else {
+      const role = await Role.findOne({ name: "user" });
+      req.body.roles = [role._id];
+    }
+
     const updatedUser = await User.findByIdAndUpdate(
       req.params.userId,
       req.body,
@@ -95,6 +105,7 @@ export const updateUserById = async (req, res) => {
 
     res.status(200).json({ status: 200, updatedUser });
   } catch (error) {
+    console.log(error);
     res
       .status(400)
       .json({ status: 400, message: "No se actualizó el usuario" });
