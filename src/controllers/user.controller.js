@@ -1,21 +1,33 @@
 import User from "../models/User";
 import Role from "../models/Role";
-// import Employee from '../models/Employee'
 
 export const getUsers = async (req, res) => {
-  const users = await User.find({}, { password: 0 })
-    .populate("roles")
-    .populate({
-      path: "employee",
+  const limit = req.query.limit || 10;
+  const page = req.query.pageSise || 1;
+  const options = {
+    limit,
+    page: page,
+    projection: { password: 0 },
+    options: {
       populate: [
         {
-          path: "documentType",
+          path: "roles",
         },
         {
-          path: "position",
+          path: "employee",
+          populate: [
+            {
+              path: "documentType",
+            },
+            {
+              path: "position",
+            },
+          ],
         },
       ],
-    });
+    },
+  };
+  const users = await User.paginate({}, options);
 
   res.json(users);
 };
@@ -63,6 +75,7 @@ export const getUserById = async (req, res) => {
         },
       ],
     });
+
   res.status(200).json(user);
 };
 
@@ -82,7 +95,6 @@ export const updateUserById = async (req, res) => {
         new: true,
       }
     );
-
     res.status(200).json({ status: 200, updatedUser });
   } catch (error) {
     res
@@ -92,7 +104,6 @@ export const updateUserById = async (req, res) => {
 };
 
 export const deleteUserById = async (req, res) => {
-  console.log("req.params", req.params);
   const { userId } = req.params;
   await User.findOneAndDelete(userId);
   res.status(204).json();

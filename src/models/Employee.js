@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const employeeSchema = new Schema({
     name: {
@@ -51,5 +52,7 @@ const employeeSchema = new Schema({
     timestamps: true,
     versionKey: false
 })
+
+employeeSchema.plugin(mongoosePaginate);
 
 export default model('Employee', employeeSchema);
