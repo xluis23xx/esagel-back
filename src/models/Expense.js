@@ -1,28 +1,33 @@
 import { Schema, model } from "mongoose";
 
-const expenseSchema = new Schema({
+const expenseSchema = new Schema(
+  {
     code: {
-        type: String
+      type: String,
     },
     name: {
-        type: String
+      type: String,
     },
     description: {
-        type: String
+      type: String,
     },
     price: {
-        type: Number
+      type: Number,
     },
     quantity: {
-        type: Number
+      type: Number,
     },
-    provider: [{
+    provider: [
+      {
         ref: "Provider",
         type: Schema.Types.ObjectId,
-    }]
-}, {
+      },
+    ],
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Expense', expenseSchema)
+export default model("Expense", expenseSchema);

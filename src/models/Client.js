@@ -1,65 +1,72 @@
 import { Schema, model } from "mongoose";
 
-const clientSchema = new Schema({
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const clientSchema = new Schema(
+  {
     name: {
-        type: String
+      type: String,
     },
     lastname: {
-        type: String
+      type: String,
     },
     secondLastname: {
-        type: String
+      type: String,
     },
     email: {
-        type: String,
-        unique: true
+      type: String,
+      unique: true,
     },
     phoneNumber: {
-        type: String,
-        minlength: 7,
-        maxlength: 12
+      type: String,
+      minlength: 7,
+      maxlength: 12,
     },
     address: {
-        type: String
+      type: String,
     },
     documentNumber: {
-        type: String,
-        unique: true,
+      type: String,
+      unique: true,
     },
     birthdate: {
-        type: Date
+      type: Date,
     },
     documentType: {
-        ref: "Document",
-        type: Schema.Types.ObjectId,
+      ref: "Document",
+      type: Schema.Types.ObjectId,
     },
     department: {
-        type: String
+      type: String,
     },
     leadSource: {
-        ref: "Leadsource",
-        type: Schema.Types.ObjectId,
+      ref: "Leadsource",
+      type: Schema.Types.ObjectId,
     },
     prospectStatus: {
-        ref: "StatusProspect",
-        type: Schema.Types.ObjectId,
+      ref: "StatusProspect",
+      type: Schema.Types.ObjectId,
     },
     contactForm: {
-        ref: "Contact",
-        type: Schema.Types.ObjectId,
+      ref: "Contact",
+      type: Schema.Types.ObjectId,
     },
     profession: {
-        type: String
+      type: String,
     },
     business: {
-        type: String
+      type: String,
     },
     status: {
-        type: Number
-    }
-}, {
+      type: Number,
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Client', clientSchema);
+clientSchema.plugin(mongoosePaginate);
+
+export default model("Client", clientSchema);

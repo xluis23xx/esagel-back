@@ -1,18 +1,25 @@
 import { Schema, model } from "mongoose";
 
-const contactSchema = new Schema({
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const contactSchema = new Schema(
+  {
     name: {
-        type: String
+      type: String,
     },
     description: {
-        type: String
+      type: String,
     },
     status: {
-        type: Number
-    }
-}, {
+      type: Number,
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Contact', contactSchema);
+contactSchema.plugin(mongoosePaginate);
+
+export default model("Contact", contactSchema);

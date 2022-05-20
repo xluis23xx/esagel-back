@@ -1,31 +1,38 @@
 import { Schema, model } from "mongoose";
 
-const providerSchema = new Schema({
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const providerSchema = new Schema(
+  {
     businessName: {
-        type: String
+      type: String,
     },
     contactName: {
-        type: String
+      type: String,
     },
     phoneNumber: {
-        type: String,
-        minlength: 7,
-        maxlength: 12
+      type: String,
+      minlength: 7,
+      maxlength: 12,
     },
     documentNumber: {
-        type: String,
-        unique: true,
+      type: String,
+      unique: true,
     },
     status: {
-        type: Number
+      type: Number,
     },
     documentType: {
-        ref: "Document",
-        type: Schema.Types.ObjectId, //relaciona con documento
-    }
-}, {
+      ref: "Document",
+      type: Schema.Types.ObjectId, //relaciona con documento
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Provider', providerSchema);
+providerSchema.plugin(mongoosePaginate);
+
+export default model("Provider", providerSchema);

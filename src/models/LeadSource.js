@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
 
+const mongoosePaginate = require("mongoose-paginate-v2");
+
 const leadSourceSchema = new Schema(
   {
     code: {
@@ -21,5 +23,7 @@ const leadSourceSchema = new Schema(
     versionKey: false,
   }
 );
+
+leadSourceSchema.plugin(mongoosePaginate);
 
 export default model("Leadsource", leadSourceSchema);

@@ -59,11 +59,25 @@ export const createEmployee = async (req, res) => {
 };
 
 export const getEmployees = async (req, res) => {
-  const limit = req.query.limit || 10;
-  const page = req.query.pageSise || 1;
+  const limit = parseInt(req.query.limit || 10);
+  const page = parseInt(req.query.pageSise || 1);
+  const { filter } = req.body;
+  const options = {
+    limit,
+    page: page,
+    populate: ["documentType", "position"],
+  };
+
   const employees = await Employee.paginate(
-    {},
-    { populate: "documentType", limit, page }
+    {
+      $or: [
+        { name: filter },
+        { lastname: filter },
+        { secondLastname: filter },
+        { documentNumber: filter },
+      ],
+    },
+    options
   );
   res.status(200).json(employees);
 };

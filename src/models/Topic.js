@@ -1,18 +1,25 @@
 import { Schema, model } from "mongoose";
 
-const topicSchema = new Schema({
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const topicSchema = new Schema(
+  {
     name: {
-        type: String
+      type: String,
     },
     description: {
-        type: String
+      type: String,
     },
     status: {
-        type: Number
+      type: Number,
     },
-}, {
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Topic', topicSchema);
+topicSchema.plugin(mongoosePaginate);
+
+export default model("Topic", topicSchema);

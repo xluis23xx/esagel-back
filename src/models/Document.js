@@ -1,12 +1,19 @@
-import {Schema, model} from 'mongoose'
+import { Schema, model } from "mongoose";
 
-const documentSchema = new Schema({
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const documentSchema = new Schema(
+  {
     name: String,
     operation: String,
-    status: Number
-}, {
+    status: Number,
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Document', documentSchema);
+documentSchema.plugin(mongoosePaginate);
+
+export default model("Document", documentSchema);

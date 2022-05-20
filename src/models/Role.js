@@ -1,11 +1,18 @@
-import {Schema, model} from 'mongoose'
+import { Schema, model } from "mongoose";
 
-export const ROLES = ["user", "admin", "moderator"]
+const mongoosePaginate = require("mongoose-paginate-v2");
 
-const roleSchema = new Schema({
+export const ROLES = ["user", "admin", "moderator"];
+
+const roleSchema = new Schema(
+  {
     name: String,
-},{
-    versionKey: false
-})
+  },
+  {
+    versionKey: false,
+  }
+);
+
+roleSchema.plugin(mongoosePaginate);
 
 export default model("Role", roleSchema);

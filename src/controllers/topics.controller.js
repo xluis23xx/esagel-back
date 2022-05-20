@@ -1,7 +1,16 @@
 import Topic from "../models/Topic";
 
 export const getTopics = async (req, res) => {
-  const topics = await Topic.find();
+  const limit = parseInt(req.query.limit || 10);
+  const page = parseInt(req.query.pageSise || 1);
+
+  const options = {
+    limit,
+    page: page,
+  };
+
+  const topics = await Topic.paginate({}, options);
+  // const topics = await Topic.find();
   res.json(topics);
 };
 
@@ -12,16 +21,14 @@ export const createTopic = async (req, res) => {
     const newTopic = new Topic({
       name,
       description,
-      status
+      status,
     });
 
     const savedTopic = await newTopic.save();
 
     res.status(201).json({ status: 201, savedTopic });
   } catch (error) {
-    res
-      .status(400)
-      .json({ status: 400, message: "No se creó el tema" });
+    res.status(400).json({ status: 400, message: "No se creó el tema" });
   }
 };
 
@@ -41,8 +48,6 @@ export const updateTopicById = async (req, res) => {
     );
     res.status(200).json({ status: 200, updateTopic });
   } catch (error) {
-    res
-      .status(400)
-      .json({ status: 400, message: "No se actualizó el tema" });
+    res.status(400).json({ status: 400, message: "No se actualizó el tema" });
   }
 };

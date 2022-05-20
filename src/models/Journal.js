@@ -1,18 +1,21 @@
 import { Schema } from "mongoose";
 
-const journalSchema = new Schema({
+const journalSchema = new Schema(
+  {
     name: {
-        type: String
+      type: String,
     },
     serie: {
-        type: String
+      type: String,
     },
     number_serie: {
-        type: Number
-    }
-}, {
+      type: Number,
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Journal', journalSchema)
+export default model("Journal", journalSchema);

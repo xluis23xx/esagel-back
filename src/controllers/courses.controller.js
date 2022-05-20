@@ -47,7 +47,24 @@ export const createCourse = async (req, res) => {
 };
 
 export const getCourses = async (req, res) => {
-  const courses = await Course.find().populate("courseType");
+  const limit = parseInt(req.query.limit || 10);
+  const page = parseInt(req.query.pageSise || 1);
+  const { filter } = req.body;
+  const options = {
+    limit,
+    page: page,
+    populate: [
+      {
+        path: "courseType",
+      },
+    ],
+  };
+  const courses = await Course.paginate(
+    {
+      $or: [{ code: filter }, { name: filter }],
+    },
+    options
+  );
   res.json(courses);
 };
 

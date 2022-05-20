@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
-const mongoosePaginate = require('mongoose-paginate-v2');
+
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 const userSchema = new Schema(
   {

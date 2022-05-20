@@ -1,25 +1,34 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
-const goalSchema = new Schema({
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const goalSchema = new Schema(
+  {
     initial_date: {
-        type: Date
+      type: Date,
     },
     end_date: {
-        type: Date
+      type: Date,
     },
     amount: {
-        type: Number
+      type: Number,
     },
     amount_sold: {
-        type: Number
+      type: Number,
     },
-    employee: [{
+    employee: [
+      {
         ref: "Employee",
         type: Schema.Types.ObjectId,
-    }]
-}, {
+      },
+    ],
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Goal', goalSchema);
+goalSchema.plugin(mongoosePaginate);
+
+export default model("Goal", goalSchema);

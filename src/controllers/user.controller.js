@@ -4,30 +4,28 @@ import Employee from "../models/Employee";
 import { generatorPassword } from "../utils/randomGenerator";
 
 export const getUsers = async (req, res) => {
-  const limit = req.query.limit || 10;
-  const page = req.query.pageSise || 1;
+  const limit = parseInt(req.query.limit || 10);
+  const page = parseInt(req.query.pageSise || 1);
   const options = {
     limit,
     page: page,
     projection: { password: 0 },
-    options: {
-      populate: [
-        {
-          path: "roles",
-        },
-        {
-          path: "employee",
-          populate: [
-            {
-              path: "documentType",
-            },
-            {
-              path: "position",
-            },
-          ],
-        },
-      ],
-    },
+    populate: [
+      {
+        path: "roles",
+      },
+      {
+        path: "employee",
+        populate: [
+          {
+            path: "documentType",
+          },
+          {
+            path: "position",
+          },
+        ],
+      },
+    ],
   };
   const users = await User.paginate({}, options);
 
@@ -100,7 +98,6 @@ export const updateUserById = async (req, res) => {
   const { roles } = req.body;
 
   try {
-    
     if (roles) {
       const foundRoles = await Role.find({ name: { $in: roles } });
       req.body.roles = foundRoles.map((role) => role._id);

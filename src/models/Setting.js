@@ -1,31 +1,38 @@
 import { Schema, model } from "mongoose";
 
-const settingSchema = new Schema({
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const settingSchema = new Schema(
+  {
     companyName: {
-        type: String
+      type: String,
     },
     description: {
-        type: String
+      type: String,
     },
     businessName: {
-        type: String
+      type: String,
     },
     ruc: {
-        type: String,
-        unique: true,
+      type: String,
+      unique: true,
     },
     url: {
-        type: String
+      type: String,
     },
     logo: {
-        type: String
+      type: String,
     },
     tax: {
-        type: Number
-    }
-}, {
+      type: Number,
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Setting', settingSchema);
+settingSchema.plugin(mongoosePaginate);
+
+export default model("Setting", settingSchema);

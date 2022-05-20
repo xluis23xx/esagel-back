@@ -1,19 +1,22 @@
 import { Schema } from "mongoose";
 
-const eventSchema = new Schema({
+const eventSchema = new Schema(
+  {
     code: {
-        type: String,
-        unique: true
+      type: String,
+      unique: true,
     },
     name: {
-        type: String
+      type: String,
     },
     description: {
-        type: String
-    }
-}, {
+      type: String,
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Event', eventSchema)
+export default model("Event", eventSchema);

@@ -1,15 +1,22 @@
 import { Schema, model } from "mongoose";
 
-const positionSchema = new Schema({
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const positionSchema = new Schema(
+  {
     name: {
-        type: String
+      type: String,
     },
     status: {
-        type: Number
-    }
-}, {
+      type: Number,
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Position', positionSchema);
+positionSchema.plugin(mongoosePaginate);
+
+export default model("Position", positionSchema);

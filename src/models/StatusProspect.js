@@ -1,18 +1,25 @@
 import { Schema, model } from "mongoose";
 
-const statusProspectSchema = new Schema({
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const statusProspectSchema = new Schema(
+  {
     name: {
-        type: String
+      type: String,
     },
     description: {
-        type: String
+      type: String,
     },
     status: {
-        type: Number
-    }
-}, {
+      type: Number,
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('StatusProspect', statusProspectSchema);
+statusProspectSchema.plugin(mongoosePaginate);
+
+export default model("StatusProspect", statusProspectSchema);

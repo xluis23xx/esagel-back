@@ -1,18 +1,31 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
-const orderSchema = new Schema({
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const orderSchema = new Schema(
+  {
     order_date: {
-        type: String
+      type: String,
     },
-    user:[{
+    user: [
+      {
         ref: "User",
         type: Schema.Types.ObjectId,
-    }],
-    client:[{
+      },
+    ],
+    client: [
+      {
         ref: "Client",
         type: Schema.Types.ObjectId,
-    }]
-}, {
+      },
+    ],
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
+
+orderSchema.plugin(mongoosePaginate);
+
+export default model("Order", orderSchema);

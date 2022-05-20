@@ -1,21 +1,28 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
-const saleSchema = new Schema({
-    sale_type:{
-        type: String
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const saleSchema = new Schema(
+  {
+    sale_type: {
+      type: String,
     },
     date: {
-        type: Date
+      type: Date,
     },
     tax: {
-        type: Number   
+      type: Number,
     },
     amount: {
-        type: Number
-    }
-}, {
+      type: Number,
+    },
+  },
+  {
     timestamps: true,
-    versionKey: false
-})
+    versionKey: false,
+  }
+);
 
-export default model('Sale', saleSchema);
+saleSchema.plugin(mongoosePaginate);
+
+export default model("Sale", saleSchema);

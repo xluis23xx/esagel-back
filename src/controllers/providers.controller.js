@@ -34,8 +34,25 @@ export const createProvider = async (req, res) => {
 };
 
 export const getProviders = async (req, res) => {
-  const providers = await Provider.find().populate("documentType");
-  res.json(providers);
+  const limit = parseInt(req.query.limit || 10);
+  const page = parseInt(req.query.pageSise || 1);
+  const { filter } = req.body;
+
+  const options = {
+    limit,
+    page: page,
+    populate: ["documentType", "position"],
+  };
+
+  const providers = await Provider.paginate(
+    {
+      $or: [{ documentNumber: filter }],
+    },
+    options
+  );
+  res.status(200).json(providers);
+  // const providers = await Provider.find().populate("documentType");
+  // res.json(providers);
 };
 
 export const getProviderById = async (req, res) => {
