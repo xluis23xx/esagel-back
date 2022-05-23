@@ -34,4 +34,5 @@ const settingSchema = new Schema(
   }
 );
 
+
 export default model("Setting", settingSchema);
