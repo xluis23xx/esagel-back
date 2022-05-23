@@ -48,7 +48,7 @@ export const createCourse = async (req, res) => {
 
 export const getCourses = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
-  const page = parseInt(req.query.pageSise || 1);
+  const page = parseInt(req.query.pageSize || 1);
   const { filter } = req.body;
   const options = {
     limit,
@@ -61,7 +61,7 @@ export const getCourses = async (req, res) => {
   };
   const courses = await Course.paginate(
     {
-      $or: [{ code: filter }, { name: filter }],
+      // $or: [{ code: filter }, { name: filter }],
     },
     options
   );

@@ -5,13 +5,13 @@ import * as userCtrl from '../controllers/user.controller';
 import { authJwt, verifySignUp } from '../middlewares'
 
 router.get('/', [
-    authJwt.verifyToken, 
-    authJwt.isAdmin
+    authJwt.verifyToken,
+    authJwt.isModerator
 ], userCtrl.getUsers)
 
 router.post('/', [
-    authJwt.verifyToken, 
-    authJwt.isAdmin,
+    authJwt.verifyToken,
+    authJwt.isModerator,
     verifySignUp.checkDuplicateUsernameOrEmail, 
     verifySignUp.checkRolesExisted
 ], userCtrl.createUser)
@@ -26,7 +26,7 @@ router.put('/:userId', [
 
 router.delete('/:userId', [
     authJwt.verifyToken,
-    authJwt.isAdmin
+    authJwt.isModerator,
 ], userCtrl.deleteUserById)
 
 export default router;

@@ -5,7 +5,7 @@ import { generatorPassword } from "../utils/randomGenerator";
 
 export const getUsers = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
-  const page = parseInt(req.query.pageSise || 1);
+  const page = parseInt(req.query.pageSize || 1);
   const options = {
     limit,
     page: page,

@@ -35,7 +35,7 @@ export const createProvider = async (req, res) => {
 
 export const getProviders = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
-  const page = parseInt(req.query.pageSise || 1);
+  const page = parseInt(req.query.pageSize || 1);
   const { filter } = req.body;
 
   const options = {
@@ -46,7 +46,7 @@ export const getProviders = async (req, res) => {
 
   const providers = await Provider.paginate(
     {
-      $or: [{ documentNumber: filter }],
+      // $or: [{ documentNumber: filter }],
     },
     options
   );

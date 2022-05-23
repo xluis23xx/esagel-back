@@ -2,7 +2,7 @@ import Topic from "../models/Topic";
 
 export const getTopics = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
-  const page = parseInt(req.query.pageSise || 1);
+  const page = parseInt(req.query.pageSize || 1);
 
   const options = {
     limit,
