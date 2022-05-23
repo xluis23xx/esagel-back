@@ -18,6 +18,7 @@ import mediumContactsRoutes from "./routes/mediumContacts.routes";
 import settingsRoutes from "./routes/settings.routes";
 import topicsRoutes from "./routes/topics.routes";
 import clientsRoutes from "./routes/clients.routes";
+import ordersRoutes from "./routes/orders.routes";
 
 const app = express();
 const cors = require("cors");
@@ -54,5 +55,6 @@ app.use("/api/contactForms", mediumContactsRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/topics", topicsRoutes);
 app.use("/api/clients", clientsRoutes);
+app.use("/api/orders", ordersRoutes);
 
 export default app;
