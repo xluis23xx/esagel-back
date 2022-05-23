@@ -26,6 +26,9 @@ const settingSchema = new Schema(
     tax: {
       type: Number,
     },
+    manual: {
+      type: String,
+    },
   },
   {
     timestamps: true,

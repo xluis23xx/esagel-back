@@ -74,6 +74,7 @@ export const createSetting = async () => {
         url: "https://www.facebook.com/groups/grupoesagel",
         logo: "https://firebasestorage.googleapis.com/v0/b/restaurant-app-6a09d.appspot.com/o/saegel%2Fesagel.png?alt=media&token=04d99e71-7eea-4876-8a44-6d1a4dc4f330",
         tax: 0.18,
+        manual:'https://firebasestorage.googleapis.com/v0/b/restaurant-app-6a09d.appspot.com/o/manual%2FSOLICITUD%20VISA.pdf?alt=media&token=e20e5a50-5ecc-4036-8b9b-a5e05ad10aa8'
       }).save(),
     ]);
 
