@@ -4,7 +4,7 @@ import Document from "../models/Document";
 import Client from "../models/Client";
 import User from "../models/User";
 import Course from "../models/Course";
-import Course from "../models/Sale";
+// import Course from "../models/Sale";
 
 export const createOrder = async (req, res) => {
   const { isConfirm, isCancel } = req.body;
@@ -46,7 +46,7 @@ export const createOrder = async (req, res) => {
       orderLines.map(async (element) => {
         try {
           const foundCourses = await Course.find({
-            code: { $in: element.course },
+            _id: { $in: element._id}
           });
 
           if (!foundCourses.length > 0)
@@ -67,6 +67,7 @@ export const createOrder = async (req, res) => {
             collectionLines.push(newOrderLine);
           });
         } catch (error) {
+          console.log(error)
           res
             .status(400)
             .json({ status: 400, message: "No se creó el detalle del pedido" });
@@ -96,7 +97,6 @@ export const createOrder = async (req, res) => {
     //     newOrder._id
     //   });
     // }
-
     res.status(201).json({ status: 201, savedOrder });
   } catch (error) {
     res.status(400).json({ status: 400, message: error });
