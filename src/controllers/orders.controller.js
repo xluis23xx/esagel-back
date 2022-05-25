@@ -4,7 +4,7 @@ import Document from "../models/Document";
 import Client from "../models/Client";
 import User from "../models/User";
 import Course from "../models/Course";
-import Course from "../models/Sale";
+// import Course from "../models/Sale";
 
 export const createOrder = async (req, res) => {
   const { isConfirm, isCancel } = req.body;
