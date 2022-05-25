@@ -6,6 +6,6 @@ import { authJwt} from '../middlewares';
 
 router.get('/', [authJwt.verifyToken], settingsCtrl.getSettings)
 
-router.put('/:settingId', [authJwt.verifyToken], settingsCtrl.updateSettingById)
+router.put('/:settingId', [authJwt.verifyToken, authJwt.isModerator], settingsCtrl.updateSettingById)
 
 export default router;

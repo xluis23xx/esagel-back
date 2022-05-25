@@ -98,7 +98,7 @@ export const createClient = async (req, res) => {
 
 export const getClients = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
-  const page = parseInt(req.query.pageSise || 1);
+  const page = parseInt(req.query.pageSize || 1);
   const { filter } = req.body;
   const options = {
     limit,
@@ -121,14 +121,14 @@ export const getClients = async (req, res) => {
       ],
     },
   };
-  const clients = await clients.paginate(
+  const clients = await Client.paginate(
     {
-      $or: [
-        { name: filter },
-        { lastname: filter },
-        { secondLastname: filter },
-        { documentNumber: filter },
-      ],
+      // $or: [
+      //   { name: filter },
+      //   { lastname: filter },
+      //   { secondLastname: filter },
+      //   { documentNumber: filter },
+      // ],
     },
     options
   );

@@ -60,7 +60,7 @@ export const createEmployee = async (req, res) => {
 
 export const getEmployees = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
-  const page = parseInt(req.query.pageSise || 1);
+  const page = parseInt(req.query.pageSize || 1);
   const { filter } = req.body;
   const options = {
     limit,
@@ -70,12 +70,12 @@ export const getEmployees = async (req, res) => {
 
   const employees = await Employee.paginate(
     {
-      $or: [
-        { name: filter },
-        { lastname: filter },
-        { secondLastname: filter },
-        { documentNumber: filter },
-      ],
+      // $or: [
+      //   { name: filter },
+      //   { lastname: filter },
+      //   { secondLastname: filter },
+      //   { documentNumber: filter },
+      // ],
     },
     options
   );

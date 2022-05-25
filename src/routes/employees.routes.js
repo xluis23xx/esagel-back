@@ -10,7 +10,7 @@ router.get('/', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.getEmployee
 
 router.get('/:employeeId', [authJwt.verifyToken], employeeCtrl.getEmployeeById)
 
-router.put('/:employeeId', [authJwt.verifyToken], employeeCtrl.updateEmployeeById)
+router.put('/:employeeId', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.updateEmployeeById)
 
 router.delete('/:employeeId', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.deleteEmployeeById)
 

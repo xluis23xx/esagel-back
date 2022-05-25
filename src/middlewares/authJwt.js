@@ -41,11 +41,25 @@ export const isAdmin = async (req, res, next) => {
     const roles = await Role.find({_id: user.roles})
 
     for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "admin") {
+        if (roles[i].name === "admin" || roles[i].name === "moderator") {
             next();
             return; 
         }
     }
     
     return res.status(403).json({message: "Rol de administrador requerido"})
+}
+
+export const isUser = async (req, res, next) => {
+    const user = await User.findById(req.userId)
+    const roles = await Role.find({_id: user.roles})
+
+    for (let i = 0; i < roles.length; i++) {
+        if (roles[i].name === "user" || roles[i].name === "admin" || roles[i].name === "moderator") {
+            next();
+            return; 
+        }
+    }
+    
+    return res.status(403).json({message: "Rol de usuario requerido"})
 }
