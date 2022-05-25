@@ -88,13 +88,7 @@ export const createOrder = async (req, res) => {
     });
 
     await newOrder.save();
-
-    const newSale = new Sale({
-      status: 1,
-      order: newOrder._id,
-    });
-
-    await newSale.save();
+    
     res.status(201).json({
       status: 201,
       message: "Se ha generado el pedido: " + newOrder.orderNumber,
@@ -125,16 +119,26 @@ export const updateOrderById = async (req, res) => {
       updatedOrder = await Order.findByIdAndUpdate(req.params.orderId, req.body, {
         new: true,
       });
+      res.status(200).json({ status: 200, updatedOrder });
     } else if (req.body?.isConfirm) {
       req.body.status = 2
       updatedOrder = await Order.findByIdAndUpdate(req.params.orderId, req.body, {
         new: true,
       });
+
+      const newSale = new Sale({
+        status: 1,
+        order: req.params.orderId,
+      });
+  
+      const savedSale = await newSale.save();
+      res.status(200).json({ status: 200, savedSale, message: "Se generó la venta con éxito" });
     }
-    res.status(200).json({ status: 200, updatedOrder });
   } catch (error) {
-    if (req.body?.isCancel) {
-      res.status(400).json({ status: 400, message: "No se canceló el pedido" });
+    if (req.body?.isConfirm) {
+      res.status(400).json({ status: 400, message: "No se generó la venta con éxito" });
+    } else if (req.body?.isCancel) {
+
     } else {
       res
         .status(400)
