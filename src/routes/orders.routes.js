@@ -8,9 +8,9 @@ router.post('/', [authJwt.verifyToken, authJwt.isAdmin], orderCtrl.createOrder)
 
 router.get('/', [authJwt.verifyToken, authJwt.isAdmin], orderCtrl.getOrders)
 
-// router.get('/:employeeId', [authJwt.verifyToken], employeeCtrl.getEmployeeById)
+// router.get('/:orderId', [authJwt.verifyToken], orderCtrl.updateOrderById)
 
-// router.put('/:employeeId', [authJwt.verifyToken], employeeCtrl.updateEmployeeById)
+router.put('/:orderId', [authJwt.verifyToken], orderCtrl.updateOrderById)
 
 // router.delete('/:employeeId', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.deleteEmployeeById)
 
