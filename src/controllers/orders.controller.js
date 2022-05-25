@@ -21,7 +21,6 @@ export const createOrder = async (req, res) => {
       documentType,
       documentNumber,
       orderLines,
-      isConfirm,
     } = req.body;
 
     const foundSellers = await User.find({ _id: { $in: seller } });
@@ -90,22 +89,17 @@ export const createOrder = async (req, res) => {
     });
 
     await newOrder.save();
-    if (isConfirm) {
-      const newSale = new Sale({
-        status: 1,
-        order: newOrder._id,
-      });
-      await newSale.save();
-      res.status(201).json({
-        status: 201,
-        message: "Se ha generado la venta del pedido: " + newOrder.orderNumber,
-      });
-    } else {
-      res.status(201).json({
-        status: 201,
-        message: "Se ha generado el pedido: " + newOrder.orderNumber,
-      });
-    }
+
+    const newSale = new Sale({
+      status: 1,
+      order: newOrder._id,
+    });
+
+    await newSale.save();
+    res.status(201).json({
+      status: 201,
+      message: "Se ha generado el pedido: " + newOrder.orderNumber,
+    });
   } catch (error) {
     res.status(400).json({ status: 400, message: error });
   }
@@ -128,23 +122,16 @@ export const updateOrderById = async (req, res) => {
   try {
     let updatedOrder = null;
     if (req.body?.isCancel) {
-      updatedOrder = await Order.findByIdAndUpdate(
-        req.params.orderId,
-        req.body,
-        {
-          new: true,
-        }
-      );
-    } else {
-      updatedOrder = await Order.findByIdAndUpdate(
-        req.params.orderId,
-        req.body,
-        {
-          new: true,
-        }
-      );
+      req.body.status = 0
+      updatedOrder = await Order.findByIdAndUpdate(req.params.orderId, req.body, {
+        new: true,
+      });
+    } else if (req.body?.isConfirm) {
+      req.body.status = 2
+      updatedOrder = await Order.findByIdAndUpdate(req.params.orderId, req.body, {
+        new: true,
+      });
     }
-
     res.status(200).json({ status: 200, updatedOrder });
   } catch (error) {
     if (req.body?.isCancel) {
