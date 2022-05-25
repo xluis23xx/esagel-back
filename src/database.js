@@ -4,7 +4,8 @@ mongoose.connect("mongodb+srv://xluis23xx:6jwl8ycq069@cluster0.19wdh.mongodb.net
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
 })
     .then(db => console.log('Db is connected'))
     .catch(error => console.log(error))

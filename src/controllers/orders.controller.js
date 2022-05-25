@@ -4,10 +4,9 @@ import Document from "../models/Document";
 import Client from "../models/Client";
 import User from "../models/User";
 import Course from "../models/Course";
-// import Course from "../models/Sale";
+import Sale from "../models/Sale";
 
 export const createOrder = async (req, res) => {
-  const { isConfirm, isCancel } = req.body;
   try {
     let collectionLines = [];
     const {
@@ -22,6 +21,7 @@ export const createOrder = async (req, res) => {
       documentType,
       documentNumber,
       orderLines,
+      isConfirm,
     } = req.body;
 
     const foundSellers = await User.find({ _id: { $in: seller } });
@@ -89,15 +89,23 @@ export const createOrder = async (req, res) => {
       orderLines: collectionLines,
     });
 
-    const savedOrder = await newOrder.save();
-
-    // if (isConfirm) {
-    //   const newSale = new Sale({
-    //     status: 1,
-    //     newOrder._id
-    //   });
-    // }
-    res.status(201).json({ status: 201, savedOrder });
+    await newOrder.save();
+    if (isConfirm) {
+      const newSale = new Sale({
+        status: 1,
+        order: newOrder._id,
+      });
+      await newSale.save();
+      res.status(201).json({
+        status: 201,
+        message: "Se ha generado la venta del pedido: " + newOrder.orderNumber,
+      });
+    } else {
+      res.status(201).json({
+        status: 201,
+        message: "Se ha generado el pedido: " + newOrder.orderNumber,
+      });
+    }
   } catch (error) {
     res.status(400).json({ status: 400, message: error });
   }
@@ -116,51 +124,35 @@ export const getOrders = async (req, res) => {
   res.status(200).json(orders);
 };
 
-// export const updateOrderById = async (req, res) => {
-//   try {
-//     let updatedOrder = null;
-//     if (req.body?.isDelete) {
-//       updatedOrder = await Order.findByIdAndUpdate(
-//         req.params.orderId,
-//         req.body,
-//         {
-//           new: true,
-//         }
-//       )
-//         .populate("documentType")
-//         .populate("position");
-//     } else {
-//       const foundPositions = await Position.find({
-//         name: { $in: req.body.position },
-//       });
+export const updateOrderById = async (req, res) => {
+  try {
+    let updatedOrder = null;
+    if (req.body?.isCancel) {
+      updatedOrder = await Order.findByIdAndUpdate(
+        req.params.orderId,
+        req.body,
+        {
+          new: true,
+        }
+      );
+    } else {
+      updatedOrder = await Order.findByIdAndUpdate(
+        req.params.orderId,
+        req.body,
+        {
+          new: true,
+        }
+      );
+    }
 
-//       if (!foundPositions.length > 0)
-//         return res
-//           .status(400)
-//           .json({ status: 400, message: "Cargo no encontrado" });
-
-//       req.body.position = foundPositions[0]._id;
-//       updatedEmployee = await Employee.findByIdAndUpdate(
-//         req.params.employeeId,
-//         req.body,
-//         {
-//           new: true,
-//         }
-//       )
-//         .populate("documentType")
-//         .populate("position");
-//     }
-
-//     res.status(200).json({ status: 200, updatedEmployee });
-//   } catch (error) {
-//     if (req.body?.isDelete) {
-//       res
-//         .status(400)
-//         .json({ status: 400, message: "No se eliminó el empleado" });
-//     } else {
-//       res
-//         .status(400)
-//         .json({ status: 400, message: "No se actualizó el empleado" });
-//     }
-//   }
-// };
+    res.status(200).json({ status: 200, updatedOrder });
+  } catch (error) {
+    if (req.body?.isCancel) {
+      res.status(400).json({ status: 400, message: "No se canceló el pedido" });
+    } else {
+      res
+        .status(400)
+        .json({ status: 400, message: "No se actualizó el pedido" });
+    }
+  }
+};
