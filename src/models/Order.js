@@ -6,7 +6,6 @@ const orderSchema = new Schema(
   {
     orderNumber: {
       type: String,
-      unique: true,
     },
     percentIva: {
       type: Number,

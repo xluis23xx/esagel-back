@@ -4,47 +4,13 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 
 const saleSchema = new Schema(
   {
-    orderNumber: {
-      type: String,
-      unique: true,
-    },
-    percentIva: {
-      type: Number,
-    },
-    subtotal: {
-      type: Number,
-    },
-    amountInIva: {
-      type: Number,
-    },
-    total: {
-      type: Number,
-    },
     status: {
       type: Number,
     },
-    seller: {
-      ref: "User",
+    order: {
+      ref: "Order",
       type: Schema.Types.ObjectId,
     },
-    client: {
-      ref: "Client",
-      type: Schema.Types.ObjectId,
-    },
-    documentType: {
-      ref: "Document",
-      type: Schema.Types.ObjectId,
-    },
-    documentNumber: {
-      type: String,
-      unique: true,
-    },
-    courses: [
-      {
-        ref: "Course",
-        type: Schema.Types.ObjectId,
-      },
-    ],
   },
   {
     timestamps: true,
