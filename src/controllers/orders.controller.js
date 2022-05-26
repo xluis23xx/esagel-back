@@ -88,7 +88,7 @@ export const createOrder = async (req, res) => {
     });
 
     await newOrder.save();
-    
+
     res.status(201).json({
       status: 201,
       message: "Se ha generado el pedido: " + newOrder.orderNumber,
@@ -106,8 +106,8 @@ export const getOrders = async (req, res) => {
     page: page,
     populate: ["seller", "client", "documentType", "orderLines"],
   };
-
   const orders = await Order.paginate({}, options);
+
   res.status(200).json(orders);
 };
 
@@ -115,30 +115,56 @@ export const updateOrderById = async (req, res) => {
   try {
     let updatedOrder = null;
     if (req.body?.isCancel) {
-      req.body.status = 0
-      updatedOrder = await Order.findByIdAndUpdate(req.params.orderId, req.body, {
-        new: true,
-      });
-      res.status(200).json({ status: 200, updatedOrder });
-    } else if (req.body?.isConfirm) {
-      req.body.status = 2
-      updatedOrder = await Order.findByIdAndUpdate(req.params.orderId, req.body, {
-        new: true,
-      });
+      updatedOrder = await Order.findById(req.params.orderId);
+      if (updatedOrder.status === 1) {
+        updatedOrder.status = 0;
+        const savedUpdatedOrder = await updatedOrder.save();
 
-      const newSale = new Sale({
-        status: 1,
-        order: req.params.orderId,
-      });
-  
-      const savedSale = await newSale.save();
-      res.status(200).json({ status: 200, savedSale, message: "Se generó la venta con éxito" });
+        res.status(200).json({
+          status: 200,
+          savedUpdatedOrder,
+          message: "Pedido cancelado",
+        });
+      } else {
+        res.status(400).json({
+          status: 400,
+          message: "Estado de pedido no aceptado",
+        });
+      }
+    } else if (req.body?.isConfirm) {
+      updatedOrder = await Order.findById(req.params.orderId);
+      if (updatedOrder.status === 1) {
+        updatedOrder.status = 2;
+        await updatedOrder.save();
+
+        const newSale = new Sale({
+          status: 1,
+          order: req.params.orderId,
+        });
+
+        const savedSale = await newSale.save();
+
+        res.status(200).json({
+          status: 200,
+          savedSale,
+          message: "Se generó la venta con éxito",
+        });
+      } else {
+        res.status(400).json({
+          status: 400,
+          message: "Estado de pedido no aceptado",
+        });
+      }
     }
   } catch (error) {
     if (req.body?.isConfirm) {
-      res.status(400).json({ status: 400, message: "No se generó la venta con éxito" });
+      res
+        .status(400)
+        .json({ status: 400, message: "No se generó la venta con éxito" });
     } else if (req.body?.isCancel) {
-
+      res
+        .status(400)
+        .json({ status: 400, message: "No se canceló el pedido con éxito" });
     } else {
       res
         .status(400)
