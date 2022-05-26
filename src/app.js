@@ -19,6 +19,7 @@ import settingsRoutes from "./routes/settings.routes";
 import topicsRoutes from "./routes/topics.routes";
 import clientsRoutes from "./routes/clients.routes";
 import ordersRoutes from "./routes/orders.routes";
+import purchasesRoutes from "./routes/purchases.routes";
 
 const app = express();
 const cors = require("cors");
@@ -56,5 +57,6 @@ app.use("/api/settings", settingsRoutes);
 app.use("/api/topics", topicsRoutes);
 app.use("/api/clients", clientsRoutes);
 app.use("/api/orders", ordersRoutes);
+app.use("/api/purchases", purchasesRoutes);
 
 export default app;
