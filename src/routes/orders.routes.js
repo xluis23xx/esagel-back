@@ -8,10 +8,8 @@ router.post('/', [authJwt.verifyToken, authJwt.isUser], orderCtrl.createOrder)
 
 router.get('/', [authJwt.verifyToken, authJwt.isAdmin], orderCtrl.getOrders)
 
-// router.get('/:orderId', [authJwt.verifyToken], orderCtrl.updateOrderById)
+router.get('/:orderId', [authJwt.verifyToken], orderCtrl.getOrderById)
 
 router.put('/:orderId', [authJwt.verifyToken], orderCtrl.updateOrderById)
-
-// router.delete('/:employeeId', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.deleteEmployeeById)
 
 export default router;

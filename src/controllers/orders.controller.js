@@ -111,6 +111,15 @@ export const getOrders = async (req, res) => {
   res.status(200).json(orders);
 };
 
+export const getOrderById = async (req, res) => {
+  const order = await Order.findById(req.params.orderId)
+    .populate("seller")
+    .populate("client")
+    .populate("documentType")
+    .populate("orderLines");
+  res.status(200).json(order);
+};
+
 export const updateOrderById = async (req, res) => {
   try {
     let updatedOrder = null;
@@ -134,6 +143,20 @@ export const updateOrderById = async (req, res) => {
     } else if (req.body?.isConfirm) {
       updatedOrder = await Order.findById(req.params.orderId);
       if (updatedOrder.status === 1) {
+        const orderLines = updatedOrder.orderLines;
+        orderLines.map(async (element) => {
+          const lineDetail = await OrderDetail.findById(element);
+          const course = await Course.findById(lineDetail.course);
+          if (course.vacanciesNumber < 1)
+            return res
+              .status(400)
+              .json({
+                status: 400,
+                message: "No hay vacantes para el curso: " + course.name,
+              });
+          course.vacanciesNumber = course.vacanciesNumber - 1;
+          await course.save();
+        });
         updatedOrder.status = 2;
         await updatedOrder.save();
 

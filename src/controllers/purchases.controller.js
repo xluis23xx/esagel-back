@@ -83,13 +83,16 @@ export const updatePurchaseById = async (req, res) => {
   try {
     let updatedPurchase = null;
     if (req.body?.isDelete) {
+      req.body.status = 0;
       updatedPurchase = await Purchase.findByIdAndUpdate(
         req.params.purchaseId,
         req.body,
         {
           new: true,
         }
-      );
+      )
+        .populate("buyer")
+        .populate("provider");
     } else {
       const foundBuyers = await User.find({ _id: { $in: req.body.buyer } });
 
@@ -110,10 +113,26 @@ export const updatePurchaseById = async (req, res) => {
           .json({ status: 400, message: "Proveedor no encontrado" });
 
       req.body.provider = foundProviders[0]._id;
+
+      updatedPurchase = await Purchase.findByIdAndUpdate(
+        req.params.purchaseId,
+        req.body,
+        {
+          new: true,
+        }
+      )
+        .populate("buyer")
+        .populate("provider");
     }
 
     res.status(200).json({ status: 200, updatedPurchase });
   } catch (error) {
-    res.status(400).json({ status: 400, message: "No se actualizó la compra" });
+    if (req.body?.isDelete) {
+      res.status(400).json({ status: 400, message: "No se anuló la compra" });
+    } else {
+      res
+        .status(400)
+        .json({ status: 400, message: "No se actualizó la compra" });
+    }
   }
 };
