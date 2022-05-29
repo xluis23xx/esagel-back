@@ -72,7 +72,14 @@ export const getPurchaseById = async (req, res) => {
   try {
     const purchase = await Purchase.findById(req.params.purchaseId)
       .populate("provider")
-      .populate("buyer");
+      .populate({
+        path: "buyer",
+        populate: [
+          {
+            path: "employee",
+          },
+        ],
+      });
     res.status(200).json(purchase);
   } catch (error) {
     res.status(400).json({ message: "Compra no encontrada" });
