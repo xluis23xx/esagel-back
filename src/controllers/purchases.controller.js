@@ -89,7 +89,7 @@ export const getPurchaseById = async (req, res) => {
 export const updatePurchaseById = async (req, res) => {
   try {
     let updatedPurchase = null;
-    if (req.body?.isDelete) {
+    if (req.body?.isCancel) {
       req.body.status = 0;
       updatedPurchase = await Purchase.findByIdAndUpdate(
         req.params.purchaseId,
