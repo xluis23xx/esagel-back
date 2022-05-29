@@ -45,7 +45,7 @@ export const createOrder = async (req, res) => {
       orderLines.map(async (element) => {
         try {
           const foundCourses = await Course.find({
-            code: { $in: element.course },
+            _id: { $in: element._id },
           });
 
           if (!foundCourses.length > 0)
@@ -113,7 +113,14 @@ export const getOrders = async (req, res) => {
 
 export const getOrderById = async (req, res) => {
   const order = await Order.findById(req.params.orderId)
-    .populate("seller")
+    .populate({
+      path: "seller",
+      populate: [
+        {
+          path: "employee",
+        },
+      ],
+    })
     .populate("client")
     .populate("documentType")
     .populate("orderLines");
@@ -141,19 +148,26 @@ export const updateOrderById = async (req, res) => {
         });
       }
     } else if (req.body?.isConfirm) {
-      updatedOrder = await Order.findById(req.params.orderId);
+      updatedOrder = await Order.findById(req.params.orderId)
+        .populate({
+          path: "seller",
+          populate: [
+            {
+              path: "employee",
+            },
+          ],
+        })
+        .populate("client");
       if (updatedOrder.status === 1) {
         const orderLines = updatedOrder.orderLines;
         orderLines.map(async (element) => {
           const lineDetail = await OrderDetail.findById(element);
           const course = await Course.findById(lineDetail.course);
           if (course.vacanciesNumber < 1)
-            return res
-              .status(400)
-              .json({
-                status: 400,
-                message: "No hay vacantes para el curso: " + course.name,
-              });
+            return res.status(400).json({
+              status: 400,
+              message: "No hay vacantes para el curso: " + course.name,
+            });
           course.vacanciesNumber = course.vacanciesNumber - 1;
           await course.save();
         });
@@ -161,8 +175,15 @@ export const updateOrderById = async (req, res) => {
         await updatedOrder.save();
 
         const newSale = new Sale({
+          saleNumber: updatedOrder.orderNumber,
           status: 1,
           order: req.params.orderId,
+          seller: updatedOrder.seller,
+          client: updatedOrder.client,
+          percentIva: updatedOrder.percentIva,
+          subtotal: updatedOrder.subtotal,
+          amountInIva: updatedOrder.amountInIva,
+          total: updatedOrder.total,
         });
 
         const savedSale = await newSale.save();
@@ -180,6 +201,7 @@ export const updateOrderById = async (req, res) => {
       }
     }
   } catch (error) {
+    console.log(error)
     if (req.body?.isConfirm) {
       res
         .status(400)

@@ -4,6 +4,18 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 
 const saleSchema = new Schema(
   {
+    saleNumber: {
+      type: String,
+    },
+    seller: {
+      ref: "User",
+      type: Schema.Types.ObjectId,
+    },
+    client: { ref: "Client", type: Schema.Types.ObjectId },
+    percentIva: { type: Number },
+    subtotal: { type: Number },
+    amountInIva: { type: Number },
+    total: { type: Number },
     status: {
       type: Number,
     },

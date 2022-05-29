@@ -11,7 +11,13 @@ export const getSales = async (req, res) => {
   const options = {
     limit,
     page: page,
-    populate: ["order"],
+    populate: [
+      "client",
+      {
+        path: "seller",
+        populate: "employee",
+      },
+    ],
   };
 
   const sales = await Sale.paginate(
@@ -25,10 +31,31 @@ export const getSales = async (req, res) => {
 
 export const getSaleById = async (req, res) => {
   try {
-    const sale = await Sale.findById(req.params.saleId).populate("order");
+    const sale = await Sale.findById(req.params.saleId)
+      .populate({
+        path: "order",
+        populate: [
+          {
+            path: "orderLines",
+            populate: "course",
+          },
+          {
+            path: "documentType",
+          },
+        ],
+      })
+      .populate("client")
+      .populate({
+        path: "seller",
+        populate: [
+          {
+            path: "employee",
+          },
+        ],
+      });
     res.status(200).json(sale);
   } catch (error) {
-    res.status(400).json({ message: "Compra no encontrada" });
+    res.status(400).json({ message: "Venta no encontrada" });
   }
 };
 
@@ -53,9 +80,9 @@ export const updateSaleById = async (req, res) => {
           .json({ status: 200, updatedSale, message: "Venta anulada" });
       } else {
         res.status(400).json({
-            status: 400,
-            message: "Estado de venta no aceptado",
-          });
+          status: 400,
+          message: "Estado de venta no aceptado",
+        });
       }
     }
   } catch (error) {
