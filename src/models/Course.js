@@ -32,6 +32,12 @@ const courseSchema = new Schema(
       ref: "CourseType",
       type: Schema.Types.ObjectId,
     },
+    courseLines: [
+      {
+        ref: "Topic",
+        type: Schema.Types.ObjectId,
+      },
+    ],
   },
   {
     timestamps: true,
