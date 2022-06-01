@@ -1,7 +1,5 @@
 import Employee from "../models/Employee";
 import User from "../models/User";
-import jwt from "jsonwebtoken";
-import config from "../config";
 
 export const updateProfileById = async (req, res) => {
   try {
