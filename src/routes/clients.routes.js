@@ -6,9 +6,9 @@ import { authJwt } from '../middlewares';
 
 router.post('/', [authJwt.verifyToken, authJwt.isAdmin], clientsCtrl.createClient)
 
-router.get('/', [authJwt.verifyToken], clientsCtrl.getClients)
+router.get('/', [authJwt.verifyToken, authJwt.isUser], clientsCtrl.getClients)
 
-router.get('/:clientId', [authJwt.verifyToken], clientsCtrl.getClientById)
+router.get('/:clientId', [authJwt.verifyToken, authJwt.isUser], clientsCtrl.getClientById)
 
 router.put('/:clientId',[authJwt.verifyToken, authJwt.isAdmin], clientsCtrl.updateClientById)
 

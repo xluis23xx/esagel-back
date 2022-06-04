@@ -3,21 +3,58 @@ import User from "../models/User";
 
 export const updateProfileById = async (req, res) => {
   try {
-    const updatedProfile = await Employee.findByIdAndUpdate(
-      req.params.employeeId,
-      req.body,
-      {
-        new: true,
-      }
-    );
+    let updatedProfile = null;
+    if (req.body.isDelete) {
+      updatedProfile = await User.findByIdAndUpdate(
+        req.params.employeeId,
+        req.body,
+        {
+          new: true,
+        }
+      );
+    } else {
+      updatedProfile = await Employee.findByIdAndUpdate(
+        req.params.employeeId,
+        req.body,
+        {
+          new: true,
+        }
+      );
+    }
     res.status(200).json({
       status: 200,
       updatedProfile,
       message: "Perfil actualizado con éxito",
     });
   } catch (error) {
-    res.status(400).json({ status: 400, message: "No se actualizó el perfil" });
+    if (req.body.isDelete) {
+      res
+        .status(400)
+        .json({ status: 400, message: "No se pudo deshabilitar su cuenta" });
+    } else {
+      res
+        .status(400)
+        .json({ status: 400, message: "No se actualizó el perfil" });
+    }
   }
+};
+
+export const getProfileById = async (req, res) => {
+  const user = await User.findById(req.params.userId, { password: 0 })
+    .populate("roles")
+    .populate({
+      path: "employee",
+      populate: [
+        {
+          path: "documentType",
+        },
+        {
+          path: "position",
+        },
+      ],
+    });
+
+  res.status(200).json(user);
 };
 
 export const updatePasswordProfileById = async (req, res) => {

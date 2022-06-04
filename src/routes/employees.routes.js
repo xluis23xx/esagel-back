@@ -8,7 +8,7 @@ router.post('/', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.createEmpl
 
 router.get('/', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.getEmployees)
 
-router.get('/:employeeId', [authJwt.verifyToken], employeeCtrl.getEmployeeById)
+router.get('/:employeeId', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.getEmployeeById)
 
 router.put('/:employeeId', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.updateEmployeeById)
 

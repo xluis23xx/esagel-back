@@ -4,12 +4,12 @@ const router = Router()
 import * as leadSourcesCtrl from '../controllers/leadSources.controller';
 import { authJwt} from '../middlewares';
 
-router.get('/', [authJwt.verifyToken], leadSourcesCtrl.getLeadSources)
+router.get('/', [authJwt.verifyToken, authJwt.isUser], leadSourcesCtrl.getLeadSources)
 
-router.get('/:leadSourceId', [authJwt.verifyToken], leadSourcesCtrl.getLeadSourceById)
+router.get('/:leadSourceId', [authJwt.verifyToken, authJwt.isUser], leadSourcesCtrl.getLeadSourceById)
 
-router.post('/', [authJwt.verifyToken], leadSourcesCtrl.createLeadSource)
+router.post('/', [authJwt.verifyToken, authJwt.isAdmin], leadSourcesCtrl.createLeadSource)
 
-router.put('/:leadSourceId', [authJwt.verifyToken], leadSourcesCtrl.updateLeadSourceById)
+router.put('/:leadSourceId', [authJwt.verifyToken, authJwt.isAdmin], leadSourcesCtrl.updateLeadSourceById)
 
 export default router;

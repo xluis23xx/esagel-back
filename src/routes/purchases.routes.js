@@ -9,7 +9,7 @@ router.post('/', [authJwt.verifyToken, authJwt.isAdmin], purchaseCtrl.createPurc
 
 router.get('/', [authJwt.verifyToken, authJwt.isAdmin], purchaseCtrl.getPurchases)
 
-router.get('/:purchaseId', [authJwt.verifyToken], purchaseCtrl.getPurchaseById)
+router.get('/:purchaseId', [authJwt.verifyToken, authJwt.isAdmin], purchaseCtrl.getPurchaseById)
 
 router.put('/:purchaseId', [authJwt.verifyToken, authJwt.isAdmin], purchaseCtrl.updatePurchaseById)
 

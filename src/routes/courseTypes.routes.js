@@ -4,19 +4,27 @@ const router = Router();
 import * as courseTypesCtrl from "../controllers/courseType.controller";
 import { authJwt } from "../middlewares";
 
-router.get("/", [authJwt.verifyToken], courseTypesCtrl.getCourseTypes);
+router.get(
+  "/",
+  [authJwt.verifyToken, authJwt.isUser],
+  courseTypesCtrl.getCourseTypes
+);
 
 router.get(
   "/:courseTypeId",
-  [authJwt.verifyToken],
+  [authJwt.verifyToken, authJwt.isUser],
   courseTypesCtrl.getCourseTypeById
 );
 
-router.post("/", [authJwt.verifyToken], courseTypesCtrl.createCourseType);
+router.post(
+  "/",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  courseTypesCtrl.createCourseType
+);
 
 router.put(
   "/:courseTypeId",
-  [authJwt.verifyToken],
+  [authJwt.verifyToken, authJwt.isAdmin],
   courseTypesCtrl.updateCourseTypeById
 );
 

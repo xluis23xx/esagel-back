@@ -6,7 +6,7 @@ import { authJwt} from '../middlewares';
 
 router.get('/', [authJwt.verifyToken, authJwt.isUser], topicsCtrl.getTopics)
 
-router.get('/:topicId', [authJwt.verifyToken], topicsCtrl.getTopicById)
+router.get('/:topicId', [authJwt.verifyToken, authJwt.isUser], topicsCtrl.getTopicById)
 
 router.post('/', [authJwt.verifyToken, authJwt.isUser], topicsCtrl.createTopic)
 

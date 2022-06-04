@@ -48,6 +48,11 @@ export const signIn = async (req, res) => {
       .status(401)
       .json({ status: 400, message: "Contraseña Inválida" });
 
+  if (!userFound.status)
+    return res
+      .status(401)
+      .json({ status: 400, message: "Usuario deshabilitado" });
+
   const user = await User.findOne(
     { username: userFound.username },
     { password: 0 }

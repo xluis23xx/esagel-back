@@ -1,15 +1,31 @@
-import {Router} from 'express'
-const router = Router()
+import { Router } from "express";
+const router = Router();
 
-import * as documentsCtrl from '../controllers/documents.controller';
-import { authJwt} from '../middlewares';
+import * as documentsCtrl from "../controllers/documents.controller";
+import { authJwt } from "../middlewares";
 
-router.get('/', [authJwt.verifyToken], documentsCtrl.getDocuments)
+router.get(
+  "/",
+  [authJwt.verifyToken, authJwt.isUser],
+  documentsCtrl.getDocuments
+);
 
-router.get('/:documentId', [authJwt.verifyToken], documentsCtrl.getDocumentById)
+router.get(
+  "/:documentId",
+  [authJwt.verifyToken, authJwt.isUser],
+  documentsCtrl.getDocumentById
+);
 
-router.post('/', [authJwt.verifyToken], documentsCtrl.createDocument)
+router.post(
+  "/",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  documentsCtrl.createDocument
+);
 
-router.put('/:documentId', [authJwt.verifyToken], documentsCtrl.updateDocumentById)
+router.put(
+  "/:documentId",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  documentsCtrl.updateDocumentById
+);
 
 export default router;

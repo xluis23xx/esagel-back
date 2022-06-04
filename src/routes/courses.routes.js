@@ -8,7 +8,7 @@ router.post('/', [authJwt.verifyToken, authJwt.isUser], coursesCtrl.createCourse
 
 router.get('/',[authJwt.verifyToken, authJwt.isUser], coursesCtrl.getCourses)
 
-router.get('/:courseId', coursesCtrl.getCourseById)
+router.get('/:courseId', [authJwt.verifyToken, authJwt.isUser], coursesCtrl.getCourseById)
 
 router.put('/:courseId', [authJwt.verifyToken, authJwt.isUser], coursesCtrl.updateCourseById)
 

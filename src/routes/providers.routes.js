@@ -9,7 +9,7 @@ router.post('/', [authJwt.verifyToken, authJwt.isAdmin], providerCtrl.createProv
 
 router.get('/', [authJwt.verifyToken, authJwt.isAdmin], providerCtrl.getProviders)
 
-router.get('/:providerId', [authJwt.verifyToken], providerCtrl.getProviderById)
+router.get('/:providerId', [authJwt.verifyToken, authJwt.isAdmin], providerCtrl.getProviderById)
 
 router.put('/:providerId', [authJwt.verifyToken, authJwt.isAdmin], providerCtrl.updateProviderById)
 
