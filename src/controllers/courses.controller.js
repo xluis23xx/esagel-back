@@ -13,6 +13,7 @@ export const createCourse = async (req, res) => {
       vacanciesNumber,
       courseType,
       status,
+      courseLines,
     } = req.body;
 
     const newCourse = new Course({
@@ -24,6 +25,7 @@ export const createCourse = async (req, res) => {
       image,
       vacanciesNumber,
       status,
+      courseLines,
     });
 
     const foundCourseTypes = await CourseType.find({
@@ -36,7 +38,13 @@ export const createCourse = async (req, res) => {
         .json({ status: 400, message: "Tipo de curso no encontrado" });
 
     newCourse.courseType = foundCourseTypes[0];
-    console.log(newCourse);
+
+    if (!courseLines.length > 0)
+      return res
+        .status(400)
+        .json({ status: 400, message: "Debe seleccionarse un tema" });
+
+    newCourse.courseLines = courseLines.map((topic) => topic._id);
 
     const savedCourse = await newCourse.save();
 
@@ -56,6 +64,9 @@ export const getCourses = async (req, res) => {
     populate: [
       {
         path: "courseType",
+      },
+      {
+        path: "courseLines",
       },
     ],
   };

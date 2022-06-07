@@ -7,6 +7,7 @@ const documentSchema = new Schema(
     name: String,
     operation: String,
     status: Number,
+    code: String,
   },
   {
     timestamps: true,
