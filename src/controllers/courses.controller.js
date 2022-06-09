@@ -80,9 +80,9 @@ export const getCourses = async (req, res) => {
 };
 
 export const getCourseById = async (req, res) => {
-  const course = await Course.findById(req.params.courseId).populate(
-    "courseType"
-  );
+  const course = await Course.findById(req.params.courseId)
+    .populate("courseType")
+    .populate("courseLines");
   res.status(200).json(course);
 };
 
