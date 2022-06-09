@@ -22,6 +22,7 @@ import ordersRoutes from "./routes/orders.routes";
 import purchasesRoutes from "./routes/purchases.routes";
 import salesRoutes from "./routes/sales.routes";
 import profilesRoutes from "./routes/profiles.routes";
+import goalsRoutes from "./routes/goals.routes";
 
 const app = express();
 const cors = require("cors");
@@ -62,5 +63,6 @@ app.use("/api/orders", ordersRoutes);
 app.use("/api/purchases", purchasesRoutes);
 app.use("/api/sales", salesRoutes);
 app.use("/api/profiles", profilesRoutes);
+app.use("/api/goals", goalsRoutes);
 
 export default app;

@@ -4,16 +4,16 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 
 const goalSchema = new Schema(
   {
-    initial_date: {
+    startDate: {
       type: Date,
     },
-    end_date: {
+    endDate: {
       type: Date,
     },
-    amount: {
+    estimatedQuantity: {
       type: Number,
     },
-    amount_sold: {
+    quantitySold: {
       type: Number,
     },
     employee: [
