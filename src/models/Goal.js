@@ -18,7 +18,7 @@ const goalSchema = new Schema(
     },
     employee: [
       {
-        ref: "Employee",
+        ref: "User",
         type: Schema.Types.ObjectId,
       },
     ],

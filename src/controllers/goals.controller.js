@@ -4,11 +4,6 @@ import User from "../models/User";
 
 export const createGoal = async (req, res) => {
   const { employee, startDate, endDate, estimatedQuantity } = req.body;
-  // const isoDateStart = Date(startDate);
-  // const isoDateEnd = Date(endDate);
-
-  // console.log("isoDateStart",isoDateStart);
-  // console.log("isoDateEnd",isoDateEnd);
 
   const foundSellers = await User.find({ _id: { $in: employee } });
 
@@ -20,6 +15,7 @@ export const createGoal = async (req, res) => {
   const orderRangeFounds = await Order.find({
     createdAt: { $gte: startDate, $lte: endDate },
     seller: employee,
+    status: 2,
   });
 
   if (!orderRangeFounds.length > 0)
@@ -28,10 +24,10 @@ export const createGoal = async (req, res) => {
       .json({ status: 400, message: "Pedidos no encontrados" });
 
   let amountSold = 0.0;
-  
+
   orderRangeFounds.map(async (element) => {
-    amountSold = amountSold + element.total
-  })
+    amountSold = amountSold + element.total;
+  });
 
   const newGoal = new Goal({
     employee,
@@ -46,72 +42,76 @@ export const createGoal = async (req, res) => {
   res.status(201).json({ status: 201, savedGoal });
 };
 
-// export const getProviders = async (req, res) => {
-//   const limit = parseInt(req.query.limit || 10);
-//   const page = parseInt(req.query.pageSize || 1);
-//   const { filter } = req.body;
+export const getGoals = async (req, res) => {
+  const limit = parseInt(req.query.limit || 10);
+  const page = parseInt(req.query.pageSize || 1);
+  const { startDate, endDate } = req.body;
 
-//   const options = {
-//     limit,
-//     page: page,
-//     populate: ["documentType", "position"],
-//   };
+  const options = {
+    limit,
+    page: page,
+    populate: ["employee"],
+  };
 
-//   const providers = await Provider.paginate(
-//     {
-//       // $or: [{ documentNumber: filter }],
-//     },
-//     options
-//   );
-//   res.status(200).json(providers);
-//   // const providers = await Provider.find().populate("documentType");
-//   // res.json(providers);
-// };
+  const goals = await Goal.paginate(
+    {
+      createdAt: { $gte: startDate, $lte: endDate },
+    },
+    options
+  );
+  res.status(200).json(goals);
+};
 
-// export const getProviderById = async (req, res) => {
-//   try {
-//     const provider = await Provider.findById(req.params.providerId).populate(
-//       "documentType"
-//     );
-//     res.status(200).json(provider);
-//   } catch (error) {
-//     res.status(400).json({ message: "Proveedor no encontrado" });
-//   }
-// };
+export const getGoalById = async (req, res) => {
+  try {
+    const goal = await Goal.findById(req.params.goalId).populate("employee");
+    res.status(200).json(goal);
+  } catch (error) {
+    res.status(400).json({ message: "Meta no encontrada no encontrada" });
+  }
+};
 
-// export const updateProviderById = async (req, res) => {
-//   try {
-//     const updatedProvider = await Provider.findByIdAndUpdate(
-//       req.params.providerId,
-//       req.body,
-//       {
-//         new: true,
-//       }
-//     );
-//     res.status(200).json({ status: 200, updatedProvider });
-//   } catch (error) {
-//     res
-//       .status(400)
-//       .json({ status: 400, message: "No se actualizó el proveedor" });
-//   }
-// };
+export const updateGoalById = async (req, res) => {
+  try {
+    const { employee, startDate, endDate } = req.body;
 
-// export const getGoals = async (req, res) => {
-//   const {
-//     employee,
-//     startDate,
-//     endDate,
-//     estimatedQuantity,
-//   } = req.body;
+    const foundSellers = await User.find({ _id: { $in: employee } });
 
-//   const orderRangeFounds = await Order.find({"createdAt" : {"$gte" : startDate, "$lte" : endDate}, seller: employee})
+    if (!foundSellers.length > 0)
+      return res
+        .status(400)
+        .json({ status: 400, message: "Vendedor no encontrado" });
 
-//   if (!orderRangeFounds.length > 0)
-//     return res
-//       .status(400)
-//       .json({ status: 400, message: "Pedidos no encontrados" });
+    const orderRangeFounds = await Order.find({
+      createdAt: { $gte: startDate, $lte: endDate },
+      seller: employee,
+      status: 2,
+    });
 
-//   console.log("orderRangeFounds",orderRangeFounds);
+    if (!orderRangeFounds.length > 0)
+      return res
+        .status(400)
+        .json({ status: 400, message: "Pedidos no encontrados" });
 
-//   res.status(201).json({ status: 201, savedProvider });
-// };
+    let amountSold = 0.0;
+
+    orderRangeFounds.map(async (element) => {
+      amountSold = amountSold + element.total;
+    });
+
+    req.body.quantitySold = amountSold;
+
+    const updatedGoal = await Goal.findByIdAndUpdate(
+      req.params.goalId,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    res.status(200).json({ status: 200, updatedGoal });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ status: 400, message: "No se actualizó la meta" });
+  }
+};
