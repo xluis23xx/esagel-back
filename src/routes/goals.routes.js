@@ -10,7 +10,7 @@ router.post(
   goalsCtrl.createGoal
 );
 
-router.get('/', [authJwt.verifyToken, authJwt.isAdmin], goalsCtrl.getGoals);
+router.post('/consult', [authJwt.verifyToken, authJwt.isAdmin], goalsCtrl.getGoals);
 
 router.get('/:goalId', [authJwt.verifyToken, authJwt.isAdmin], goalsCtrl.getGoalById)
 

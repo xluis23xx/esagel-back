@@ -45,7 +45,7 @@ export const createGoal = async (req, res) => {
 export const getGoals = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
   const page = parseInt(req.query.pageSize || 1);
-  const { startDate, endDate } = req.query;
+  const { startDate, endDate } = req.body;
 
   const options = {
     limit,
