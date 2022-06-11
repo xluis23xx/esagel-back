@@ -46,6 +46,16 @@ export const getGoals = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
   const page = parseInt(req.query.pageSize || 1);
   const { startDate, endDate } = req.body;
+  const convertStart = new Date(startDate);
+  const convertEnd = new Date(endDate);
+
+  if (!(convertStart < convertEnd))
+    return res
+      .status(400)
+      .json({
+        status: 400,
+        message: "La fecha inicial debe ser menor a la fecha final",
+      });
 
   const options = {
     limit,
@@ -110,8 +120,6 @@ export const updateGoalById = async (req, res) => {
     );
     res.status(200).json({ status: 200, updatedGoal });
   } catch (error) {
-    res
-      .status(400)
-      .json({ status: 400, message: "No se actualizó la meta" });
+    res.status(400).json({ status: 400, message: "No se actualizó la meta" });
   }
 };

@@ -5,7 +5,7 @@ const router = Router()
 import * as saleCtrl from '../controllers/sales.controller'
 import { authJwt } from '../middlewares';
 
-router.get('/', [authJwt.verifyToken, authJwt.isUser], saleCtrl.getSales)
+router.post('/', [authJwt.verifyToken, authJwt.isUser], saleCtrl.getSales)
 
 router.get('/:saleId', [authJwt.verifyToken, authJwt.isUser], saleCtrl.getSaleById)
 

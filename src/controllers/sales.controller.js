@@ -6,6 +6,17 @@ import Sale from "../models/Sale";
 export const getSales = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
   const page = parseInt(req.query.pageSize || 1);
+  const { startDate, endDate } = req.body;
+  const convertStart = new Date(startDate);
+  const convertEnd = new Date(endDate);
+
+  if (!(convertStart < convertEnd))
+    return res
+      .status(400)
+      .json({
+        status: 400,
+        message: "La fecha inicial debe ser menor a la fecha final",
+      });
   //   const { filter } = req.body;
 
   const options = {
@@ -22,6 +33,7 @@ export const getSales = async (req, res) => {
 
   const sales = await Sale.paginate(
     {
+      createdAt: { $gte: startDate, $lte: endDate },
       // $or: [{ documentNumber: filter }],
     },
     options

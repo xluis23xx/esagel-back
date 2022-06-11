@@ -7,7 +7,7 @@ import { authJwt } from '../middlewares';
 
 router.post('/', [authJwt.verifyToken, authJwt.isAdmin], purchaseCtrl.createPurchase)
 
-router.get('/', [authJwt.verifyToken, authJwt.isAdmin], purchaseCtrl.getPurchases)
+router.post('/consult', [authJwt.verifyToken, authJwt.isAdmin], purchaseCtrl.getPurchases)
 
 router.get('/:purchaseId', [authJwt.verifyToken, authJwt.isAdmin], purchaseCtrl.getPurchaseById)
 

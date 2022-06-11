@@ -6,7 +6,7 @@ import { authJwt } from "../middlewares";
 
 router.post("/", [authJwt.verifyToken, authJwt.isUser], orderCtrl.createOrder);
 
-router.get("/", [authJwt.verifyToken, authJwt.isUser], orderCtrl.getOrders);
+router.post("/consult", [authJwt.verifyToken, authJwt.isUser], orderCtrl.getOrders);
 
 router.get(
   "/:orderId",
