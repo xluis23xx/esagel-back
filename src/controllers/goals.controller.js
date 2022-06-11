@@ -50,12 +50,10 @@ export const getGoals = async (req, res) => {
   const convertEnd = new Date(endDate);
 
   if (!(convertStart < convertEnd))
-    return res
-      .status(400)
-      .json({
-        status: 400,
-        message: "La fecha inicial debe ser menor a la fecha final",
-      });
+    return res.status(400).json({
+      status: 400,
+      message: "La fecha inicial debe ser menor a la fecha final",
+    });
 
   const options = {
     limit,
@@ -79,7 +77,14 @@ export const getGoals = async (req, res) => {
 
 export const getGoalById = async (req, res) => {
   try {
-    const goal = await Goal.findById(req.params.goalId).populate("seller");
+    const goal = await Goal.findById(req.params.goalId).populate({
+      path: "seller",
+      populate: [
+        {
+          path: "employee",
+        },
+      ],
+    });
     res.status(200).json(goal);
   } catch (error) {
     res.status(400).json({ message: "Meta no encontrada no encontrada" });
@@ -88,42 +93,53 @@ export const getGoalById = async (req, res) => {
 
 export const updateGoalById = async (req, res) => {
   try {
-    const { seller, startDate, endDate } = req.body;
+    if (req.body?.isCancel) {
+      const updatedGoal = await Goal.findByIdAndUpdate(
+        req.params.goalId,
+        req.body,
+        {
+          new: true,
+        }
+      );
+      res.status(200).json({ status: 200, updatedGoal });
+    } else {
+      const { seller, startDate, endDate } = req.body;
 
-    const foundSellers = await User.find({ _id: { $in: seller } });
+      const foundSellers = await User.find({ _id: { $in: seller } });
 
-    if (!foundSellers.length > 0)
-      return res
-        .status(400)
-        .json({ status: 400, message: "Vendedor no encontrado" });
+      if (!foundSellers.length > 0)
+        return res
+          .status(400)
+          .json({ status: 400, message: "Vendedor no encontrado" });
 
-    const orderRangeFounds = await Order.find({
-      createdAt: { $gte: startDate, $lte: endDate },
-      seller: seller,
-      status: 2,
-    });
+      const orderRangeFounds = await Order.find({
+        createdAt: { $gte: startDate, $lte: endDate },
+        seller: seller,
+        status: 2,
+      });
 
-    if (!orderRangeFounds.length > 0)
-      return res
-        .status(400)
-        .json({ status: 400, message: "Pedidos no encontrados" });
+      if (!orderRangeFounds.length > 0)
+        return res
+          .status(400)
+          .json({ status: 400, message: "Pedidos no encontrados" });
 
-    let amountSold = 0.0;
+      let amountSold = 0.0;
 
-    orderRangeFounds.map(async (element) => {
-      amountSold = amountSold + element.total;
-    });
+      orderRangeFounds.map(async (element) => {
+        amountSold = amountSold + element.total;
+      });
 
-    req.body.quantitySold = amountSold;
+      req.body.quantitySold = amountSold;
 
-    const updatedGoal = await Goal.findByIdAndUpdate(
-      req.params.goalId,
-      req.body,
-      {
-        new: true,
-      }
-    );
-    res.status(200).json({ status: 200, updatedGoal });
+      const updatedGoal = await Goal.findByIdAndUpdate(
+        req.params.goalId,
+        req.body,
+        {
+          new: true,
+        }
+      );
+      res.status(200).json({ status: 200, updatedGoal });
+    }
   } catch (error) {
     res.status(400).json({ status: 400, message: "No se actualizó la meta" });
   }
