@@ -60,7 +60,12 @@ export const getGoals = async (req, res) => {
   const options = {
     limit,
     page: page,
-    populate: ["seller"],
+    populate: [
+      "seller",
+      {
+        populate: "employee",
+      }
+    ],
   };
 
   const goals = await Goal.paginate(
