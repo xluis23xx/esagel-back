@@ -14,7 +14,7 @@ export const createGoal = async (req, res) => {
 
   const orderRangeFounds = await Order.find({
     createdAt: { $gte: startDate, $lte: endDate },
-    seller: employee,
+    seller: seller,
     status: 2,
   });
 
@@ -30,7 +30,7 @@ export const createGoal = async (req, res) => {
   });
 
   const newGoal = new Goal({
-    employee,
+    seller,
     startDate,
     endDate,
     estimatedQuantity,
@@ -60,7 +60,7 @@ export const getGoals = async (req, res) => {
   const options = {
     limit,
     page: page,
-    populate: ["employee"],
+    populate: ["seller"],
   };
 
   const goals = await Goal.paginate(
@@ -74,7 +74,7 @@ export const getGoals = async (req, res) => {
 
 export const getGoalById = async (req, res) => {
   try {
-    const goal = await Goal.findById(req.params.goalId).populate("employee");
+    const goal = await Goal.findById(req.params.goalId).populate("seller");
     res.status(200).json(goal);
   } catch (error) {
     res.status(400).json({ message: "Meta no encontrada no encontrada" });
@@ -83,9 +83,9 @@ export const getGoalById = async (req, res) => {
 
 export const updateGoalById = async (req, res) => {
   try {
-    const { employee, startDate, endDate } = req.body;
+    const { seller, startDate, endDate } = req.body;
 
-    const foundSellers = await User.find({ _id: { $in: employee } });
+    const foundSellers = await User.find({ _id: { $in: seller } });
 
     if (!foundSellers.length > 0)
       return res
@@ -94,7 +94,7 @@ export const updateGoalById = async (req, res) => {
 
     const orderRangeFounds = await Order.find({
       createdAt: { $gte: startDate, $lte: endDate },
-      seller: employee,
+      seller: seller,
       status: 2,
     });
 
