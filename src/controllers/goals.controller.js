@@ -14,7 +14,7 @@ export const createGoal = async (req, res) => {
 
   const orderRangeFounds = await Order.find({
     createdAt: { $gte: startDate, $lte: endDate },
-    seller: seller,
+    seller: seller ? seller : '',
     status: 2,
   });
 
