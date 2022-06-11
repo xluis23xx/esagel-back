@@ -72,7 +72,10 @@ export const getCourses = async (req, res) => {
   };
   const courses = await Course.paginate(
     {
-      // $or: [{ code: filter }, { name: filter }],
+      $or: [
+        { code: { $regex: '.*' + filter + '.*', $options: 'i' } }, 
+        { name: { $regex: '.*' + filter + '.*', $options: 'i' } },
+      ],
     },
     options
   );

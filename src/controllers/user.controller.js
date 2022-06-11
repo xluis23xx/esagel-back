@@ -6,6 +6,7 @@ import { generatorPassword } from "../utils/randomGenerator";
 export const getUsers = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
   const page = parseInt(req.query.pageSize || 1);
+  const { filter } = req.body;
   const options = {
     limit,
     page: page,
@@ -27,7 +28,13 @@ export const getUsers = async (req, res) => {
       },
     ],
   };
-  const users = await User.paginate({}, options);
+  const users = await User.paginate(
+    {
+      $or: [
+        { username: { $regex: '.*' + filter + '.*', $options: 'i' } },
+      ],
+    }, 
+    options);
 
   res.status(200).json(users);
 };

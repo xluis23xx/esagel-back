@@ -3,13 +3,23 @@ import Topic from "../models/Topic";
 export const getTopics = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
   const page = parseInt(req.query.pageSize || 1);
+  const { filter } = req.body;
 
   const options = {
     limit,
     page: page,
   };
 
-  const topics = await Topic.paginate({}, options);
+  const topics = await Topic.paginate(
+    {
+      $or: [
+        {
+          name: { $regex: '.*' + filter + '.*', $options: 'i' }
+        }
+      ]
+    }, 
+    options
+  );
   // const topics = await Topic.find();
   res.json(topics);
 };

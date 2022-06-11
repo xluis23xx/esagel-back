@@ -4,7 +4,7 @@ const router = Router()
 import * as topicsCtrl from '../controllers/topics.controller';
 import { authJwt} from '../middlewares';
 
-router.get('/', [authJwt.verifyToken, authJwt.isUser], topicsCtrl.getTopics)
+router.post('/consult', [authJwt.verifyToken, authJwt.isUser], topicsCtrl.getTopics)
 
 router.get('/:topicId', [authJwt.verifyToken, authJwt.isUser], topicsCtrl.getTopicById)
 

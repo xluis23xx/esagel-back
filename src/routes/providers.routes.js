@@ -7,7 +7,7 @@ import { authJwt } from '../middlewares';
 
 router.post('/', [authJwt.verifyToken, authJwt.isAdmin], providerCtrl.createProvider)
 
-router.get('/', [authJwt.verifyToken, authJwt.isAdmin], providerCtrl.getProviders)
+router.post('/consult', [authJwt.verifyToken, authJwt.isAdmin], providerCtrl.getProviders)
 
 router.get('/:providerId', [authJwt.verifyToken, authJwt.isAdmin], providerCtrl.getProviderById)
 

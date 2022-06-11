@@ -16,11 +16,13 @@ const goalSchema = new Schema(
     quantitySold: {
       type: Number,
     },
-    seller:
-      {
-        ref: "User",
-        type: Schema.Types.ObjectId,
-      },
+    seller: {
+      ref: "User",
+      type: Schema.Types.ObjectId,
+    },
+    status: {
+      type: Number,
+    },
   },
   {
     timestamps: true,

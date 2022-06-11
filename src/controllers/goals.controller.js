@@ -3,7 +3,7 @@ import Goal from "../models/Goal";
 import User from "../models/User";
 
 export const createGoal = async (req, res) => {
-  const { seller, startDate, endDate, estimatedQuantity } = req.body;
+  const { seller, startDate, endDate, estimatedQuantity, status } = req.body;
 
   const foundSellers = await User.find({ _id: { $in: seller } });
 
@@ -35,6 +35,7 @@ export const createGoal = async (req, res) => {
     endDate,
     estimatedQuantity,
     quantitySold: amountSold,
+    status: status ? status : 1,
   });
 
   const savedGoal = await newGoal.save();
@@ -69,6 +70,7 @@ export const getGoals = async (req, res) => {
   const goals = await Goal.paginate(
     {
       createdAt: { $gte: startDate, $lte: endDate },
+      status: 1,
     },
     options
   );

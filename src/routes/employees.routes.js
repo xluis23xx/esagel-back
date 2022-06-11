@@ -6,7 +6,7 @@ import { authJwt } from '../middlewares';
 
 router.post('/', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.createEmployee)
 
-router.get('/', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.getEmployees)
+router.post('/consult', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.getEmployees)
 
 router.get('/:employeeId', [authJwt.verifyToken, authJwt.isAdmin], employeeCtrl.getEmployeeById)
 

@@ -6,7 +6,7 @@ import { authJwt } from '../middlewares';
 
 router.post('/', [authJwt.verifyToken, authJwt.isUser], coursesCtrl.createCourse)
 
-router.get('/',[authJwt.verifyToken, authJwt.isUser], coursesCtrl.getCourses)
+router.post('/consult',[authJwt.verifyToken, authJwt.isUser], coursesCtrl.getCourses)
 
 router.get('/:courseId', [authJwt.verifyToken, authJwt.isUser], coursesCtrl.getCourseById)
 
