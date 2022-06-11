@@ -59,6 +59,7 @@ export const getGoals = async (req, res) => {
   const options = {
     limit,
     page: page,
+    sort: { createdAt: 'desc' },
     populate: [
       {
         path: "seller",

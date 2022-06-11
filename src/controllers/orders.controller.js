@@ -100,7 +100,7 @@ export const createOrder = async (req, res) => {
 
 export const getOrders = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
-  const page = parseInt(req.query.pageSise || 1);
+  const page = parseInt(req.query.pageSize || 1);
   const { startDate, endDate } = req.body;
   const convertStart = new Date(startDate);
   const convertEnd = new Date(endDate);
@@ -113,6 +113,7 @@ export const getOrders = async (req, res) => {
   const options = {
     limit,
     page: page,
+    sort: { createdAt: 'desc' },
     populate: ["seller", "client", "documentType", "orderLines"],
   };
 

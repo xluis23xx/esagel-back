@@ -66,6 +66,7 @@ export const getPurchases = async (req, res) => {
   const options = {
     limit,
     page: page,
+    sort: { createdAt: 'desc' },
     populate: ["provider", "buyer"],
   };
 
