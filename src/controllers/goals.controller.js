@@ -3,9 +3,9 @@ import Goal from "../models/Goal";
 import User from "../models/User";
 
 export const createGoal = async (req, res) => {
-  const { employee, startDate, endDate, estimatedQuantity } = req.body;
+  const { seller, startDate, endDate, estimatedQuantity } = req.body;
 
-  const foundSellers = await User.find({ _id: { $in: employee } });
+  const foundSellers = await User.find({ _id: { $in: seller } });
 
   if (!foundSellers.length > 0)
     return res

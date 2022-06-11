@@ -16,7 +16,7 @@ const goalSchema = new Schema(
     quantitySold: {
       type: Number,
     },
-    employee: [
+    seller: [
       {
         ref: "User",
         type: Schema.Types.ObjectId,
