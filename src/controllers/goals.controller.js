@@ -14,14 +14,14 @@ export const createGoal = async (req, res) => {
 
   const orderRangeFounds = await Order.find({
     createdAt: { $gte: startDate, $lte: endDate },
-    seller: seller ? seller : '',
+    seller: seller,
     status: 2,
   });
 
-  if (!orderRangeFounds.length > 0)
-    return res
-      .status(400)
-      .json({ status: 400, message: "Pedidos no encontrados" });
+  // if (!orderRangeFounds.length > 0)
+  //   return res
+  //     .status(400)
+  //     .json({ status: 400, message: "Pedidos no encontrados" });
 
   let amountSold = 0.0;
 
