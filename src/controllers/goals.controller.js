@@ -61,10 +61,10 @@ export const getGoals = async (req, res) => {
     limit,
     page: page,
     populate: [
-      "seller",
       {
+        path: "seller",
         populate: "employee",
-      }
+      },
     ],
   };
 
