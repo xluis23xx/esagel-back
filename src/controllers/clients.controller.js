@@ -104,7 +104,7 @@ export const getClients = async (req, res) => {
     limit,
     page: page,
     projection: { password: 0 },
-    sort: { name: "asc", lastname: "asc" },
+    sort: { name: "asc", lastname: "asc", secondLastname: "asc" },
     options: {
       populate: [
         {
