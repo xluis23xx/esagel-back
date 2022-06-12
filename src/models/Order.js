@@ -36,7 +36,6 @@ const orderSchema = new Schema(
     },
     documentNumber: {
       type: String,
-      unique: true,
     },
     orderLines: [
       {

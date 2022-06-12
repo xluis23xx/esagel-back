@@ -9,7 +9,7 @@ import Sale from "../models/Sale";
 export const createOrder = async (req, res) => {
   try {
     let collectionLines = [];
-    let serie = '';
+    let serie = "";
     const {
       percentIva,
       subtotal,
@@ -47,9 +47,9 @@ export const createOrder = async (req, res) => {
     const serial = lengthSecuential.length;
     const resultLength = document.length - serial;
     for (let index = 0; index < resultLength; index++) {
-      serie = serie + '0';
+      serie = serie + "0";
     }
-    serie = document.code + '-' + serie + lengthSecuential;
+    serie = document.code + "-" + serie + lengthSecuential;
     document.sequential = initialSequential;
     await document.save();
 
@@ -106,7 +106,8 @@ export const createOrder = async (req, res) => {
       message: "Se ha generado el pedido: " + newOrder.orderNumber,
     });
   } catch (error) {
-    res.status(400).json({ status: 400, message: 'hola' });
+    console.log(error);
+    res.status(400).json({ status: 400, message: error });
   }
 };
 
@@ -117,15 +118,16 @@ export const getOrders = async (req, res) => {
   const convertStart = new Date(startDate);
   const convertEnd = new Date(endDate);
 
-  if (!(convertStart < convertEnd)) 
-    return res
-    .status(400)
-    .json({ status: 400, message: "La fecha inicial debe ser menor a la fecha final" });
-  
+  if (!(convertStart < convertEnd))
+    return res.status(400).json({
+      status: 400,
+      message: "La fecha inicial debe ser menor a la fecha final",
+    });
+
   const options = {
     limit,
     page: page,
-    sort: { createdAt: 'desc' },
+    sort: { createdAt: "desc" },
     populate: ["seller", "client", "documentType", "orderLines"],
   };
 
@@ -150,7 +152,14 @@ export const getOrderById = async (req, res) => {
     })
     .populate("client")
     .populate("documentType")
-    .populate("orderLines");
+    .populate({
+      path: "orderLines",
+      populate: [
+        {
+          path: "course",
+        },
+      ],
+    });
   res.status(200).json(order);
 };
 
