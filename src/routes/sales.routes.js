@@ -1,14 +1,26 @@
 import { Router } from "express";
 
-const router = Router()
+const router = Router();
 
-import * as saleCtrl from '../controllers/sales.controller'
-import { authJwt } from '../middlewares';
+import * as saleCtrl from "../controllers/sales.controller";
+import { authJwt } from "../middlewares";
 
-router.post('/', [authJwt.verifyToken, authJwt.isUser], saleCtrl.getSales)
+router.post(
+  "/consult",
+  [authJwt.verifyToken, authJwt.isUser],
+  saleCtrl.getSales
+);
 
-router.get('/:saleId', [authJwt.verifyToken, authJwt.isUser], saleCtrl.getSaleById)
+router.get(
+  "/:saleId",
+  [authJwt.verifyToken, authJwt.isUser],
+  saleCtrl.getSaleById
+);
 
-router.put('/:saleId', [authJwt.verifyToken, authJwt.isAdmin], saleCtrl.updateSaleById)
+router.put(
+  "/:saleId",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  saleCtrl.updateSaleById
+);
 
 export default router;

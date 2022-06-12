@@ -10,19 +10,17 @@ export const getSales = async (req, res) => {
   const convertStart = new Date(startDate);
   const convertEnd = new Date(endDate);
 
-  if (!(convertStart < convertEnd))
-    return res
-      .status(400)
-      .json({
-        status: 400,
-        message: "La fecha inicial debe ser menor a la fecha final",
-      });
+  if (!(convertStart <= convertEnd))
+    return res.status(400).json({
+      status: 400,
+      message: "La fecha inicial debe ser menor a la fecha final",
+    });
   //   const { filter } = req.body;
 
   const options = {
     limit,
     page: page,
-    sort: { createdAt: 'desc' },
+    sort: { createdAt: "desc" },
     populate: [
       "client",
       {
