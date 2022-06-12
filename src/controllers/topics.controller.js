@@ -14,10 +14,11 @@ export const getTopics = async (req, res) => {
     {
       $or: [
         {
-          name: { $regex: '.*' + filter + '.*', $options: 'i' }
-        }
-      ]
-    }, 
+          name: { $regex: ".*" + filter + ".*", $options: "i" },
+        },
+      ],
+      status: 1,
+    },
     options
   );
   // const topics = await Topic.find();

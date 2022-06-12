@@ -47,10 +47,11 @@ export const getProviders = async (req, res) => {
   const providers = await Provider.paginate(
     {
       $or: [
-        { documentNumber: { $regex: '.*' + filter + '.*', $options: 'i' } },
-        { businessName: { $regex: '.*' + filter + '.*', $options: 'i' } },
-        { contactName: { $regex: '.*' + filter + '.*', $options: 'i' } }
+        { documentNumber: { $regex: ".*" + filter + ".*", $options: "i" } },
+        { businessName: { $regex: ".*" + filter + ".*", $options: "i" } },
+        { contactName: { $regex: ".*" + filter + ".*", $options: "i" } },
       ],
+      status: 1,
     },
     options
   );

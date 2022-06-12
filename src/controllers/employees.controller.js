@@ -71,11 +71,12 @@ export const getEmployees = async (req, res) => {
   const employees = await Employee.paginate(
     {
       $or: [
-        { name: { $regex: '.*' + filter + '.*', $options: 'i' } },
-        { lastname: { $regex: '.*' + filter + '.*', $options: 'i' } },
-        { secondLastname: { $regex: '.*' + filter + '.*', $options: 'i' } },
-        { documentNumber: { $regex: '.*' + filter + '.*', $options: 'i' } },
+        { name: { $regex: ".*" + filter + ".*", $options: "i" } },
+        { lastname: { $regex: ".*" + filter + ".*", $options: "i" } },
+        { secondLastname: { $regex: ".*" + filter + ".*", $options: "i" } },
+        { documentNumber: { $regex: ".*" + filter + ".*", $options: "i" } },
       ],
+      status: 1,
     },
     options
   );
