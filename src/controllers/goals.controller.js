@@ -46,7 +46,7 @@ export const createGoal = async (req, res) => {
 export const getGoals = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
   const page = parseInt(req.query.pageSize || 1);
-  const { startDate, endDate } = req.body;
+  const { startDate, endDate, status } = req.body;
   const convertStart = new Date(startDate);
   const convertEnd = new Date(endDate);
 
@@ -71,7 +71,7 @@ export const getGoals = async (req, res) => {
   const goals = await Goal.paginate(
     {
       createdAt: { $gte: startDate, $lte: endDate },
-      status: 1,
+      status: typeof status === "number" ? status : [0, 1],
     },
     options
   );
