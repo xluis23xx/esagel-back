@@ -9,8 +9,8 @@ import Sale from "../models/Sale";
 export const createOrder = async (req, res) => {
   try {
     let collectionLines = [];
+    let serie = '';
     const {
-      orderNumber,
       percentIva,
       subtotal,
       amountInIva,
@@ -40,6 +40,18 @@ export const createOrder = async (req, res) => {
       return res
         .status(400)
         .json({ status: 400, message: "Tipo documento no encontrado" });
+
+    const document = await Document.findById(foundDocuments[0]._id);
+    const initialSequential = document.sequential + 1;
+    const lengthSecuential = initialSequential.toString();
+    const serial = lengthSecuential.length;
+    const resultLength = document.length - serial;
+    for (let index = 0; index < resultLength; index++) {
+      serie = serie + '0';
+    }
+    serie = document.code + '-' + serie + lengthSecuential;
+    document.sequential = initialSequential;
+    await document.save();
 
     await Promise.all(
       orderLines.map(async (element) => {
@@ -74,7 +86,7 @@ export const createOrder = async (req, res) => {
     );
 
     const newOrder = new Order({
-      orderNumber,
+      orderNumber: serie,
       percentIva,
       subtotal,
       amountInIva,
@@ -94,7 +106,7 @@ export const createOrder = async (req, res) => {
       message: "Se ha generado el pedido: " + newOrder.orderNumber,
     });
   } catch (error) {
-    res.status(400).json({ status: 400, message: error });
+    res.status(400).json({ status: 400, message: 'hola' });
   }
 };
 

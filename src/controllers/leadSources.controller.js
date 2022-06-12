@@ -20,7 +20,6 @@ export const createLeadSource = async (req, res) => {
 
     res.status(201).json({ status: 201, savedLeadSource });
   } catch (error) {
-    console.log(error);
     res
       .status(400)
       .json({ status: 400, message: "No se creó el origen de prospecto" });

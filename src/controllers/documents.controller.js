@@ -7,13 +7,15 @@ export const getDocuments = async (req, res) => {
 
 export const createDocument = async (req, res) => {
   try {
-    const { name, operation, status, code } = req.body;
+    const { name, operation, status, code, length } = req.body;
 
     const newDocument = new Document({
       name,
       operation,
       status,
       code: code ? code : '',
+      sequential: 0,
+      length: length ? length : 0,
     });
 
     const savedDocument = await newDocument.save();

@@ -4,10 +4,26 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 
 const documentSchema = new Schema(
   {
-    name: String,
-    operation: String,
-    status: Number,
-    code: String,
+    name: {
+      type: String,
+      unique: true,
+    },
+    operation: {
+      type: String,
+    },
+    status: {
+      type: Number,
+    },
+    code: {
+      type: String,
+      unique: true,
+    },
+    sequential: {
+      type: Number,
+    },
+    length: {
+      type: Number,
+    },
   },
   {
     timestamps: true,

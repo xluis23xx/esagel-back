@@ -72,7 +72,6 @@ export const createUser = async (req, res) => {
 
     res.status(201).json({ status: 201, message: verifyPassword });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ status: 400, message: "Usuario no creado" });
   }
 };
@@ -122,7 +121,6 @@ export const updateUserById = async (req, res) => {
     );
     res.status(200).json({ status: 200, updatedUser });
   } catch (error) {
-    console.log(error);
     res
       .status(400)
       .json({ status: 400, message: "No se actualizó el usuario" });
