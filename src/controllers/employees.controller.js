@@ -65,6 +65,7 @@ export const getEmployees = async (req, res) => {
   const options = {
     limit,
     page: page,
+    sort: { name: "asc" },
     populate: ["documentType", "position"],
   };
 

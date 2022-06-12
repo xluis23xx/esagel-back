@@ -61,6 +61,7 @@ export const getCourses = async (req, res) => {
   const options = {
     limit,
     page: page,
+    sort: { name: "asc" },
     populate: [
       {
         path: "courseType",

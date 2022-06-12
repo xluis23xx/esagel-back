@@ -114,9 +114,12 @@ export const createOrder = async (req, res) => {
 export const getOrders = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
   const page = parseInt(req.query.pageSize || 1);
-  const { startDate, endDate } = req.body;
+  // const { status = '' } = req.query || {};
+  const { startDate, endDate, status } = req.body;
   const convertStart = new Date(startDate);
   const convertEnd = new Date(endDate);
+
+  console.log("status", status);
 
   if (!(convertStart < convertEnd))
     return res.status(400).json({
@@ -134,6 +137,7 @@ export const getOrders = async (req, res) => {
   const orders = await Order.paginate(
     {
       createdAt: { $gte: startDate, $lte: endDate },
+      status: typeof status === "number" ? status : [0, 1, 2],
     },
     options
   );

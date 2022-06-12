@@ -41,6 +41,7 @@ export const getProviders = async (req, res) => {
   const options = {
     limit,
     page: page,
+    sort: { businessName: "asc" },
     populate: ["documentType", "position"],
   };
 

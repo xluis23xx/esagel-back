@@ -8,6 +8,7 @@ export const getTopics = async (req, res) => {
   const options = {
     limit,
     page: page,
+    sort: { name: "asc" },
   };
 
   const topics = await Topic.paginate(
