@@ -36,7 +36,7 @@ export const createProvider = async (req, res) => {
 export const getProviders = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
   const page = parseInt(req.query.pageSize || 1);
-  const { filter } = req.body;
+  const { filter, status } = req.body;
 
   const options = {
     limit,
@@ -52,7 +52,7 @@ export const getProviders = async (req, res) => {
         { businessName: { $regex: ".*" + filter + ".*", $options: "i" } },
         { contactName: { $regex: ".*" + filter + ".*", $options: "i" } },
       ],
-      status: 1,
+      status: typeof status === "number" ? status : [0, 1],
     },
     options
   );

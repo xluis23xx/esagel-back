@@ -61,7 +61,7 @@ export const createEmployee = async (req, res) => {
 export const getEmployees = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
   const page = parseInt(req.query.pageSize || 1);
-  const { filter } = req.body;
+  const { filter, status } = req.body;
   const options = {
     limit,
     page: page,
@@ -77,7 +77,7 @@ export const getEmployees = async (req, res) => {
         { secondLastname: { $regex: ".*" + filter + ".*", $options: "i" } },
         { documentNumber: { $regex: ".*" + filter + ".*", $options: "i" } },
       ],
-      status: 1,
+      status: typeof status === "number" ? status : [0, 1],
     },
     options
   );
