@@ -1,7 +1,7 @@
 import LeadSource from "../models/LeadSource";
 
 export const getLeadSources = async (req, res) => {
-  const leadSources = await LeadSource.find();
+  const leadSources = await LeadSource.find().sort({ name: "asc" });;
   res.json(leadSources);
 };
 

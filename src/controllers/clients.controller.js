@@ -104,7 +104,7 @@ export const getClients = async (req, res) => {
     limit,
     page: page,
     projection: { password: 0 },
-    sort: { name: "asc" },
+    sort: { name: "asc", lastname: "asc" },
     options: {
       populate: [
         {
@@ -196,7 +196,7 @@ export const updateClientById = async (req, res) => {
       if (!foundMediumContacts.length > 0)
         return res
           .status(400)
-          .json({ status: 400, message: "Estado de prospecto no encontrado" });
+          .json({ status: 400, message: "Forma de contacto no encontrado" });
 
       req.body.contactForm = foundMediumContacts[0]._id;
 

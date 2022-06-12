@@ -1,7 +1,7 @@
 import Contact from "../models/MediumContact";
 
 export const getContacts = async (req, res) => {
-  const contacts = await Contact.find();
+  const contacts = await Contact.find().sort({ name: "asc" });;
   res.json(contacts);
 };
 

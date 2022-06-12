@@ -1,7 +1,7 @@
 import Document from "../models/Document";
 
 export const getDocuments = async (req, res) => {
-  const documents = await Document.find();
+  const documents = await Document.find().sort({ name: "asc" });;
   res.status(200).json(documents);
 };
 

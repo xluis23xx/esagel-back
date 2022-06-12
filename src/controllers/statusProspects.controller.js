@@ -1,7 +1,7 @@
 import StatusProspect from "../models/StatusProspect";
 
 export const getStatusProspects = async (req, res) => {
-  const statusProspects = await StatusProspect.find();
+  const statusProspects = await StatusProspect.find().sort({ name: "asc" });;
   res.json(statusProspects);
 };
 

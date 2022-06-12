@@ -1,7 +1,7 @@
 import CourseType from "../models/CourseType";
 
 export const getCourseTypes = async (req, res) => {
-  const coursesTypes = await CourseType.find();
+  const coursesTypes = await CourseType.find().sort({ name: "asc" });
   res.json(coursesTypes);
 };
 

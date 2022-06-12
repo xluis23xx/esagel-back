@@ -11,6 +11,7 @@ export const getUsers = async (req, res) => {
     limit,
     page: page,
     projection: { password: 0 },
+    sort:{ username: "asc" },
     populate: [
       {
         path: "roles",

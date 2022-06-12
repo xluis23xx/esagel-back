@@ -106,7 +106,6 @@ export const createOrder = async (req, res) => {
       message: "Se ha generado el pedido: " + newOrder.orderNumber,
     });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ status: 400, message: error });
   }
 };
@@ -114,12 +113,9 @@ export const createOrder = async (req, res) => {
 export const getOrders = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
   const page = parseInt(req.query.pageSize || 1);
-  // const { status = '' } = req.query || {};
   const { startDate, endDate, status } = req.body;
   const convertStart = new Date(startDate);
   const convertEnd = new Date(endDate);
-
-  console.log("status", status);
 
   if (!(convertStart < convertEnd))
     return res.status(400).json({
@@ -241,7 +237,6 @@ export const updateOrderById = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error);
     if (req.body?.isConfirm) {
       res
         .status(400)
