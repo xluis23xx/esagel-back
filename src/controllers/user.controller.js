@@ -31,7 +31,6 @@ export const getUsers = async (req, res) => {
   const users = await User.paginate(
     {
       $or: [{ username: { $regex: ".*" + filter + ".*", $options: "i" } }],
-      status: 1,
     },
     options
   );
