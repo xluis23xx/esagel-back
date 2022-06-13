@@ -3,9 +3,12 @@ import Purchase from "../models/Purchase";
 
 export const getDashboard = async (req, res) => {
   const { firstMonth = null, secondMonth = null, thirdMonth = null } = req.body;
-  const { startFirstMonth = null, endFirstMonth = null } = firstMonth || {};
-  const { startSecondMonth = null, endSecondMonth = null } = secondMonth || {};
-  const { startThirdMonth = null, endThirdMonth = null } = thirdMonth || {};
+  const { startDate: startFirstMonth = null, endDate: endFirstMonth = null } =
+    firstMonth || {};
+  const { startDate: startSecondMonth = null, endDate: endSecondMonth = null } =
+    secondMonth || {};
+  const { startDate: startThirdMonth = null, endDate: endThirdMonth = null } =
+    thirdMonth || {};
 
   const convertStartFirstMonth = new Date(startFirstMonth);
   const convertEndFirstMonth = new Date(endFirstMonth);
@@ -20,6 +23,9 @@ export const getDashboard = async (req, res) => {
   let totalFirstMonthSold = 0.0;
   let totalSecondMonthSold = 0.0;
   let totalThirdMonthSold = 0.0;
+  let quantitySalesFirstMonth = 0;
+  let quantitySalesSecondMonth = 0;
+  let quantitySalesThirdMonth = 0;
   let totalAmountSold = 0.0;
   let amountsSoldMonths = [];
   let quantitiesSoldMonths = [];
@@ -55,7 +61,12 @@ export const getDashboard = async (req, res) => {
   amountsSoldMonths.push(totalThirdMonthSold);
   quantitiesSoldMonths.push(ordersThirdMonth.length);
 
-  totalAmountSold = totalFirstMonthSold + totalSecondMonthSold + totalThirdMonthSold;
+  totalAmountSold =
+    totalFirstMonthSold + totalSecondMonthSold + totalThirdMonthSold;
+
+  quantitySalesFirstMonth = ordersFirstMonth.length || 0;
+  quantitySalesSecondMonth = ordersSecondMonth.length || 0;
+  quantitySalesThirdMonth = ordersThirdMonth.length || 0;
 
   totalQuantitiesSoldMonths =
     ordersFirstMonth.length +
@@ -63,9 +74,12 @@ export const getDashboard = async (req, res) => {
     ordersThirdMonth.length;
 
   ////////////*-Purchases-*////////////
-  let purchaseTotalFirstMonth = 0.0;
-  let purchaseTotalSecondMonth = 0.0;
-  let purchaseTotalThirdMonth = 0.0;
+  let totalFirstMonthPurchased = 0.0;
+  let totalSecondMonthPurchased = 0.0;
+  let totalThirdMonthPurchased = 0.0;
+  let quantityPurchasesFirstMonth = 0;
+  let quantityPurchasesSecondMonth = 0;
+  let quantityPurchasesThirdMonth = 0;
   let purchaseTotalAmountPurchased = 0.0;
   let amountsPurchasedMonths = [];
   let quantitiesPurchasedMonths = [];
@@ -76,9 +90,9 @@ export const getDashboard = async (req, res) => {
     status: 1,
   });
   purchasesFirstMonth.forEach((element) => {
-    purchaseTotalFirstMonth = purchaseTotalFirstMonth + element.total;
+    totalFirstMonthPurchased = totalFirstMonthPurchased + element.total;
   });
-  amountsPurchasedMonths.push(purchaseTotalFirstMonth);
+  amountsPurchasedMonths.push(totalFirstMonthPurchased);
   quantitiesPurchasedMonths.push(purchasesFirstMonth.length);
 
   const purchasesSecondMonth = await Purchase.find({
@@ -86,9 +100,9 @@ export const getDashboard = async (req, res) => {
     status: 1,
   });
   purchasesSecondMonth.forEach((element) => {
-    purchaseTotalSecondMonth = purchaseTotalSecondMonth + element.total;
+    totalSecondMonthPurchased = totalSecondMonthPurchased + element.total;
   });
-  amountsPurchasedMonths.push(purchaseTotalSecondMonth);
+  amountsPurchasedMonths.push(totalSecondMonthPurchased);
   quantitiesPurchasedMonths.push(purchasesSecondMonth.length);
 
   const purchasesThirdMonth = await Purchase.find({
@@ -96,15 +110,19 @@ export const getDashboard = async (req, res) => {
     status: 1,
   });
   purchasesThirdMonth.forEach((element) => {
-    purchaseTotalThirdMonth = purchaseTotalThirdMonth + element.total;
+    totalThirdMonthPurchased = totalThirdMonthPurchased + element.total;
   });
-  amountsPurchasedMonths.push(purchaseTotalThirdMonth);
+  amountsPurchasedMonths.push(totalThirdMonthPurchased);
   quantitiesPurchasedMonths.push(purchasesThirdMonth.length);
 
   purchaseTotalAmountPurchased =
-    purchaseTotalFirstMonth +
-    purchaseTotalSecondMonth +
-    purchaseTotalThirdMonth;
+    totalFirstMonthPurchased +
+    totalSecondMonthPurchased +
+    totalThirdMonthPurchased;
+
+  quantityPurchasesFirstMonth = purchasesFirstMonth.length || 0;
+  quantityPurchasesSecondMonth = purchasesSecondMonth.length || 0;
+  quantityPurchasesThirdMonth = purchasesThirdMonth.length || 0;
 
   totalQuantitiesPurchasedMonths =
     purchasesFirstMonth.length +
@@ -113,12 +131,24 @@ export const getDashboard = async (req, res) => {
 
   res.status(200).json({
     sales: {
+      totalFirstMonth: totalFirstMonthSold,
+      totalSecondMonth: totalSecondMonthSold,
+      totalThirdMonth: totalThirdMonthSold,
+      quantityFirstMonth: quantitySalesFirstMonth,
+      quantitySecondMonth: quantitySalesSecondMonth,
+      quantitySThirdMonth: quantitySalesThirdMonth,
       quantitiesTotal: totalQuantitiesSoldMonths,
       quantitiesSold: quantitiesSoldMonths,
       amountTotal: totalAmountSold,
       amountsSold: amountsSoldMonths,
     },
     purchases: {
+      totalFirstMonth: totalFirstMonthPurchased,
+      totalSecondMonth: totalSecondMonthPurchased,
+      totalThirdMonth: totalThirdMonthPurchased,
+      quantityFirstMonth: quantityPurchasesFirstMonth,
+      quantitySecondMonth: quantityPurchasesSecondMonth,
+      quantitySThirdMonth: quantityPurchasesThirdMonth,
       quantitiesTotal: totalQuantitiesPurchasedMonths,
       quantitiesPurchased: quantitiesPurchasedMonths,
       amountTotal: purchaseTotalAmountPurchased,
