@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import config from "../config";
 import Role from "../models/Role";
 
-let refreshToken = '';
+let refreshToken = "";
 
 export const signUp = async (req, res) => {
   const { username, password, roles } = req.body;
@@ -113,10 +113,12 @@ export const renewToken = async (req, res) => {
       expiresIn: 86400,
     });
 
-    res.json({ status: 200, accessToken });
+    refreshToken = jwt.sign({ id: id }, config.REFRESH_SECRET, {
+      expiresIn: 86400, //24 horas
+    });
+
+    res.json({ status: 200, accessToken, refreshToken });
   } catch (error) {
-    res
-      .status(400)
-      .json({ status: 400, message: "Token inválido" });
+    res.status(400).json({ status: 400, message: "Token inválido" });
   }
 };
