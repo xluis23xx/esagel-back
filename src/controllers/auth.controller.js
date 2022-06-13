@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import config from "../config";
 import Role from "../models/Role";
 
+let refreshTokens = [];
+
 export const signUp = async (req, res) => {
   const { username, password, roles } = req.body;
 
@@ -74,5 +76,49 @@ export const signIn = async (req, res) => {
     expiresIn: 86400,
   });
 
-  res.json({ status: 200, user, token });
+  const refreshToken = jwt.sign({ id: userFound._id }, config.REFRESH_SECRET, {
+    expiresIn: 86400, //24 horas
+  });
+
+  refreshTokens.push(refreshToken);
+
+  res.json({ status: 200, user, token, refreshTokens });
+};
+
+export const renewToken = async (req, res) => {
+  const recycleToken = req.headers["x-access-token"];
+
+  if (!recycleToken) {
+    res.status(401).json({
+      errors: [
+        {
+          message: "Token no encontrado",
+        },
+      ],
+    });
+  }
+
+  if (!refreshTokens) {
+    res.status(403).json({
+      errors: [
+        {
+          message: "Renovación de token inválido",
+        },
+      ],
+    });
+  }
+
+  try {
+    const user = jwt.verify(recycleToken, config.REFRESH_SECRET);
+    const { id } = user;
+    const accessToken = jwt.sign({ id: id }, config.SECRET, {
+      expiresIn: 86400,
+    });
+
+    res.json({ status: 200, accessToken });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ status: 400, message: "Token inválido" });
+  }
 };

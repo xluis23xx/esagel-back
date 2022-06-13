@@ -14,4 +14,6 @@ router.post(
 
 router.post('/signin', authCtrl.signIn)
 
+router.post('/token', authCtrl.renewToken)
+
 export default router;

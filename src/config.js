@@ -1,3 +1,4 @@
 export default {
-    SECRET: 'products-api'
+    SECRET: 'products-api',
+    REFRESH_SECRET: 'refresh-api' 
 }
