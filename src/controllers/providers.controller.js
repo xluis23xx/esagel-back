@@ -8,6 +8,7 @@ export const createProvider = async (req, res) => {
     phoneNumber,
     status,
     documentNumber,
+    description,
     documentType,
   } = req.body;
 
@@ -17,6 +18,7 @@ export const createProvider = async (req, res) => {
     phoneNumber,
     status,
     documentNumber,
+    description,
   });
 
   const foundDocuments = await Document.find({ name: { $in: documentType } });

@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import config from "../config";
 import Role from "../models/Role";
 
-let refreshTokens = [];
+let refreshToken = '';
 
 export const signUp = async (req, res) => {
   const { username, password, roles } = req.body;
@@ -76,13 +76,11 @@ export const signIn = async (req, res) => {
     expiresIn: 86400,
   });
 
-  const refreshToken = jwt.sign({ id: userFound._id }, config.REFRESH_SECRET, {
+  refreshToken = jwt.sign({ id: userFound._id }, config.REFRESH_SECRET, {
     expiresIn: 86400, //24 horas
   });
 
-  refreshTokens.push(refreshToken);
-
-  res.json({ status: 200, user, token, refreshTokens });
+  res.json({ status: 200, user, token, refreshToken });
 };
 
 export const renewToken = async (req, res) => {
@@ -98,7 +96,7 @@ export const renewToken = async (req, res) => {
     });
   }
 
-  if (!refreshTokens) {
+  if (!refreshToken) {
     res.status(403).json({
       errors: [
         {

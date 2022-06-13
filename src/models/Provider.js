@@ -19,6 +19,9 @@ const providerSchema = new Schema(
       type: String,
       unique: true,
     },
+    description: {
+
+    },
     status: {
       type: Number,
     },
