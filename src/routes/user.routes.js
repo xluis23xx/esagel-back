@@ -17,6 +17,15 @@ router.post(
   userCtrl.createUser
 );
 
+router.post(
+  "/newPassword",
+  [
+    authJwt.verifyToken,
+    authJwt.isModerator,
+  ],
+  userCtrl.generateNewUserPassword
+);
+
 router.get(
   "/:userId",
   [authJwt.verifyToken, authJwt.isUser],

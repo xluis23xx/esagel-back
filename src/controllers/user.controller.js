@@ -133,3 +133,21 @@ export const deleteUserById = async (req, res) => {
   await User.findOneAndDelete(userId);
   res.status(204).json();
 };
+
+export const generateNewUserPassword = async (req, res) => {
+  try {
+    const { _id } = req.body;
+    const foundUser = await User.findById( _id);
+    if (!foundUser) 
+      return res
+        .status(400)
+        .json({ status: 400, message: "Usuario no encontrado" });
+        
+    const newPassword = generatorPassword(8);
+    foundUser.password = await User.encryptPassword(newPassword);
+    await foundUser.save();
+    res.status(201).json({ status: 201, message: newPassword });
+  } catch (error) {
+    res.status(400).json({ status: 400, message: "No se creó la nueva contraseña" });
+  }
+};
