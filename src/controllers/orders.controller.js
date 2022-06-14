@@ -204,7 +204,7 @@ export const updateOrderById = async (req, res) => {
               status: 400,
               message: "No hay vacantes para el curso: " + course.name,
             });
-          course.vacanciesNumber = course.vacanciesNumber - 1;
+          course.vacanciesNumber = course.vacanciesNumber - lineDetail.quantity;
           await course.save();
         });
         updatedOrder.status = 2;

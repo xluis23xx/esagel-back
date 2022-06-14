@@ -82,7 +82,7 @@ export const updateSaleById = async (req, res) => {
         orderLines.map(async (element) => {
           const lineDetail = await OrderDetail.findById(element);
           const course = await Course.findById(lineDetail.course);
-          course.vacanciesNumber = course.vacanciesNumber + 1;
+          course.vacanciesNumber = course.vacanciesNumber + lineDetail.quantity;
           await course.save();
         });
         updatedSale.status = 0;
