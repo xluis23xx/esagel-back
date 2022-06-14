@@ -6,7 +6,6 @@ export const createPurchase = async (req, res) => {
   let sequentialPurchase = 0;
   let codePurchaseNumber = "";
   const {
-    purchaseNumber,
     name,
     reason,
     price,
