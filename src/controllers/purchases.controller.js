@@ -3,6 +3,8 @@ import Provider from "../models/Provider";
 import User from "../models/User";
 
 export const createPurchase = async (req, res) => {
+  let sequentialPurchase = 0;
+  let codePurchaseNumber = "";
   const {
     purchaseNumber,
     name,
@@ -15,8 +17,16 @@ export const createPurchase = async (req, res) => {
     provider,
   } = req.body;
 
+  const purchasesFound = await Purchase.find();
+  if (purchasesFound.length < 1) {
+    sequentialPurchase = 1;
+  } else {
+    sequentialPurchase = purchasesFound.length + 1;
+  }
+  codePurchaseNumber = 'C' + '-' + sequentialPurchase.toString();
+
   const newPurchase = new Purchase({
-    purchaseNumber,
+    purchaseNumber: codePurchaseNumber,
     name,
     reason,
     price,
@@ -56,17 +66,15 @@ export const getPurchases = async (req, res) => {
   const convertEnd = new Date(endDate);
   //   const { filter } = req.body;
   if (!(convertStart < convertEnd))
-    return res
-      .status(400)
-      .json({
-        status: 400,
-        message: "La fecha inicial debe ser menor a la fecha final",
-      });
+    return res.status(400).json({
+      status: 400,
+      message: "La fecha inicial debe ser menor a la fecha final",
+    });
 
   const options = {
     limit,
     page: page,
-    sort: { createdAt: 'desc' },
+    sort: { createdAt: "desc" },
     populate: ["provider", "buyer"],
   };
 

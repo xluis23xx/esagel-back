@@ -166,6 +166,8 @@ export const getOrderById = async (req, res) => {
 export const updateOrderById = async (req, res) => {
   try {
     let updatedOrder = null;
+    let sequentialSale = 0;
+    let codeSaleNumber = '';
     if (req.body?.isCancel) {
       updatedOrder = await Order.findById(req.params.orderId);
       if (updatedOrder.status === 1) {
@@ -210,8 +212,16 @@ export const updateOrderById = async (req, res) => {
         updatedOrder.status = 2;
         await updatedOrder.save();
 
+        const salesFound = await Sale.find();
+        if (salesFound.length < 1) {
+          sequentialSale = 1;
+        } else {
+          sequentialSale = salesFound.length + 1;
+        }
+        codeSaleNumber = 'V' + '-' + sequentialSale.toString();
+
         const newSale = new Sale({
-          saleNumber: updatedOrder.orderNumber,
+          saleNumber: codeSaleNumber,
           status: 1,
           order: req.params.orderId,
           seller: updatedOrder.seller,
