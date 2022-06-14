@@ -130,13 +130,14 @@ export const getDashboard = async (req, res) => {
     purchasesThirdMonth.length;
 
   res.status(200).json({
+    status: 200,
     sales: {
       totalFirstMonth: totalFirstMonthSold,
       totalSecondMonth: totalSecondMonthSold,
       totalThirdMonth: totalThirdMonthSold,
       quantityFirstMonth: quantitySalesFirstMonth,
       quantitySecondMonth: quantitySalesSecondMonth,
-      quantitySThirdMonth: quantitySalesThirdMonth,
+      quantityThirdMonth: quantitySalesThirdMonth,
       quantitiesTotal: totalQuantitiesSoldMonths,
       quantitiesSold: quantitiesSoldMonths,
       amountTotal: totalAmountSold,
@@ -148,7 +149,7 @@ export const getDashboard = async (req, res) => {
       totalThirdMonth: totalThirdMonthPurchased,
       quantityFirstMonth: quantityPurchasesFirstMonth,
       quantitySecondMonth: quantityPurchasesSecondMonth,
-      quantitySThirdMonth: quantityPurchasesThirdMonth,
+      quantityThirdMonth: quantityPurchasesThirdMonth,
       quantitiesTotal: totalQuantitiesPurchasedMonths,
       quantitiesPurchased: quantitiesPurchasedMonths,
       amountTotal: purchaseTotalAmountPurchased,
