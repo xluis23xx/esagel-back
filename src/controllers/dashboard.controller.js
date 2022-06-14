@@ -157,3 +157,7 @@ export const getDashboard = async (req, res) => {
     },
   });
 };
+
+export const getDashboard2 = async (req, res) => {
+
+}

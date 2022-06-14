@@ -2,7 +2,7 @@ import LeadSource from "../models/LeadSource";
 
 export const getLeadSources = async (req, res) => {
   const leadSources = await LeadSource.find().sort({ name: "asc" });;
-  res.json(leadSources);
+  res.status(200).json({ status: 200, leadSources });
 };
 
 export const createLeadSource = async (req, res) => {
@@ -28,7 +28,7 @@ export const createLeadSource = async (req, res) => {
 
 export const getLeadSourceById = async (req, res) => {
   const leadSource = await LeadSource.findById(req.params.leadSourceId);
-  res.status(200).json(leadSource);
+  res.status(200).json({ status: 200, leadSource });
 };
 
 export const updateLeadSourceById = async (req, res) => {

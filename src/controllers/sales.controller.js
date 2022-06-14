@@ -38,7 +38,7 @@ export const getSales = async (req, res) => {
     },
     options
   );
-  res.status(200).json(sales);
+  res.status(200).json({ status: 200, sales });
 };
 
 export const getSaleById = async (req, res) => {
@@ -65,7 +65,7 @@ export const getSaleById = async (req, res) => {
           },
         ],
       });
-    res.status(200).json(sale);
+    res.status(200).json({ status: 200, sale });
   } catch (error) {
     res.status(400).json({ message: "Venta no encontrada" });
   }

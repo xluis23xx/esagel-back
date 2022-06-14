@@ -2,7 +2,7 @@ import StatusProspect from "../models/StatusProspect";
 
 export const getStatusProspects = async (req, res) => {
   const statusProspects = await StatusProspect.find().sort({ name: "asc" });;
-  res.json(statusProspects);
+  res.status(200).json({ status: 200, statusProspects });
 };
 
 export const createStatusProspect = async (req, res) => {
@@ -29,7 +29,7 @@ export const getStatusProspectById = async (req, res) => {
   const statusProspect = await StatusProspect.findById(
     req.params.statusProspectId
   );
-  res.status(200).json(statusProspect);
+  res.status(200).json({ status: 200, statusProspect });
 };
 
 export const updateStatusProspectById = async (req, res) => {

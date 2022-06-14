@@ -7,6 +7,7 @@ export const ROLES = ["user", "admin", "moderator"];
 const roleSchema = new Schema(
   {
     name: String,
+    priority: Number,
   },
   {
     versionKey: false,

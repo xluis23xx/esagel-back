@@ -2,7 +2,7 @@ import Document from "../models/Document";
 
 export const getDocuments = async (req, res) => {
   const documents = await Document.find().sort({ name: "asc" });;
-  res.status(200).json(documents);
+  res.status(200).json({ status: 200, documents });
 };
 
 export const createDocument = async (req, res) => {
@@ -28,7 +28,7 @@ export const createDocument = async (req, res) => {
 
 export const getDocumentById = async (req, res) => {
   const document = await Document.findById(req.params.documentId);
-  res.status(200).json(document);
+  res.status(200).json({ status: 200, document });
 };
 
 export const updateDocumentById = async (req, res) => {

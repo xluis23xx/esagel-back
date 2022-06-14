@@ -2,7 +2,7 @@ import Contact from "../models/MediumContact";
 
 export const getContacts = async (req, res) => {
   const contacts = await Contact.find().sort({ name: "asc" });;
-  res.json(contacts);
+  res.status(200).json({ status: 200, contacts });
 };
 
 export const createContact = async (req, res) => {
@@ -27,7 +27,7 @@ export const createContact = async (req, res) => {
 
 export const getContactById = async (req, res) => {
   const contact = await Contact.findById(req.params.contactId);
-  res.status(200).json(contact);
+  res.status(200).json({ status: 200, contact });
 };
 
 export const updateContactById = async (req, res) => {

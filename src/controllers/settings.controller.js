@@ -2,7 +2,7 @@ import Setting from "../models/Setting";
 
 export const getSettings = async (req, res) => {
   const settings = await Setting.find();
-  res.json(settings[0]);
+  res.json({ status: 200, settings: settings[0] });
 };
 
 export const updateSettingById = async (req, res) => {

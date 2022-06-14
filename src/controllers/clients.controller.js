@@ -139,7 +139,7 @@ export const getClients = async (req, res) => {
   //   .populate("leadSource")
   //   .populate("prospectStatus")
   //   .populate("contactForm");
-  res.status(200).json(clients);
+  res.status(200).json({ status: 200, clients });
 };
 
 export const getClientById = async (req, res) => {
@@ -148,7 +148,7 @@ export const getClientById = async (req, res) => {
     .populate("leadSource")
     .populate("prospectStatus")
     .populate("contactForm");
-  res.status(200).json(client);
+  res.status(200).json({ status: 200, client });
 };
 
 export const updateClientById = async (req, res) => {

@@ -2,7 +2,7 @@ import CourseType from "../models/CourseType";
 
 export const getCourseTypes = async (req, res) => {
   const coursesTypes = await CourseType.find().sort({ name: "asc" });
-  res.json(coursesTypes);
+  res.status(200).json({ status: 200, coursesTypes});
 };
 
 export const createCourseType = async (req, res) => {
@@ -28,7 +28,7 @@ export const createCourseType = async (req, res) => {
 
 export const getCourseTypeById = async (req, res) => {
   const courseType = await CourseType.findById(req.params.courseTypeId);
-  res.status(200).json(courseType);
+  res.status(200).json({ status: 200, courseType });
 };
 
 export const updateCourseTypeById = async (req, res) => {

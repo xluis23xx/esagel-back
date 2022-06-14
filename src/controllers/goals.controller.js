@@ -59,7 +59,7 @@ export const getGoals = async (req, res) => {
   const options = {
     limit,
     page: page,
-    sort: { createdAt: 'desc' },
+    sort: { createdAt: "desc" },
     populate: [
       {
         path: "seller",
@@ -75,7 +75,7 @@ export const getGoals = async (req, res) => {
     },
     options
   );
-  res.status(200).json(goals);
+  res.status(200).json({ status: 200, goals });
 };
 
 export const getGoalById = async (req, res) => {
@@ -88,7 +88,7 @@ export const getGoalById = async (req, res) => {
         },
       ],
     });
-    res.status(200).json(goal);
+    res.status(200).json({ status: 200, goal });
   } catch (error) {
     res.status(400).json({ message: "Meta no encontrada no encontrada" });
   }

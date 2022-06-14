@@ -37,7 +37,7 @@ export const getUsers = async (req, res) => {
     options
   );
 
-  res.status(200).json(users);
+  res.status(200).json({ status: 200, users });
 };
 
 export const createUser = async (req, res) => {

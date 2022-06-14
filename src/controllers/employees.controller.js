@@ -85,14 +85,14 @@ export const getEmployees = async (req, res) => {
     },
     options
   );
-  res.status(200).json(employees);
+  res.status(200).json({ status: 200, employees });
 };
 
 export const getEmployeeById = async (req, res) => {
   const employee = await Employee.findById(req.params.employeeId)
     .populate("documentType")
     .populate("position");
-  res.status(200).json(employee);
+  res.status(200).json({ status: 200, employee });
 };
 
 export const updateEmployeeById = async (req, res) => {

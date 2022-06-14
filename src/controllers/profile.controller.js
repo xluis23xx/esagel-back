@@ -54,7 +54,7 @@ export const getProfileById = async (req, res) => {
       ],
     });
 
-  res.status(200).json(user);
+  res.status(200).json({ status: 200, user });
 };
 
 export const updatePasswordProfileById = async (req, res) => {

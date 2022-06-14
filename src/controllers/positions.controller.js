@@ -2,7 +2,7 @@ import Position from "../models/Position"
 
 export const getPositions = async(req, res) => {
     const positions = await Position.find().sort({ name: "asc" });;
-    res.json(positions)
+    res.status(200).json({ status: 200, positions })
 }
 
 export const createPosition = async (req, res) => {
