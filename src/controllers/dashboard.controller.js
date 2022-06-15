@@ -158,6 +158,42 @@ export const getDashboard = async (req, res) => {
   });
 };
 
-export const getDashboard2 = async (req, res) => {
+// export const getDashboard2 = async (req, res) => {
+//   const { months = [] } = req.body;
+//   let data = [{}];
 
-}
+//   months.forEach((date) => {
+//     let monthSold = 0.0;
+//     let monthPurchased = 0.0;
+//     //*-Sales-*//
+//     const ordersPerMonth = await Order.find({
+//       createdAt: { $gte: date.startDate, $lte: date.endDate },
+//       status: 2,
+//     })
+//     ordersPerMonth.forEach((order) => {
+//       monthSold = monthSold + order.total;
+//     });
+//     //*-Purchases-*//
+//     const purchasesPerMonth = await Purchase.find({
+//       createdAt: { $gte: date.startDate, $lte: date.endDate },
+//       status: 1,
+//     });
+//     purchasesPerMonth.forEach((purchase) => {
+//       monthPurchased = purchase + purchase.total;
+//     });
+
+//     data.push(
+//       {
+//         totalMonthSold: monthSold,
+//         quantityMonthSold: ordersPerMonth.length,
+//         totalMonthPurchased: monthPurchased,
+//         quantityMonthPurchased: purchasesPerMonth.length,
+//       }
+//     );
+//   });
+
+//   res.status(200).json({
+//     status: 200,
+//     data: data,
+//   });
+// }
