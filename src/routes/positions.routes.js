@@ -4,8 +4,8 @@ const router = Router();
 import * as positionsCtrl from "../controllers/positions.controller";
 import { authJwt } from "../middlewares";
 
-router.get(
-  "/",
+router.post(
+  "/consult",
   [authJwt.verifyToken, authJwt.isUser],
   positionsCtrl.getPositions
 );

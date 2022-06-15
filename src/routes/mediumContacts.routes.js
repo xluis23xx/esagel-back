@@ -4,7 +4,7 @@ const router = Router()
 import * as mediumContactsCtrl from '../controllers/mediumContacts.controller';
 import { authJwt} from '../middlewares';
 
-router.get('/', [authJwt.verifyToken, authJwt.isUser], mediumContactsCtrl.getContacts)
+router.post('/consult', [authJwt.verifyToken, authJwt.isUser], mediumContactsCtrl.getContacts)
 
 router.get('/:contactId', [authJwt.verifyToken, authJwt.isUser], mediumContactsCtrl.getContactById)
 

@@ -1,8 +1,23 @@
 import StatusProspect from "../models/StatusProspect";
 
 export const getStatusProspects = async (req, res) => {
-  const statusProspects = await StatusProspect.find().sort({ name: "asc" });;
-  res.status(200).json({ status: 200, statusProspects });
+  const limit = parseInt(req.query.limit || 100);
+  const page = parseInt(req.query.pageSize || 1);
+  const { filter, status } = req.body;
+  const options = {
+    limit,
+    page: page,
+    sort: { name: "asc" },
+  };
+  // const statusProspects = await StatusProspect.find().sort({ name: "asc" });
+  const statusProspects = await StatusProspect.paginate(
+    {
+      $or: [{ name: { $regex: ".*" + filter + ".*", $options: "i" } }],
+      status: typeof status === "number" ? status : [0, 1],
+    },
+    options
+  );
+  res.status(200).json({ status: 200, ...statusProspects });
 };
 
 export const createStatusProspect = async (req, res) => {
@@ -29,7 +44,7 @@ export const getStatusProspectById = async (req, res) => {
   const statusProspect = await StatusProspect.findById(
     req.params.statusProspectId
   );
-  res.status(200).json({ status: 200, statusProspect });
+  res.status(200).json({ status: 200, doc: statusProspect });
 };
 
 export const updateStatusProspectById = async (req, res) => {

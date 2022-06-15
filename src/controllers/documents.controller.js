@@ -1,8 +1,23 @@
 import Document from "../models/Document";
 
 export const getDocuments = async (req, res) => {
-  const documents = await Document.find().sort({ name: "asc" });;
-  res.status(200).json({ status: 200, documents });
+  const limit = parseInt(req.query.limit || 100);
+  const page = parseInt(req.query.pageSize || 1);
+  const { filter, status } = req.body;
+  const options = {
+    limit,
+    page: page,
+    sort: { name: "asc" },
+  };
+  const documents = await Document.paginate(
+    {
+      $or: [{ name: { $regex: ".*" + filter + ".*", $options: "i" } }],
+      status: typeof status === "number" ? status : [0, 1],
+    },
+    options
+  );
+  // const documents = await Document.find().sort({ name: "asc" });;
+  res.status(200).json({ status: 200, ...documents });
 };
 
 export const createDocument = async (req, res) => {
@@ -13,7 +28,7 @@ export const createDocument = async (req, res) => {
       name,
       operation,
       status,
-      code: code ? code : '',
+      code: code ? code : "",
       sequential: 0,
       length: length ? length : 0,
     });
@@ -28,7 +43,7 @@ export const createDocument = async (req, res) => {
 
 export const getDocumentById = async (req, res) => {
   const document = await Document.findById(req.params.documentId);
-  res.status(200).json({ status: 200, document });
+  res.status(200).json({ status: 200, doc: document });
 };
 
 export const updateDocumentById = async (req, res) => {

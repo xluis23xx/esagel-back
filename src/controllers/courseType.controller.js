@@ -1,8 +1,23 @@
 import CourseType from "../models/CourseType";
 
 export const getCourseTypes = async (req, res) => {
-  const coursesTypes = await CourseType.find().sort({ name: "asc" });
-  res.status(200).json({ status: 200, coursesTypes});
+  const limit = parseInt(req.query.limit || 100);
+  const page = parseInt(req.query.pageSize || 1);
+  const { filter, status } = req.body;
+  const options = {
+    limit,
+    page: page,
+    sort: { name: "asc" },
+  };
+  // const coursesTypes = await CourseType.find().sort({ name: "asc" });
+  const coursesTypes = await CourseType.paginate(
+    {
+      $or: [{ name: { $regex: ".*" + filter + ".*", $options: "i" } }],
+      status: typeof status === "number" ? status : [0, 1],
+    },
+    options
+  );
+  res.status(200).json({ status: 200, ...coursesTypes });
 };
 
 export const createCourseType = async (req, res) => {
@@ -28,7 +43,7 @@ export const createCourseType = async (req, res) => {
 
 export const getCourseTypeById = async (req, res) => {
   const courseType = await CourseType.findById(req.params.courseTypeId);
-  res.status(200).json({ status: 200, courseType });
+  res.status(200).json({ status: 200, doc: courseType });
 };
 
 export const updateCourseTypeById = async (req, res) => {

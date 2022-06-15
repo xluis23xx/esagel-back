@@ -37,7 +37,7 @@ export const getUsers = async (req, res) => {
     options
   );
 
-  res.status(200).json({ status: 200, users });
+  res.status(200).json({ status: 200, ...users });
 };
 
 export const createUser = async (req, res) => {
@@ -92,7 +92,7 @@ export const getUserById = async (req, res) => {
       ],
     });
 
-  res.status(200).json(user);
+  res.status(200).json({ status: 200, doc: user });
 };
 
 export const updateUserById = async (req, res) => {

@@ -23,7 +23,7 @@ export const getTopics = async (req, res) => {
     options
   );
   // const topics = await Topic.find();
-  res.status(200).json({ status: 200, topics });
+  res.status(200).json({ status: 200, ...topics });
 };
 
 export const createTopic = async (req, res) => {
@@ -46,7 +46,7 @@ export const createTopic = async (req, res) => {
 
 export const getTopicById = async (req, res) => {
   const topic = await Topic.findById(req.params.topicId);
-  res.status(200).json({ status: 200, topic });
+  res.status(200).json({ status: 200, doc: topic });
 };
 
 export const updateTopicById = async (req, res) => {

@@ -4,8 +4,8 @@ const router = Router();
 import * as documentsCtrl from "../controllers/documents.controller";
 import { authJwt } from "../middlewares";
 
-router.get(
-  "/",
+router.post(
+  "/consult",
   [authJwt.verifyToken, authJwt.isUser],
   documentsCtrl.getDocuments
 );

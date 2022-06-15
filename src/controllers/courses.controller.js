@@ -81,14 +81,14 @@ export const getCourses = async (req, res) => {
     },
     options
   );
-  res.status(200).json({ status: 200, courses });
+  res.status(200).json({ status: 200, ...courses });
 };
 
 export const getCourseById = async (req, res) => {
   const course = await Course.findById(req.params.courseId)
     .populate("courseType")
     .populate("courseLines");
-  res.status(200).json({ status: 200, course });
+  res.status(200).json({ status: 200, doc: course });
 };
 
 export const updateCourseById = async (req, res) => {

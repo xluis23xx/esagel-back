@@ -137,7 +137,7 @@ export const getOrders = async (req, res) => {
     },
     options
   );
-  res.status(200).json({ status: 200, orders });
+  res.status(200).json({ status: 200, ...orders });
 };
 
 export const getOrderById = async (req, res) => {
@@ -160,7 +160,7 @@ export const getOrderById = async (req, res) => {
         },
       ],
     });
-  res.status(200).json({ status: 200, order });
+  res.status(200).json({ status: 200, doc: order });
 };
 
 export const updateOrderById = async (req, res) => {

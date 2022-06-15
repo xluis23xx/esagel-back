@@ -4,8 +4,8 @@ const router = Router();
 import * as courseTypesCtrl from "../controllers/courseType.controller";
 import { authJwt } from "../middlewares";
 
-router.get(
-  "/",
+router.post(
+  "/consult",
   [authJwt.verifyToken, authJwt.isUser],
   courseTypesCtrl.getCourseTypes
 );

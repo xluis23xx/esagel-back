@@ -85,7 +85,7 @@ export const getPurchases = async (req, res) => {
     },
     options
   );
-  res.status(200).json({ status: 200, purchases });
+  res.status(200).json({ status: 200, ...purchases });
 };
 
 export const getPurchaseById = async (req, res) => {
@@ -100,7 +100,7 @@ export const getPurchaseById = async (req, res) => {
           },
         ],
       });
-    res.status(200).json({ status: 200, purchase });
+    res.status(200).json({ status: 200, doc: purchase });
   } catch (error) {
     res.status(400).json({ message: "Compra no encontrada" });
   }

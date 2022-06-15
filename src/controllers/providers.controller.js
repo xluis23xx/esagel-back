@@ -58,7 +58,7 @@ export const getProviders = async (req, res) => {
     },
     options
   );
-  res.status(200).json({ status: 200, providers });
+  res.status(200).json({ status: 200, ...providers });
   // const providers = await Provider.find().populate("documentType");
   // res.json(providers);
 };
@@ -68,7 +68,7 @@ export const getProviderById = async (req, res) => {
     const provider = await Provider.findById(req.params.providerId).populate(
       "documentType"
     );
-    res.status(200).json({ status: 200, provider });
+    res.status(200).json({ status: 200, doc: provider });
   } catch (error) {
     res.status(400).json({ message: "Proveedor no encontrado" });
   }

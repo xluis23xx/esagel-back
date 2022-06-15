@@ -4,7 +4,7 @@ const router = Router()
 import * as leadSourcesCtrl from '../controllers/leadSources.controller';
 import { authJwt} from '../middlewares';
 
-router.get('/', [authJwt.verifyToken, authJwt.isUser], leadSourcesCtrl.getLeadSources)
+router.post('/consult', [authJwt.verifyToken, authJwt.isUser], leadSourcesCtrl.getLeadSources)
 
 router.get('/:leadSourceId', [authJwt.verifyToken, authJwt.isUser], leadSourcesCtrl.getLeadSourceById)
 
