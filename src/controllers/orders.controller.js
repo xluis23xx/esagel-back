@@ -103,6 +103,7 @@ export const createOrder = async (req, res) => {
 
     res.status(201).json({
       status: 201,
+      doc: newOrder,
       message: "Se ha generado el pedido: " + newOrder.orderNumber,
     });
   } catch (error) {
@@ -167,7 +168,7 @@ export const updateOrderById = async (req, res) => {
   try {
     let updatedOrder = null;
     let sequentialSale = 0;
-    let codeSaleNumber = '';
+    let codeSaleNumber = "";
     if (req.body?.isCancel) {
       updatedOrder = await Order.findById(req.params.orderId);
       if (updatedOrder.status === 1) {
@@ -176,7 +177,7 @@ export const updateOrderById = async (req, res) => {
 
         res.status(200).json({
           status: 200,
-          savedUpdatedOrder,
+          doc: savedUpdatedOrder,
           message: "Pedido cancelado",
         });
       } else {
@@ -218,7 +219,7 @@ export const updateOrderById = async (req, res) => {
         } else {
           sequentialSale = salesFound.length + 1;
         }
-        codeSaleNumber = 'V' + '-' + sequentialSale.toString();
+        codeSaleNumber = "V" + "-" + sequentialSale.toString();
 
         const newSale = new Sale({
           saleNumber: codeSaleNumber,
@@ -236,7 +237,7 @@ export const updateOrderById = async (req, res) => {
 
         res.status(200).json({
           status: 200,
-          savedSale,
+          doc: savedSale,
           message: "Se generó la venta con éxito",
         });
       } else {

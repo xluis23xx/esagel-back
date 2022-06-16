@@ -88,7 +88,7 @@ export const createClient = async (req, res) => {
 
     const savedClient = await newClient.save();
 
-    res.status(201).json({ status: 201, savedClient });
+    res.status(201).json({ status: 201, doc: savedClient });
   } catch (error) {
     return res
       .status(400)
@@ -213,7 +213,7 @@ export const updateClientById = async (req, res) => {
         .populate("contactForm");
     }
 
-    res.status(200).json({ status: 200, updatedClient });
+    res.status(200).json({ status: 200, doc: updatedClient });
   } catch (error) {
     if (req.body?.isDelete) {
       res

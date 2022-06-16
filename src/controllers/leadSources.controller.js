@@ -33,7 +33,7 @@ export const createLeadSource = async (req, res) => {
 
     const savedLeadSource = await newLeadSource.save();
 
-    res.status(201).json({ status: 201, savedLeadSource });
+    res.status(201).json({ status: 201, doc: savedLeadSource });
   } catch (error) {
     res
       .status(400)
@@ -55,7 +55,7 @@ export const updateLeadSourceById = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).json({ status: 200, updateLeadSource });
+    res.status(200).json({ status: 200, doc: updateLeadSource });
   } catch (error) {
     res
       .status(400)

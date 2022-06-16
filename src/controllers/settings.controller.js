@@ -2,7 +2,7 @@ import Setting from "../models/Setting";
 
 export const getSettings = async (req, res) => {
   const settings = await Setting.find();
-  res.json({ status: 200, settings: settings[0] });
+  res.json({ status: 200, doc: settings[0] });
 };
 
 export const updateSettingById = async (req, res) => {
@@ -14,7 +14,7 @@ export const updateSettingById = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).json({ status: 200, updateSetting });
+    res.status(200).json({ status: 200, doc: updateSetting });
   } catch (error) {
     res
       .status(400)

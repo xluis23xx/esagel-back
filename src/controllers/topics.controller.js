@@ -38,7 +38,7 @@ export const createTopic = async (req, res) => {
 
     const savedTopic = await newTopic.save();
 
-    res.status(201).json({ status: 201, savedTopic });
+    res.status(201).json({ status: 201, doc: savedTopic });
   } catch (error) {
     res.status(400).json({ status: 400, message: "No se creó el tema" });
   }
@@ -58,7 +58,7 @@ export const updateTopicById = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).json({ status: 200, updateTopic });
+    res.status(200).json({ status: 200, doc: updateTopic });
   } catch (error) {
     res.status(400).json({ status: 400, message: "No se actualizó el tema" });
   }

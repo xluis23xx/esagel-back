@@ -35,7 +35,7 @@ export const createDocument = async (req, res) => {
 
     const savedDocument = await newDocument.save();
 
-    res.status(201).json({ status: 201, savedDocument });
+    res.status(201).json({ status: 201, doc: savedDocument });
   } catch (error) {
     res.status(400).json({ status: 400, message: "No se creó el documento" });
   }
@@ -55,7 +55,7 @@ export const updateDocumentById = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).json({ status: 200, updateDocument });
+    res.status(200).json({ status: 200, doc: updateDocument });
   } catch (error) {
     res
       .status(400)

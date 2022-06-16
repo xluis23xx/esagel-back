@@ -120,7 +120,7 @@ export const updateUserById = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).json({ status: 200, updatedUser });
+    res.status(200).json({ status: 200, doc: updatedUser });
   } catch (error) {
     res
       .status(400)

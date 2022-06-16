@@ -40,7 +40,7 @@ export const createGoal = async (req, res) => {
 
   const savedGoal = await newGoal.save();
 
-  res.status(201).json({ status: 201, savedGoal });
+  res.status(201).json({ status: 201, doc: savedGoal });
 };
 
 export const getGoals = async (req, res) => {
@@ -104,7 +104,7 @@ export const updateGoalById = async (req, res) => {
           new: true,
         }
       );
-      res.status(200).json({ status: 200, updatedGoal });
+      res.status(200).json({ status: 200, doc: updatedGoal });
     } else {
       const { seller, startDate, endDate } = req.body;
 
@@ -141,7 +141,7 @@ export const updateGoalById = async (req, res) => {
           new: true,
         }
       );
-      res.status(200).json({ status: 200, updatedGoal });
+      res.status(200).json({ status: 200, doc: updatedGoal });
     }
   } catch (error) {
     res.status(400).json({ status: 400, message: "No se actualizó la meta" });

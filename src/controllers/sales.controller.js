@@ -10,7 +10,7 @@ export const getSales = async (req, res) => {
   const convertStart = new Date(startDate);
   const convertEnd = new Date(endDate);
 
-  if (!(convertStart <= convertEnd))
+  if (!(convertStart < convertEnd))
     return res.status(400).json({
       status: 400,
       message: "La fecha inicial debe ser menor a la fecha final",
@@ -89,7 +89,7 @@ export const updateSaleById = async (req, res) => {
         await updatedSale.save();
         res
           .status(200)
-          .json({ status: 200, updatedSale, message: "Venta anulada" });
+          .json({ status: 200, doc: updatedSale, message: "Venta anulada" });
       } else {
         res.status(400).json({
           status: 400,

@@ -32,7 +32,7 @@ export const createContact = async (req, res) => {
 
     const savedContact = await newContact.save();
 
-    res.status(201).json({ status: 201, savedContact });
+    res.status(201).json({ status: 201, doc: savedContact });
   } catch (error) {
     res
       .status(400)
@@ -54,7 +54,7 @@ export const updateContactById = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).json({ status: 200, updateContact });
+    res.status(200).json({ status: 200, doc: updateContact });
   } catch (error) {
     res
       .status(400)

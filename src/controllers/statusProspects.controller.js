@@ -32,7 +32,7 @@ export const createStatusProspect = async (req, res) => {
 
     const savedStatusProspect = await newStatusProspect.save();
 
-    res.status(201).json({ status: 201, savedStatusProspect });
+    res.status(201).json({ status: 201, doc: savedStatusProspect });
   } catch (error) {
     res
       .status(400)
@@ -56,7 +56,7 @@ export const updateStatusProspectById = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).json({ status: 200, updateStatusProspect });
+    res.status(200).json({ status: 200, doc: updateStatusProspect });
   } catch (error) {
     res
       .status(400)

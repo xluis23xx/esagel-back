@@ -32,7 +32,7 @@ export const createProvider = async (req, res) => {
 
   const savedProvider = await newProvider.save();
 
-  res.status(201).json({ status: 201, savedProvider });
+  res.status(201).json({ status: 201, doc: savedProvider });
 };
 
 export const getProviders = async (req, res) => {
@@ -83,7 +83,7 @@ export const updateProviderById = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).json({ status: 200, updatedProvider });
+    res.status(200).json({ status: 200, doc: updatedProvider });
   } catch (error) {
     res
       .status(400)

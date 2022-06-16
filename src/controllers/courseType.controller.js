@@ -33,7 +33,7 @@ export const createCourseType = async (req, res) => {
 
     const savedCourseType = await newCourseType.save();
 
-    res.status(201).json({ status: 201, savedCourseType });
+    res.status(201).json({ status: 201, doc: savedCourseType });
   } catch (error) {
     res
       .status(400)
@@ -55,7 +55,7 @@ export const updateCourseTypeById = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).json({ status: 200, updateCourseType });
+    res.status(200).json({ status: 200, doc: updateCourseType });
   } catch (error) {
     res
       .status(400)

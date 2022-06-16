@@ -56,7 +56,7 @@ export const createEmployee = async (req, res) => {
   
     const savedEmployee = await newEmployee.save();
   
-    res.status(201).json({ status: 201, savedEmployee });
+    res.status(201).json({ status: 201, doc: savedEmployee });
   } catch (error) {
     res.status(400).json({ status: 400, message: error.message });
   } 
@@ -130,7 +130,7 @@ export const updateEmployeeById = async (req, res) => {
         .populate("position");
     }
 
-    res.status(200).json({ status: 200, updatedEmployee });
+    res.status(200).json({ status: 200, doc: updatedEmployee });
   } catch (error) {
     if (req.body?.isDelete) {
       res

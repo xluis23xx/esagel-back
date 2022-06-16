@@ -54,7 +54,7 @@ export const createPurchase = async (req, res) => {
 
   const savedPurchase = await newPurchase.save();
 
-  res.status(201).json({ status: 201, savedPurchase });
+  res.status(201).json({ status: 201, doc: savedPurchase });
 };
 
 export const getPurchases = async (req, res) => {
@@ -152,7 +152,7 @@ export const updatePurchaseById = async (req, res) => {
         .populate("provider");
     }
 
-    res.status(200).json({ status: 200, updatedPurchase });
+    res.status(200).json({ status: 200, doc: updatedPurchase });
   } catch (error) {
     if (req.body?.isDelete) {
       res.status(400).json({ status: 400, message: "No se anuló la compra" });

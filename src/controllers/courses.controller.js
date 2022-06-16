@@ -48,7 +48,7 @@ export const createCourse = async (req, res) => {
 
     const savedCourse = await newCourse.save();
 
-    res.status(201).json({ status: 201, savedCourse });
+    res.status(201).json({ status: 201, doc: savedCourse });
   } catch (error) {
     res.status(400).json({ status: 400, message: error.message });
   }
@@ -120,7 +120,7 @@ export const updateCourseById = async (req, res) => {
         }
       ).populate("courseType");
     }
-    res.status(200).json({ status: 200, updatedCourse });
+    res.status(200).json({ status: 200, doc: updatedCourse });
   } catch (error) {
     res.status(400).json({ status: 400, message: "No se actualizó el curso" });
   }

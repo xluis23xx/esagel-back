@@ -6,7 +6,7 @@ export const getDashboard = async (req, res) => {
     const months = req.body;
     const data = [];
     let totalSoldSale = 0.0;
-    let totalquantitySales = 0.0;
+    let totalQuantitySales = 0.0;
     let totalPurchased = 0.0;
     let quantityTotalPurchased = 0.0;
 
@@ -48,7 +48,7 @@ export const getDashboard = async (req, res) => {
 
     data.map(async (data) => {
       totalSoldSale = totalSoldSale + data.totalMonthSold;
-      totalquantitySales = totalquantitySales + data.quantityMonthSold;
+      totalQuantitySales = totalQuantitySales + data.quantityMonthSold;
       totalPurchased = totalPurchased + data.totalMonthPurchased;
       quantityTotalPurchased =
         quantityTotalPurchased + data.quantityMonthPurchased;
@@ -58,7 +58,7 @@ export const getDashboard = async (req, res) => {
       status: 200,
       data: data,
       totalSoldSale: totalSoldSale,
-      totalquantitySales: totalquantitySales,
+      totalQuantitySales: totalQuantitySales,
       totalPurchased: totalPurchased,
       quantityTotalPurchased: quantityTotalPurchased,
     });
