@@ -4,7 +4,7 @@ import Purchase from "../models/Purchase";
 export const getDashboard = async (req, res) => {
   try {
     const months = req.body;
-    const data = [];
+    let data = [];
     let totalSoldSale = 0.0;
     let totalQuantitySales = 0.0;
     let totalPurchased = 0.0;
@@ -22,7 +22,7 @@ export const getDashboard = async (req, res) => {
           },
           status: 2,
         });
-        ordersPerMonth.map(async (order) => {
+        ordersPerMonth.map((order) => {
           monthSold = monthSold + order.total;
         });
         //*-Purchases-*//
@@ -33,11 +33,13 @@ export const getDashboard = async (req, res) => {
           },
           status: 1,
         });
-        purchasesPerMonth.map(async (purchase) => {
+        purchasesPerMonth.map((purchase) => {
           monthPurchased = monthPurchased + purchase.total;
         });
 
         data.push({
+          startDate: date.startDate,
+          endDate: date.endDate,
           totalMonthSold: monthSold,
           quantityMonthSold: ordersPerMonth.length,
           totalMonthPurchased: monthPurchased,
@@ -46,25 +48,37 @@ export const getDashboard = async (req, res) => {
       })
     );
 
-    data.map(async (data) => {
-      totalSoldSale = totalSoldSale + data.totalMonthSold;
-      totalQuantitySales = totalQuantitySales + data.quantityMonthSold;
-      totalPurchased = totalPurchased + data.totalMonthPurchased;
+    data.map((object) => {
+      totalSoldSale = totalSoldSale + object.totalMonthSold;
+      totalQuantitySales = totalQuantitySales + object.quantityMonthSold;
+      totalPurchased = totalPurchased + object.totalMonthPurchased;
       quantityTotalPurchased =
-        quantityTotalPurchased + data.quantityMonthPurchased;
+        quantityTotalPurchased + object.quantityMonthPurchased;
+    });
+    const obtainDates = months.map((month) => month.startDate);
+
+    const newArray = [];
+    obtainDates.map((date) => {
+      data.map((dataObtain) => {
+        if (date === dataObtain.startDate) {
+          newArray.push(dataObtain);
+        }
+      });
     });
 
     res.status(200).json({
       status: 200,
-      data: data,
+      data: newArray,
       totalSoldSale: totalSoldSale,
       totalQuantitySales: totalQuantitySales,
       totalPurchased: totalPurchased,
       quantityTotalPurchased: quantityTotalPurchased,
     });
   } catch (error) {
-    return res
-      .status(400)
-      .json({ status: 400, message: "Error en la consulta, verifique información enviada", data: req.body });
+    return res.status(400).json({
+      status: 400,
+      message: "Error en la consulta, verifique información enviada",
+      data: req.body,
+    });
   }
 };
