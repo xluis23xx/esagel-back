@@ -109,6 +109,18 @@ export const updateEmployeeById = async (req, res) => {
         .populate("documentType")
         .populate("position");
     } else {
+
+      const foundDocuments = await Document.find({
+        name: { $in: req.body.documentType },
+      });
+
+      if (!foundDocuments.length > 0)
+        return res
+          .status(400)
+          .json({ status: 400, message: "Tipo documento no encontrado" });
+
+      req.body.documentType = foundDocuments[0];
+
       const foundPositions = await Position.find({
         name: { $in: req.body.position },
       });

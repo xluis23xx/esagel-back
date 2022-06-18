@@ -167,6 +167,17 @@ export const updateClientById = async (req, res) => {
         .populate("prospectStatus")
         .populate("contactForm");
     } else {
+      const foundDocuments = await Document.find({
+        name: { $in: req.body.documentType },
+      });
+
+      if (!foundDocuments.length > 0)
+        return res
+          .status(400)
+          .json({ status: 400, message: "Tipo documento no encontrado" });
+
+      req.body.documentType = foundDocuments[0];
+
       const foundLeadSources = await Leadsource.find({
         name: { $in: req.body.leadSource },
       });
@@ -215,6 +226,7 @@ export const updateClientById = async (req, res) => {
 
     res.status(200).json({ status: 200, doc: updatedClient });
   } catch (error) {
+    console.log(error);
     if (req.body?.isDelete) {
       res
         .status(400)
