@@ -12,6 +12,7 @@
   "author": "lycann",
   "license": "ISC",
   "dependencies": {
+    "@babel/runtime": "^7.18.3",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -26,6 +27,7 @@
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.14.8",
     "@babel/node": "^7.14.9",
+    "@babel/plugin-transform-runtime": "^7.18.5",
     "@babel/preset-env": "^7.14.9",
     "nodemon": "^2.0.12"
   }
