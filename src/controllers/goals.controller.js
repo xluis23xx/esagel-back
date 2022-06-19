@@ -70,11 +70,27 @@ export const getGoals = async (req, res) => {
 
   const goals = await Goal.paginate(
     {
-      createdAt: { $gte: startDate, $lte: endDate },
+      startDate: { $gte: convertStart },
+      endDate: { $lte: convertEnd },
       status: typeof status === "number" ? status : [0, 1],
     },
     options
   );
+  await Promise.all(
+    goals.docs.map(async (goal, index) => {
+      let amountSold = 0.0;
+      const orderRangeFounds = await Order.find({
+        createdAt: { $gte: goal.startDate, $lte: goal.endDate },
+        seller: goal.seller._id,
+        status: 2,
+      });
+      orderRangeFounds.map(async (order) => {
+        amountSold = amountSold + order.total;
+      });
+      goals.docs[index].quantitySold = amountSold;
+    })
+  );
+
   res.status(200).json({ status: 200, ...goals });
 };
 
