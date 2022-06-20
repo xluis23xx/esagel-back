@@ -226,7 +226,6 @@ export const updateClientById = async (req, res) => {
 
     res.status(200).json({ status: 200, doc: updatedClient });
   } catch (error) {
-    console.log(error);
     if (req.body?.isDelete) {
       res
         .status(400)

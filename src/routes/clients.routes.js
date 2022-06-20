@@ -4,7 +4,7 @@ const router = Router()
 import * as clientsCtrl from '../controllers/clients.controller'
 import { authJwt } from '../middlewares';
 
-router.post('/', [authJwt.verifyToken, authJwt.isAdmin], clientsCtrl.createClient)
+router.post('/', [authJwt.verifyToken, authJwt.isUser], clientsCtrl.createClient)
 
 router.post('/consult', [authJwt.verifyToken, authJwt.isUser], clientsCtrl.getClients)
 

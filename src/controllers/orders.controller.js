@@ -5,6 +5,7 @@ import Client from "../models/Client";
 import User from "../models/User";
 import Course from "../models/Course";
 import Sale from "../models/Sale";
+import Center from "../models/Center";
 
 export const createOrder = async (req, res) => {
   try {
@@ -16,6 +17,7 @@ export const createOrder = async (req, res) => {
       amountInIva,
       total,
       status,
+      center,
       seller,
       client,
       documentType,
@@ -40,6 +42,12 @@ export const createOrder = async (req, res) => {
       return res
         .status(400)
         .json({ status: 400, message: "Tipo documento no encontrado" });
+
+    const foundCenters = await Center.find({ branchName: { $in: center } });
+    if (!foundCenters.length > 0)
+      return res
+        .status(400)
+        .json({ status: 400, message: "Centro no encontrado" });
 
     const document = await Document.findById(foundDocuments[0]._id);
     const initialSequential = document.sequential + 1;
@@ -95,6 +103,7 @@ export const createOrder = async (req, res) => {
       seller: foundSellers[0],
       client: foundClients[0],
       documentType: foundDocuments[0],
+      center: foundCenters[0],
       documentNumber,
       orderLines: collectionLines,
     });
@@ -145,6 +154,7 @@ export const getOrderById = async (req, res) => {
   const order = await Order.findById(req.params.orderId)
     .populate({
       path: "seller",
+      path: "center",
       populate: [
         {
           path: "employee",
