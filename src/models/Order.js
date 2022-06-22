@@ -30,6 +30,10 @@ const orderSchema = new Schema(
       ref: "Client",
       type: Schema.Types.ObjectId,
     },
+    center: {
+      ref: "Center",
+      type: Schema.Types.ObjectId,
+    },
     documentType: {
       ref: "Document",
       type: Schema.Types.ObjectId,
