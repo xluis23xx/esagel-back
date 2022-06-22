@@ -54,6 +54,9 @@ export const getSaleById = async (req, res) => {
           {
             path: "documentType",
           },
+          {
+            path: "center",
+          },
         ],
       })
       .populate("client")
