@@ -6,6 +6,7 @@ import User from "../models/User";
 import Course from "../models/Course";
 import Sale from "../models/Sale";
 import Center from "../models/Center";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const createOrder = async (req, res) => {
   try {
@@ -106,6 +107,8 @@ export const createOrder = async (req, res) => {
       center: foundCenters[0],
       documentNumber,
       orderLines: collectionLines,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
 
     await newOrder.save();

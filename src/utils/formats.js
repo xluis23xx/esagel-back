@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const setFormatDate = ({ order = 0, date, separator = "-" }) => {
   if (date) {
     const convertDate = date ? new Date(date) : "";
@@ -22,4 +24,14 @@ export const setFormatDate = ({ order = 0, date, separator = "-" }) => {
     }
   }
   return "";
+};
+
+export const generateUTCToLimaDate = () => {
+  const date = new Date(
+    moment
+      .utc()
+      .add(-(5 * 60 * 60 * 1000))
+      .toString()
+  );
+  return date;
 };
