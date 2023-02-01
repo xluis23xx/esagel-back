@@ -1,4 +1,5 @@
 import Topic from "../models/Topic";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const getTopics = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
@@ -34,6 +35,8 @@ export const createTopic = async (req, res) => {
       name,
       description,
       status,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
 
     const savedTopic = await newTopic.save();

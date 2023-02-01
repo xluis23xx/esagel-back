@@ -1,6 +1,7 @@
 import Employee from "../models/Employee";
 import Document from "../models/Document";
 import Position from "../models/Position";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const createEmployee = async (req, res) => {
   try {
@@ -34,6 +35,8 @@ export const createEmployee = async (req, res) => {
       documentNumber,
       documentType,
       status: status ? status : 1,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
   
     const foundDocuments = await Document.find({ name: { $in: documentType } });

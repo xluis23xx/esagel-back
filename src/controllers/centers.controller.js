@@ -1,4 +1,5 @@
 import Center from "../models/Center";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const getCenters = async (req, res) => {
   const limit = parseInt(req.query.limit || 100);
@@ -27,6 +28,8 @@ export const createCenter = async (req, res) => {
       branchName,
       address,
       status: status ? status : 1,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
 
     const savedCenter = await newCenter.save();

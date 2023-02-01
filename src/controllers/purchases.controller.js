@@ -1,6 +1,7 @@
 import Purchase from "../models/Purchase";
 import Provider from "../models/Provider";
 import User from "../models/User";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const createPurchase = async (req, res) => {
   let sequentialPurchase = 0;
@@ -32,6 +33,8 @@ export const createPurchase = async (req, res) => {
     quantity,
     total,
     status: status ? status : 1,
+    createdAt: generateUTCToLimaDate(),
+    updatedAt: generateUTCToLimaDate()
   });
 
   const foundBuyers = await User.find({ _id: { $in: buyer } });

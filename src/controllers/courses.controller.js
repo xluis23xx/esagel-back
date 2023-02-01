@@ -1,5 +1,6 @@
 import Course from "../models/Course";
 import CourseType from "../models/CourseType";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const createCourse = async (req, res) => {
   try {
@@ -26,6 +27,8 @@ export const createCourse = async (req, res) => {
       vacanciesNumber,
       status,
       courseLines,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
 
     const foundCourseTypes = await CourseType.find({

@@ -1,6 +1,7 @@
 import Order from "../models/Order";
 import Goal from "../models/Goal";
 import User from "../models/User";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const createGoal = async (req, res) => {
   const { seller, startDate, endDate, estimatedQuantity, status } = req.body;
@@ -36,6 +37,8 @@ export const createGoal = async (req, res) => {
     estimatedQuantity,
     quantitySold: amountSold,
     status: status ? status : 1,
+    createdAt: generateUTCToLimaDate(),
+    updatedAt: generateUTCToLimaDate()
   });
 
   const savedGoal = await newGoal.save();

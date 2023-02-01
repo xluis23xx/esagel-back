@@ -1,4 +1,5 @@
 import StatusProspect from "../models/StatusProspect";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const getStatusProspects = async (req, res) => {
   const limit = parseInt(req.query.limit || 100);
@@ -28,6 +29,8 @@ export const createStatusProspect = async (req, res) => {
       name,
       description,
       status,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
 
     const savedStatusProspect = await newStatusProspect.save();

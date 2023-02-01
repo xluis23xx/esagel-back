@@ -2,6 +2,7 @@ import User from "../models/User";
 import Role from "../models/Role";
 import Employee from "../models/Employee";
 import { generatorPassword } from "../utils/randomGenerator";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const getUsers = async (req, res) => {
   const limit = parseInt(req.query.limit || 10);
@@ -59,6 +60,8 @@ export const createUser = async (req, res) => {
       status,
       employee: foundEmployee,
       image,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
 
     if (roles) {

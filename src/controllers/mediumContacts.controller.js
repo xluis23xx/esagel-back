@@ -1,4 +1,5 @@
 import Contact from "../models/MediumContact";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const getContacts = async (req, res) => {
   const limit = parseInt(req.query.limit || 100);
@@ -28,6 +29,8 @@ export const createContact = async (req, res) => {
       name,
       description,
       status,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
 
     const savedContact = await newContact.save();

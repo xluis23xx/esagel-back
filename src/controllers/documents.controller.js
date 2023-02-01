@@ -1,4 +1,5 @@
 import Document from "../models/Document";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const getDocuments = async (req, res) => {
   const limit = parseInt(req.query.limit || 100);
@@ -31,6 +32,8 @@ export const createDocument = async (req, res) => {
       code: code ? code : "",
       sequential: 0,
       length: length ? length : 0,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
 
     const savedDocument = await newDocument.save();

@@ -1,4 +1,5 @@
 import Position from "../models/Position";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const getPositions = async (req, res) => {
   const limit = parseInt(req.query.limit || 100);
@@ -27,6 +28,8 @@ export const createPosition = async (req, res) => {
     const newPosition = new Position({
       name,
       status,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
 
     const savedPosition = await newPosition.save();

@@ -1,5 +1,6 @@
 import Provider from "../models/Provider";
 import Document from "../models/Document";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const createProvider = async (req, res) => {
   const {
@@ -19,6 +20,8 @@ export const createProvider = async (req, res) => {
     status,
     documentNumber,
     description,
+    createdAt: generateUTCToLimaDate(),
+    updatedAt: generateUTCToLimaDate()
   });
 
   const foundDocuments = await Document.find({ name: { $in: documentType } });

@@ -1,4 +1,5 @@
 import CourseType from "../models/CourseType";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const getCourseTypes = async (req, res) => {
   const limit = parseInt(req.query.limit || 100);
@@ -29,6 +30,8 @@ export const createCourseType = async (req, res) => {
       name,
       description,
       status,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
 
     const savedCourseType = await newCourseType.save();

@@ -1,4 +1,5 @@
 import LeadSource from "../models/LeadSource";
+import { generateUTCToLimaDate } from "../utils/formats";
 
 export const getLeadSources = async (req, res) => {
   const limit = parseInt(req.query.limit || 100);
@@ -29,6 +30,8 @@ export const createLeadSource = async (req, res) => {
       name,
       description,
       status,
+      createdAt: generateUTCToLimaDate(),
+      updatedAt: generateUTCToLimaDate()
     });
 
     const savedLeadSource = await newLeadSource.save();
