@@ -81,6 +81,8 @@ export const createOrder = async (req, res) => {
             price: element.price,
             amount: element.amount,
             course: foundCourses[0],
+            createdAt: generateUTCToLimaDate(),
+            updatedAt: generateUTCToLimaDate()
           });
 
           await newOrderLine.save().then((savedOrderLine) => {
@@ -186,6 +188,7 @@ export const updateOrderById = async (req, res) => {
       updatedOrder = await Order.findById(req.params.orderId);
       if (updatedOrder.status === 1) {
         updatedOrder.status = 0;
+        updatedOrder.updatedAt = generateUTCToLimaDate();
         const savedUpdatedOrder = await updatedOrder.save();
 
         res.status(200).json({
@@ -224,6 +227,7 @@ export const updateOrderById = async (req, res) => {
           await course.save();
         });
         updatedOrder.status = 2;
+        updatedOrder.updatedAt = generateUTCToLimaDate();
         await updatedOrder.save();
 
         const salesFound = await Sale.find();
@@ -244,6 +248,8 @@ export const updateOrderById = async (req, res) => {
           subtotal: updatedOrder.subtotal,
           amountInIva: updatedOrder.amountInIva,
           total: updatedOrder.total,
+          createdAt: generateUTCToLimaDate(),
+          updatedAt:generateUTCToLimaDate()
         });
 
         const savedSale = await newSale.save();
