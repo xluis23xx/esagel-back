@@ -1,6 +1,7 @@
 import Role from "../models/Role";
 import Document from "../models/Document";
 import Setting from "../models/Setting";
+import Ubigeo from "../models/Ubigeo";
 
 export const createRoles = async () => {
   try {
@@ -100,5 +101,44 @@ export const createSetting = async () => {
     console.log(values);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const createUbigeos = async () => {
+  try {
+    const count = await Ubigeo.estimatedDocumentCount();
+
+    if (count > 0) return;
+
+    const values = await Promise.all([
+      new Ubigeo({ code: "010109", name: "AMAZONAS" }).save(),
+      new Ubigeo({ code: "020108", name: "ANCASH" }).save(),
+      new Ubigeo({ code: "030106", name: "APURIMAC" }).save(),
+      new Ubigeo({ code: "040106", name: "AREQUIPA" }).save(),
+      new Ubigeo({ code: "050105", name: "AYACUCHO" }).save(),
+      new Ubigeo({ code: "060109", name: "CAJAMARCA" }).save(),
+      new Ubigeo({ code: "080207", name: "CUSCO" }).save(),
+      new Ubigeo({ code: "90106", name: "HUANCAVELICA" }).save(),
+      new Ubigeo({ code: "100105", name: "HUANUCO" }).save(),
+      new Ubigeo({ code: "110107", name: "ICA" }).save(),
+      new Ubigeo({ code: "120126", name: "JUNIN" }).save(),
+      new Ubigeo({ code: "130203", name: "LA LIBERTAD" }).save(),
+      new Ubigeo({ code: "140119", name: "LAMBAYEQUE" }).save(),
+      new Ubigeo({ code: "150403", name: "LIMA" }).save(),
+      new Ubigeo({ code: "160206", name: "LORETO" }).save(),
+      new Ubigeo({ code: "170102", name: "MADRE DE DIOS" }).save(),
+      new Ubigeo({ code: "180201", name: "MOQUEGUA" }).save(),
+      new Ubigeo({ code: "190102", name: "PASCO" }).save(),
+      new Ubigeo({ code: "200301", name: "PIURA" }).save(),
+      new Ubigeo({ code: "210303", name: "PUNO" }).save(),
+      new Ubigeo({ code: "220102", name: "SAN MARTIN" }).save(),
+      new Ubigeo({ code: "230201", name: "TACNA" }).save(),
+      new Ubigeo({ code: "240203", name: "TUMBES" }).save(),
+      new Ubigeo({ code: "250104", name: "UCAYALI" }).save()
+    ]);
+
+    console.log(values);
+  } catch (error) {
+    console.error(error);
   }
 };

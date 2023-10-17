@@ -37,7 +37,8 @@ const clientSchema = new Schema(
       type: Schema.Types.ObjectId,
     },
     department: {
-      type: String,
+      ref: "Ubigeo",
+      type: Schema.Types.ObjectId,
     },
     leadSource: {
       ref: "Leadsource",

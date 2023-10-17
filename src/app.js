@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import pkg from "../package.json";
 
-import { createRoles, createDocuments, createSetting } from "./libs/initialSetup";
+import { createRoles, createDocuments, createSetting, createUbigeos } from "./libs/initialSetup";
 
 import coursesRoutes from "./routes/courses.routes";
 import authRoutes from "./routes/auth.routes";
@@ -25,12 +25,14 @@ import profilesRoutes from "./routes/profiles.routes";
 import goalsRoutes from "./routes/goals.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
 import centersRoutes from "./routes/centers.routes";
+import ubigeosRoutes from "./routes/ubigeos.routes";
 
 const app = express();
 const cors = require("cors");
 createRoles();
 createDocuments();
 createSetting();
+createUbigeos();
 
 app.set("pkg", pkg);
 
@@ -68,5 +70,6 @@ app.use("/api/profiles", profilesRoutes);
 app.use("/api/goals", goalsRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/centers", centersRoutes);
+app.use("/api/ubigeo", ubigeosRoutes);
 
 export default app;

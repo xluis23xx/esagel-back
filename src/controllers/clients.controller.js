@@ -47,6 +47,15 @@ export const createClient = async (req, res) => {
       updatedAt: generateUTCToLimaDate()
     });
 
+    const foundUbigeos = await Ubigeo.find({ code: { $in: department } });
+
+    if (!foundUbigeos.length > 0)
+      return res
+        .status(400)
+        .json({ status: 400, message: "Ubigeo no encontrado" });
+
+    newClient.department = foundUbigeos[0];
+
     const foundDocuments = await Document.find({ name: { $in: documentType } });
 
     if (!foundDocuments.length > 0)
