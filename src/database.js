@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-mongoose.connect("mongodb+srv://xluis23xx:6jwl8ycq069@cluster0.19wdh.mongodb.net/esageldb", {
+mongoose.connect("mongodb+srv://lycann96:6jwl8ycq069@cluster0.gcaew.azure.mongodb.net/esageldb", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: true,
