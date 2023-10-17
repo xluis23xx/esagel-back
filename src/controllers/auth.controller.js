@@ -6,11 +6,12 @@ import Role from "../models/Role";
 let refreshToken = "";
 
 export const signUp = async (req, res) => {
-  const { username, password, roles } = req.body;
+  const { username, password, roles, status } = req.body;
 
   const newUser = new User({
     username,
     password: await User.encryptPassword(password),
+    status
   });
 
   if (roles) {
