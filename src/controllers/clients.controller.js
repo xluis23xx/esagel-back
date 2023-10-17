@@ -102,6 +102,7 @@ export const createClient = async (req, res) => {
 
     res.status(201).json({ status: 201, doc: savedClient });
   } catch (error) {
+    console.log("error",error);
     return res
       .status(400)
       .json({ status: 400, message: "No se registró el cliente" });
