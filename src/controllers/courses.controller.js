@@ -32,7 +32,7 @@ export const createCourse = async (req, res) => {
     });
 
     const foundCourses = await Course.find({
-      name: { $in: name },
+      name: { $regex: name, $options:'i' },
     });
 
     if (foundCourses.length > 0)
