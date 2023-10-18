@@ -92,9 +92,9 @@ export const createSetting = async () => {
         businessName: "ESAGEL S.A.C",
         ruc: "12345678911",
         url: "https://www.facebook.com/groups/grupoesagel",
-        logo: "https://firebasestorage.googleapis.com/v0/b/restaurant-app-6a09d.appspot.com/o/saegel%2Fesagel.png?alt=media&token=04d99e71-7eea-4876-8a44-6d1a4dc4f330",
+        logo: "https://firebasestorage.googleapis.com/v0/b/esagel-edu.appspot.com/o/esagel%2Fe5fd0ff3-1163-460d-9e7a-d6278a75ee69.png?alt=media&token=edc0bb00-f95c-4ccc-be0d-32d4bf0d29b6&_gl=1*18wf4v9*_ga*MjkzNzgyMjI4LjE2OTc2MDc2NTc.*_ga_CW55HF8NVT*MTY5NzYxMzczMS4yLjEuMTY5NzYxNTQwOS4xNi4wLjA.",
         tax: 0.18,
-        manual:'https://firebasestorage.googleapis.com/v0/b/restaurant-app-6a09d.appspot.com/o/manual%2FSOLICITUD%20VISA.pdf?alt=media&token=e20e5a50-5ecc-4036-8b9b-a5e05ad10aa8'
+        manual:'https://firebasestorage.googleapis.com/v0/b/esagel-edu.appspot.com/o/esagel%2F609c8868-5228-45a8-8103-20a6e6de32be.pdf?alt=media&token=82ec538e-f267-4031-b953-2ba91b261473&_gl=1*n2v22a*_ga*MjkzNzgyMjI4LjE2OTc2MDc2NTc.*_ga_CW55HF8NVT*MTY5NzYxMzczMS4yLjEuMTY5NzYxNTM4MC40NS4wLjA.'
       }).save(),
     ]);
 
