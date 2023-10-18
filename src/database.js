@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-mongoose.connect("mongodb+srv://lycann96:6jwl8ycq069@cluster0.gcaew.azure.mongodb.net/esageldb", {
+const db = mongoose.connect(process.env.CONNECT_DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: true,
@@ -9,3 +9,5 @@ mongoose.connect("mongodb+srv://lycann96:6jwl8ycq069@cluster0.gcaew.azure.mongod
 })
     .then(db => console.log('Db is connected'))
     .catch(error => console.log(error))
+
+export default db

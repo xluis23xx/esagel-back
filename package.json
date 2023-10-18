@@ -12,6 +12,11 @@
   "author": "lycann",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "@babel/node": "^7.14.9",
+    "@babel/plugin-transform-runtime": "^7.18.5",
+    "@babel/preset-env": "^7.14.9",
     "@babel/runtime": "^7.18.3",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -23,12 +28,6 @@
     "mongoose": "^5.13.5",
     "mongoose-paginate-v2": "^1.6.3",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.12",
-    "@babel/cli": "^7.14.8",
-    "@babel/core": "^7.14.8",
-    "@babel/node": "^7.14.9",
-    "@babel/plugin-transform-runtime": "^7.18.5",
-    "@babel/preset-env": "^7.14.9"
-  },
-  "devDependencies": {}
+    "nodemon": "^2.0.12"
+  }
 }

@@ -1,4 +1,4 @@
 export default {
-    SECRET: 'products-api',
-    REFRESH_SECRET: 'refresh-api' 
+    SECRET: process.env.SECRET,
+    REFRESH_SECRET: process.env.REFRESH_SECRET
 }
