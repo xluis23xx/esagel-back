@@ -97,6 +97,15 @@ export const createClient = async (req, res) => {
         .status(400)
         .json({ status: 400, message: "Forma de contacto no encontrado" });
 
+    const foundClients = await Client.find({
+      documentNumber: { $in: documentNumber },
+    });
+
+    if (foundClients.length > 0)
+      return res
+        .status(400)
+        .json({ status: 400, message: "Cliente con número de documento ya registrado" });    
+
     newClient.contactForm = foundMediumContacts[0];
 
     const savedClient = await newClient.save();
