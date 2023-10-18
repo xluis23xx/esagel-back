@@ -31,6 +31,15 @@ export const createCourse = async (req, res) => {
       updatedAt: generateUTCToLimaDate()
     });
 
+    const foundCourses = await Course.find({
+      name: { $in: name },
+    });
+
+    if (foundCourses.length > 0)
+      return res
+        .status(400)
+        .json({ status: 400, message: "Nombre de curso ya registrado" });
+
     const foundCourseTypes = await CourseType.find({
       name: { $in: courseType },
     });
