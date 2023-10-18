@@ -170,7 +170,8 @@ export const getClientById = async (req, res) => {
     .populate("documentType")
     .populate("leadSource")
     .populate("prospectStatus")
-    .populate("contactForm");
+    .populate("contactForm")
+    .populate("department");
   res.status(200).json({ status: 200, doc: client });
 };
 
